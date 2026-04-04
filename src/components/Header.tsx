@@ -1,11 +1,12 @@
 'use client';
 
 import { Drawer, HStack, IconButton, Link, Portal, Spacer, Stack } from '@chakra-ui/react';
-import { Home, Menu, X } from 'lucide-react';
+import { Home, Menu, Settings, X } from 'lucide-react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { SettingsModal } from '@/components/SettingsModal';
 import { flags } from '@/lib/flags';
 
 const allNavLinks = [
@@ -19,6 +20,7 @@ const navLinks = allNavLinks.filter((link) => !('flag' in link) || link.flag);
 export function Header() {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
     setDrawerOpen(false);
@@ -61,6 +63,17 @@ export function Header() {
       </HStack>
 
       <Spacer />
+
+      <IconButton
+        aria-label="Open settings"
+        onClick={() => setSettingsOpen(true)}
+        size="sm"
+        variant="ghost"
+      >
+        <Settings size={18} />
+      </IconButton>
+
+      <SettingsModal onClose={() => setSettingsOpen(false)} open={settingsOpen} />
 
       {/* Mobile drawer */}
       <Drawer.Root onOpenChange={(e) => setDrawerOpen(e.open)} open={drawerOpen} placement="start">

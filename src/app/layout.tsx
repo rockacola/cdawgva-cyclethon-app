@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { BackToTop } from '@/components/BackToTop';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { ChakraProvider } from '@/providers/ChakraProvider';
@@ -11,12 +12,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <ChakraProvider>
           <Header />
           {children}
           <Footer />
+          <BackToTop />
         </ChakraProvider>
       </body>
     </html>

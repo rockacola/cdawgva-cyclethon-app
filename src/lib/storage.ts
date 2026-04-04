@@ -3,6 +3,7 @@
 
 export const STORAGE_KEYS = {
   DONATION_PAGE_SIZE: 'donation_page_size',
+  APPEARANCE: 'appearance',
 } as const;
 
 type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];

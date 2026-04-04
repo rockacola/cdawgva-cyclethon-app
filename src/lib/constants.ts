@@ -15,3 +15,8 @@ export const DONATION_REFETCH_INTERVAL = 10_000;
 // Page size options and default for the donation feed
 export const DONATION_PAGE_SIZES = [30, 60, 100] as const;
 export const DONATION_PAGE_SIZE_DEFAULT = 30;
+
+// Appearance mode options
+export const APPEARANCE_MODES = ['Light', 'Dark', 'System'] as const;
+export type AppearanceMode = (typeof APPEARANCE_MODES)[number];
+export const APPEARANCE_MODE_DEFAULT: AppearanceMode = 'System';
