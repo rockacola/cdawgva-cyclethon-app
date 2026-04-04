@@ -35,7 +35,7 @@ const guests: Guest[] = [
     socials: [{ ...YOUTUBE, href: 'https://www.youtube.com/@AbroadinJapan' }],
   },
   {
-    name: 'IronMouse',
+    name: 'Ironmouse',
     role: 'Chief cheerleader',
     socials: [
       { ...YOUTUBE, href: 'https://www.youtube.com/@IronMouseParty' },
