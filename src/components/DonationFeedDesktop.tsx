@@ -1,7 +1,7 @@
 import { Table, Text } from '@chakra-ui/react';
 
 import { RelativeTime } from '@/components/RelativeTime';
-import { formatAmount, isAnonymous } from '@/lib/donationUtils';
+import { formatAmountParts, isAnonymous } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 
 interface Props {
@@ -16,7 +16,7 @@ export function DonationFeedDesktop({ donations }: Props) {
           <Table.ColumnHeader w="140px" whiteSpace="nowrap">
             Time
           </Table.ColumnHeader>
-          <Table.ColumnHeader>Donor</Table.ColumnHeader>
+          <Table.ColumnHeader w="160px">Donor</Table.ColumnHeader>
           <Table.ColumnHeader>Comment</Table.ColumnHeader>
           <Table.ColumnHeader textAlign="right">Amount</Table.ColumnHeader>
         </Table.Row>
@@ -24,21 +24,30 @@ export function DonationFeedDesktop({ donations }: Props) {
       <Table.Body>
         {donations.map((d) => {
           const isAnon = isAnonymous(d.donor_name);
+          const { whole, cents } = formatAmountParts(d.amount);
           return (
             <Table.Row _hover={{ bg: 'bg.muted' }} key={d.id}>
               <Table.Cell data-utc={d.completed_at}>
                 <RelativeTime iso={d.completed_at} />
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell maxW="160px">
                 <Text
                   color={isAnon ? 'fg.subtle' : undefined}
                   fontStyle={isAnon ? 'italic' : undefined}
+                  overflowWrap="break-word"
                 >
                   {d.donor_name}
                 </Text>
               </Table.Cell>
-              <Table.Cell color="fg.muted">{d.donor_comment ?? ''}</Table.Cell>
-              <Table.Cell textAlign="right">{formatAmount(d.amount)}</Table.Cell>
+              <Table.Cell color="fg.muted" maxW="480px">
+                <Text overflowWrap="break-word">{d.donor_comment ?? ''}</Text>
+              </Table.Cell>
+              <Table.Cell textAlign="right" whiteSpace="nowrap">
+                {whole}
+                <Text as="span" color="fg.subtle">
+                  {cents}
+                </Text>
+              </Table.Cell>
             </Table.Row>
           );
         })}

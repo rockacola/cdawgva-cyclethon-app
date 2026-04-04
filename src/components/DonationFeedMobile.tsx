@@ -37,7 +37,7 @@ export function DonationFeedMobile({ donations }: Props) {
             </Box>
             {d.donor_comment ? (
               <Text color="fg.muted" fontSize="xs">
-                {d.donor_comment}
+                {d.donor_comment}{' '}
               </Text>
             ) : null}
             <Text color="fg.subtle" fontSize="xs">

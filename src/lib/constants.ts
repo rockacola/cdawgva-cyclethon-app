@@ -11,3 +11,7 @@ export const FETCH_CACHE_REVALIDATE = 10;
 
 // Client-side polling interval in milliseconds
 export const DONATION_REFETCH_INTERVAL = 10_000;
+
+// Page size options and default for the donation feed
+export const DONATION_PAGE_SIZES = [30, 60, 100] as const;
+export const DONATION_PAGE_SIZE_DEFAULT = 30;
