@@ -14,12 +14,7 @@ export function DayNav({ days }: Props) {
   const pathname = usePathname();
 
   return (
-    <Box
-      as="nav"
-      overflowX={{ base: 'auto', md: 'visible' }}
-      shrink={0}
-      w={{ base: 'full', md: '44' }}
-    >
+    <Box as="nav" overflowX={{ base: 'auto', md: 'visible' }} w={{ base: 'full', md: '44' }}>
       {/* Mobile: horizontal scroll */}
       <Stack direction={{ base: 'row', md: 'column' }} gap={1} pb={{ base: 2, md: 0 }}>
         {days.map(({ slug, label, date }) => {
