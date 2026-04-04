@@ -12,6 +12,7 @@ import {
   DONATION_PAGE_SIZE_DEFAULT,
   DONATION_REFETCH_INTERVAL,
 } from '@/lib/constants';
+import { flags } from '@/lib/flags';
 import { STORAGE_KEYS, storage } from '@/lib/storage';
 import type { Donation, DonationsData } from '@/lib/types';
 
@@ -72,7 +73,7 @@ export function DonationFeedRefresher({ initialDonations, initialGeneratedAt }: 
     storage.set(STORAGE_KEYS.DONATION_PAGE_SIZE, value);
   }
 
-  const isFiltering = commentFilter.trim().length > 0;
+  const isFiltering = flags.donationFilter && commentFilter.trim().length > 0;
   const sourceData = isFiltering && fullDonations ? fullDonations : donations;
   const filteredDonations = isFiltering
     ? sourceData.filter((d) => d.donor_comment?.toLowerCase().includes(commentFilter.toLowerCase()))
@@ -110,21 +111,25 @@ export function DonationFeedRefresher({ initialDonations, initialGeneratedAt }: 
         </Flex>
       )}
 
-      <Flex align="center" gap={2} mb={6} position="relative">
-        <Input
-          onChange={handleCommentFilterChange}
-          placeholder="Filter by comment…"
-          size="sm"
-          value={commentFilter}
-        />
-        {isLoadingFull ? <Spinner position="absolute" right={3} size="xs" /> : null}
-      </Flex>
+      {flags.donationFilter ? (
+        <>
+          <Flex align="center" gap={2} mb={6} position="relative">
+            <Input
+              onChange={handleCommentFilterChange}
+              placeholder="Filter by comment…"
+              size="sm"
+              value={commentFilter}
+            />
+            {isLoadingFull ? <Spinner position="absolute" right={3} size="xs" /> : null}
+          </Flex>
 
-      {isFiltering ? (
-        <Text color="fg.muted" fontSize="xs" mb={4}>
-          {filteredDonations.length} match{filteredDonations.length !== 1 ? 'es' : ''}
-          {isLoadingFull ? ' (loading full dataset…)' : ''}
-        </Text>
+          {isFiltering ? (
+            <Text color="fg.muted" fontSize="xs" mb={4}>
+              {filteredDonations.length} match{filteredDonations.length !== 1 ? 'es' : ''}
+              {isLoadingFull ? ' (loading full dataset…)' : ''}
+            </Text>
+          ) : null}
+        </>
       ) : null}
 
       <DonationFeed donations={visibleDonations} />

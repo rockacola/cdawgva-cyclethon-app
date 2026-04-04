@@ -4,4 +4,5 @@ export const flags = {
   showJourneyAllDaysLink: false,
   showJourneyDotLinks: false,
   showTrackRecord: false,
+  donationFilter: false,
 };
