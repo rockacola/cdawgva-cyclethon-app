@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { formatRelative, formatUTC } from '@/lib/dateUtils';
 
@@ -10,28 +10,34 @@ interface Props {
 }
 
 export function RelativeTime({ timestamp, showUTC = false }: Props) {
-  const date = useMemo(() => new Date(timestamp * 1000), [timestamp]);
+  const date = new Date(timestamp * 1000);
   const utc = formatUTC(date);
-  const [relative, setRelative] = useState<string>('');
+  const [relative, setRelative] = useState<string>(formatRelative(date));
 
-  useEffect(function syncRelativeTime() {
-    setRelative(formatRelative(date));
-    const interval = setInterval(() => setRelative(formatRelative(date)), 60_000);
-    return () => clearInterval(interval);
-  }, [date]);
-
-  if (!relative) {
-    // Pre-hydration: show UTC to avoid layout shift
-    return <span suppressHydrationWarning>{utc}</span>;
-  }
+  useEffect(
+    function syncRelativeTime() {
+      const d = new Date(timestamp * 1000);
+      setRelative(formatRelative(d));
+      const interval = setInterval(
+        () => setRelative(formatRelative(new Date(timestamp * 1000))),
+        60_000
+      );
+      return () => clearInterval(interval);
+    },
+    [timestamp]
+  );
 
   if (showUTC) {
     return (
-      <span>
+      <span suppressHydrationWarning>
         {relative} ({utc})
       </span>
     );
   }
 
-  return <span title={utc}>{relative}</span>;
+  return (
+    <span suppressHydrationWarning title={utc}>
+      {relative}
+    </span>
+  );
 }
