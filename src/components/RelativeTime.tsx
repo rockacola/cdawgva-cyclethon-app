@@ -33,5 +33,5 @@ export function RelativeTime({ iso, showUTC = false }: Props) {
     );
   }
 
-  return <span>{relative}</span>;
+  return <span title={utc}>{relative}</span>;
 }
