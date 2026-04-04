@@ -1,8 +1,7 @@
-import { Box, Container, Heading, Text } from '@chakra-ui/react';
+import { Box, Container, Heading } from '@chakra-ui/react';
 import type { Metadata } from 'next';
 
-import { DonationFeed } from '@/components/DonationFeed';
-import { RelativeTime } from '@/components/RelativeTime';
+import { DonationFeedRefresher } from '@/components/DonationFeedRefresher';
 import { getDonations } from '@/lib/getDonations';
 
 export const metadata: Metadata = {
@@ -19,13 +18,7 @@ export default async function DonationsPage() {
           Donations
         </Heading>
 
-        {!!generated_at && (
-          <Text color="fg.muted" fontSize={{ base: 'xs', md: 'sm' }} mb={8}>
-            Last checked: <RelativeTime iso={generated_at} showUTC />
-          </Text>
-        )}
-
-        <DonationFeed donations={donations} />
+        <DonationFeedRefresher initialDonations={donations} initialGeneratedAt={generated_at} />
       </Container>
     </Box>
   );
