@@ -3,14 +3,15 @@ import type { Metadata } from 'next';
 
 import { DonationFeed } from '@/components/DonationFeed';
 import { RelativeTime } from '@/components/RelativeTime';
-import donationData from '@/data/donations.json';
+import { DONATIONS_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'CDawgVA Cyclethon 5',
 };
 
-export default function HomePage() {
-  const { generated_at, donations } = donationData;
+export default async function HomePage() {
+  const res = await fetch(DONATIONS_URL, { next: { revalidate: 60 } });
+  const { generated_at, donations } = await res.json();
 
   return (
     <Box py={20}>
