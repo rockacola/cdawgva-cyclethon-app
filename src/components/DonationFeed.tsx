@@ -1,14 +1,8 @@
-import { Table, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 
-import { RelativeTime } from '@/components/RelativeTime';
-
-interface Donation {
-  id: string;
-  completed_at: string;
-  amount: { value: string; currency: string };
-  donor_name: string;
-  donor_comment: string | null;
-}
+import { DonationFeedDesktop } from '@/components/DonationFeedDesktop';
+import { DonationFeedMobile } from '@/components/DonationFeedMobile';
+import type { Donation } from '@/lib/types';
 
 interface Props {
   donations: Donation[];
@@ -24,29 +18,13 @@ export function DonationFeed({ donations }: Props) {
   }
 
   return (
-    <Table.Root size="sm" variant="outline">
-      <Table.Header>
-        <Table.Row>
-          <Table.ColumnHeader w="140px" whiteSpace="nowrap">
-            Time
-          </Table.ColumnHeader>
-          <Table.ColumnHeader>Donor</Table.ColumnHeader>
-          <Table.ColumnHeader>Comment</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right">Amount</Table.ColumnHeader>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {donations.map((d) => (
-          <Table.Row key={d.id}>
-            <Table.Cell data-utc={d.completed_at}>
-              <RelativeTime iso={d.completed_at} />
-            </Table.Cell>
-            <Table.Cell>{d.donor_name}</Table.Cell>
-            <Table.Cell color="gray.500">{d.donor_comment ?? '—'}</Table.Cell>
-            <Table.Cell textAlign="right">${parseFloat(d.amount.value).toFixed(2)}</Table.Cell>
-          </Table.Row>
-        ))}
-      </Table.Body>
-    </Table.Root>
+    <>
+      <Box display={{ base: 'block', md: 'none' }}>
+        <DonationFeedMobile donations={donations} />
+      </Box>
+      <Box display={{ base: 'none', md: 'block' }}>
+        <DonationFeedDesktop donations={donations} />
+      </Box>
+    </>
   );
 }
