@@ -10,9 +10,15 @@ function formatRelative(date: Date): string {
 
   const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
-  if (Math.abs(diffDay) >= 1) { return rtf.format(diffDay, 'day'); }
-  if (Math.abs(diffHr) >= 1) { return rtf.format(diffHr, 'hour'); }
-  if (Math.abs(diffMin) >= 1) { return rtf.format(diffMin, 'minute'); }
+  if (Math.abs(diffDay) >= 1) {
+    return rtf.format(diffDay, 'day');
+  }
+  if (Math.abs(diffHr) >= 1) {
+    return rtf.format(diffHr, 'hour');
+  }
+  if (Math.abs(diffMin) >= 1) {
+    return rtf.format(diffMin, 'minute');
+  }
   return 'just now';
 }
 
