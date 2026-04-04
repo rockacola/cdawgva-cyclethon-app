@@ -1,32 +1,167 @@
-import { Box, Container, Heading, Text } from '@chakra-ui/react';
+import {
+  Badge,
+  Box,
+  Container,
+  HStack,
+  Heading,
+  Link,
+  SimpleGrid,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
+import { ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
+import Image from 'next/image';
+import NextLink from 'next/link';
 
 import { DonationFeed } from '@/components/DonationFeed';
-import { RelativeTime } from '@/components/RelativeTime';
+import { JourneyProgressSection } from '@/components/JourneyProgressSection';
+import { TrackRecord } from '@/components/TrackRecord';
+import { WhoComing } from '@/components/WhoComing';
+import { flags } from '@/lib/flags';
 import { getDonations } from '@/lib/getDonations';
 
 export const metadata: Metadata = {
-  title: 'CDawgVA Cyclethon 5',
+  title: 'Cyclethon Tracker',
 };
 
 export default async function HomePage() {
-  const { generated_at, donations } = await getDonations();
+  const { donations } = await getDonations();
 
   return (
-    <Box py={{ base: 6, md: 20 }}>
-      <Container maxW="4xl" px={{ base: 3, md: 8 }}>
-        <Heading as="h1" mb={2} size={{ base: 'xl', md: '2xl' }}>
-          CDawgVA Cyclethon 5
-        </Heading>
+    <>
+      {/* Hero */}
+      <Box bg="bg.subtle" borderBottomWidth="1px" py={{ base: 12, md: 20 }}>
+        <Container maxW="5xl" px={{ base: 3, md: 8 }}>
+          <SimpleGrid alignItems="center" columns={{ base: 1, md: 2 }} gap={{ base: 8, md: 14 }}>
+            <Stack gap={5}>
+              <HStack flexWrap="wrap" gap={2}>
+                <Badge variant="subtle">15 Days</Badge>
+                <Badge variant="subtle">Japan · 2026</Badge>
+              </HStack>
+              <Heading as="h1" lineHeight="1.1" size={{ base: '3xl', md: '4xl' }}>
+                They're back.
+                <br />
+                On bikes.
+                <br />
+                Again.
+              </Heading>
+              <Text color="fg.muted" fontSize={{ base: 'md', md: 'lg' }}>
+                Riders, van gang, guest cyclists, support crew and a whole community behind them.
+                Everyone is here raising money for the Immune Deficiency Foundation. It keeps
+                getting bigger every year. We keep watching.
+              </Text>
+            </Stack>
+            <Box
+              aspectRatio={4 / 3}
+              borderRadius="2xl"
+              borderWidth="1px"
+              overflow="hidden"
+              position="relative"
+            >
+              <Image
+                alt="Cyclethon 4"
+                fill
+                src="/images/cyclethon-4-1.jpg"
+                style={{ objectFit: 'cover', filter: 'sepia(0.2) opacity(0.75)' }}
+              />
+            </Box>
+          </SimpleGrid>
+        </Container>
+      </Box>
 
-        {!!generated_at && (
-          <Text color="gray.500" fontSize={{ base: 'xs', md: 'sm' }} mb={8}>
-            Last checked: <RelativeTime iso={generated_at} showUTC />
+      <Container maxW="5xl" px={{ base: 3, md: 8 }}>
+        {flags.showJourneyProgress ? <JourneyProgressSection /> : null}
+        {flags.showTrackRecord ? <TrackRecord /> : null}
+
+        {/* Charity + Guests */}
+        <SimpleGrid
+          borderBottomWidth="1px"
+          columns={{ base: 1, md: 2 }}
+          gap={10}
+          py={{ base: 10, md: 16 }}
+        >
+          {/* Charity */}
+          <Stack gap={4}>
+            <Text
+              color="fg.muted"
+              fontSize="xs"
+              fontWeight="semibold"
+              letterSpacing="wide"
+              textTransform="uppercase"
+            >
+              The Cause
+            </Text>
+            <Box
+              aspectRatio={16 / 7}
+              borderRadius="2xl"
+              borderWidth="1px"
+              overflow="hidden"
+              position="relative"
+            >
+              <Image
+                alt="The Cause"
+                fill
+                src="/images/cyclethon-4-4.jpg"
+                style={{ objectFit: 'cover', filter: 'sepia(0.2) opacity(0.75)' }}
+              />
+            </Box>
+            <Heading as="h2" size="lg">
+              Immune Deficiency Foundation
+            </Heading>
+            <Text color="fg.muted" fontSize="sm">
+              The Immune Deficiency Foundation supports people living with primary immunodeficiency,
+              with over 450 types of rare, chronic conditions affecting an estimated 500,000
+              Americans. On average it takes 9 to 15 years to get a diagnosis. 70 to 90% of those
+              with a PI don't even know they have one.
+            </Text>
+            <Text color="fg.muted" fontSize="sm">
+              Every dollar raised goes toward connecting, engaging, and empowering families to live
+              longer, stronger, and healthier lives.{' '}
+              <Link
+                fontSize="sm"
+                href="https://primaryimmune.org/get-involved/raise-awareness-and-funds-idf/diy-gaming"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Learn how to get involved.
+              </Link>
+            </Text>
+          </Stack>
+
+          <WhoComing />
+        </SimpleGrid>
+
+        {/* Latest Donations */}
+        <Box py={{ base: 10, md: 16 }}>
+          <Text
+            color="fg.muted"
+            fontSize="xs"
+            fontWeight="semibold"
+            letterSpacing="wide"
+            mb={6}
+            textTransform="uppercase"
+          >
+            Latest Donations
           </Text>
-        )}
-
-        <DonationFeed donations={donations} />
+          <DonationFeed donations={donations.slice(0, 10)} />
+          <HStack justify="flex-end" mt={4}>
+            <Link
+              _hover={{ color: 'fg', textDecoration: 'none' }}
+              asChild
+              color="fg.muted"
+              fontSize="sm"
+            >
+              <NextLink href="/donations">
+                <HStack gap={1}>
+                  <Text>View all donations</Text>
+                  <ArrowRight size={14} />
+                </HStack>
+              </NextLink>
+            </Link>
+          </HStack>
+        </Box>
       </Container>
-    </Box>
+    </>
   );
 }
