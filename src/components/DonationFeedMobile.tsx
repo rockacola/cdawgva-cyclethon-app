@@ -32,7 +32,7 @@ export function DonationFeedMobile({ donations }: Props) {
                 {d.donor_name}
               </Text>
               <Text fontSize="xs" fontWeight="semibold">
-                {formatAmount(d.amount)}
+                {formatAmount(d)}
               </Text>
             </Box>
             {d.donor_comment ? (
@@ -41,7 +41,7 @@ export function DonationFeedMobile({ donations }: Props) {
               </Text>
             ) : null}
             <Text color="fg.subtle" fontSize="xs">
-              <RelativeTime iso={d.completed_at} />
+              <RelativeTime timestamp={d.completed_at} />
             </Text>
           </Box>
         );

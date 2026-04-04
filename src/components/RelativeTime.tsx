@@ -1,24 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { formatRelative, formatUTC } from '@/lib/dateUtils';
 
 interface Props {
-  iso: string;
+  timestamp: number; // unix epoch seconds
   showUTC?: boolean;
 }
 
-export function RelativeTime({ iso, showUTC = false }: Props) {
-  const utc = formatUTC(new Date(iso));
+export function RelativeTime({ timestamp, showUTC = false }: Props) {
+  const date = useMemo(() => new Date(timestamp * 1000), [timestamp]);
+  const utc = formatUTC(date);
   const [relative, setRelative] = useState<string>('');
 
-  useEffect(() => {
-    const date = new Date(iso);
+  useEffect(function syncRelativeTime() {
     setRelative(formatRelative(date));
     const interval = setInterval(() => setRelative(formatRelative(date)), 60_000);
     return () => clearInterval(interval);
-  }, [iso]);
+  }, [date]);
 
   if (!relative) {
     // Pre-hydration: show UTC to avoid layout shift

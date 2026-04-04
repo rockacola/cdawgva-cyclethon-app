@@ -56,7 +56,8 @@ export function DonationFeedRefresher({ initialDonations, initialGeneratedAt }: 
       {!!generatedAt && (
         <Flex align="center" flexWrap="wrap" gap={2} mb={8}>
           <Text color="fg.muted" fontSize={{ base: 'xs', md: 'sm' }}>
-            Last checked: <RelativeTime iso={generatedAt} showUTC />
+            Last checked:{' '}
+            <RelativeTime showUTC timestamp={Math.floor(new Date(generatedAt).getTime() / 1000)} />
             {isRefreshing ? <Spinner color="blue.300" ml={2} size="sm" /> : null}
           </Text>
           <HStack color="fg.muted" fontSize="xs" gap={1.5} ml="auto" whiteSpace="nowrap">

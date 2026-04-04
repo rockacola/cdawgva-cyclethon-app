@@ -5,24 +5,27 @@ const numberFormat = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 2,
 });
 
-function formatValue(value: string): string {
-  return numberFormat.format(parseFloat(value));
+function formatCents(amountCent: number): string {
+  return numberFormat.format(amountCent / 100);
 }
 
-export function formatAmount(amount: Donation['amount']): string {
-  const value = formatValue(amount.value);
-  if (amount.currency === 'USD') {
+export function formatAmount(d: Pick<Donation, 'amount_cent' | 'amount_currency'>): string {
+  const value = formatCents(d.amount_cent);
+  if (d.amount_currency === 'USD') {
     return `$${value}`;
   }
-  return `${amount.currency} ${value}`;
+  return `${d.amount_currency} ${value}`;
 }
 
-export function formatAmountParts(amount: Donation['amount']): { whole: string; cents: string } {
-  const value = formatValue(amount.value);
+export function formatAmountParts(d: Pick<Donation, 'amount_cent' | 'amount_currency'>): {
+  whole: string;
+  cents: string;
+} {
+  const value = formatCents(d.amount_cent);
   const dotIndex = value.lastIndexOf('.');
   const intPart = value.slice(0, dotIndex);
   const centsPart = value.slice(dotIndex + 1);
-  const whole = amount.currency === 'USD' ? `$${intPart}` : `${amount.currency} ${intPart}`;
+  const whole = d.amount_currency === 'USD' ? `$${intPart}` : `${d.amount_currency} ${intPart}`;
   return { whole, cents: `.${centsPart}` };
 }
 

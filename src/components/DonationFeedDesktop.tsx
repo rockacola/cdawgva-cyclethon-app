@@ -24,11 +24,11 @@ export function DonationFeedDesktop({ donations }: Props) {
       <Table.Body>
         {donations.map((d) => {
           const isAnon = isAnonymous(d.donor_name);
-          const { whole, cents } = formatAmountParts(d.amount);
+          const { whole, cents } = formatAmountParts(d);
           return (
             <Table.Row _hover={{ bg: 'bg.muted' }} key={d.id}>
-              <Table.Cell data-utc={d.completed_at}>
-                <RelativeTime iso={d.completed_at} />
+              <Table.Cell>
+                <RelativeTime timestamp={d.completed_at} />
               </Table.Cell>
               <Table.Cell maxW="160px">
                 <Text
