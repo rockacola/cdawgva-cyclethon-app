@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 
 import { donationsEmitter } from '@/lib/donations-emitter';
-import type { Donation } from '@/lib/types';
+import type { CampaignFact, Donation } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,14 +10,25 @@ export async function GET(req: NextRequest) {
 
   const stream = new ReadableStream({
     start(controller) {
-      const send = (donation: Donation) => {
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify(donation)}\n\n`));
+      const sendDonation = (donation: Donation) => {
+        controller.enqueue(
+          encoder.encode(`event: donation\ndata: ${JSON.stringify(donation)}\n\n`)
+        );
       };
 
-      donationsEmitter.on('donation', send);
+      const sendFact = (fact: CampaignFact) => {
+        controller.enqueue(encoder.encode(`event: fact\ndata: ${JSON.stringify(fact)}\n\n`));
+      };
+
+      // Flush headers immediately so the browser transitions to OPEN
+      controller.enqueue(encoder.encode(': connected\n\n'));
+
+      donationsEmitter.on('donation', sendDonation);
+      donationsEmitter.on('fact', sendFact);
 
       req.signal.addEventListener('abort', () => {
-        donationsEmitter.off('donation', send);
+        donationsEmitter.off('donation', sendDonation);
+        donationsEmitter.off('fact', sendFact);
         controller.close();
       });
     },

@@ -3,7 +3,7 @@ import { createHmac, timingSafeEqual } from 'crypto';
 import type { NextRequest } from 'next/server';
 
 import { donationsEmitter } from '@/lib/donations-emitter';
-import type { Donation } from '@/lib/types';
+import type { CampaignFact, Donation } from '@/lib/types';
 
 const SIGNING_ID = process.env.TILTIFY_WEBHOOK_SIGNING_ID;
 
@@ -48,6 +48,15 @@ export async function POST(req: NextRequest) {
       donor_comment: data.donor_comment ?? null,
     };
     donationsEmitter.emitDonation(donation);
+  }
+
+  if (meta?.event_type?.endsWith('fact_updated') && data?.total_amount_raised) {
+    const fact: CampaignFact = {
+      total_amount_raised_cent: Math.round(parseFloat(data.total_amount_raised.value) * 100),
+      goal_cent: Math.round(parseFloat(data.goal?.value ?? '0') * 100),
+      currency: data.total_amount_raised.currency ?? 'USD',
+    };
+    donationsEmitter.emitFact(fact);
   }
 
   return new Response('OK', { status: 200 });

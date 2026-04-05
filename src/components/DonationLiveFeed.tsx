@@ -5,9 +5,10 @@ import { ExternalLink } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { DonationFeed } from '@/components/DonationFeed';
+import { DonationProgressBar } from '@/components/DonationProgressBar';
 import { LiveDot } from '@/components/LiveDot';
 import { DONATIONS_URL, DONATION_REFETCH_INTERVAL } from '@/lib/constants';
-import type { Donation, DonationsData } from '@/lib/types';
+import type { CampaignFact, Donation, DonationsData } from '@/lib/types';
 
 const MAX_DONATIONS = 100;
 
@@ -20,6 +21,7 @@ export function DonationLiveFeed({ initialDonations }: Props) {
     () => new Map(initialDonations.map((d) => [d.id, d]))
   );
   const [isConnected, setIsConnected] = useState(false);
+  const [campaignFact, setCampaignFact] = useState<CampaignFact | null>(null);
 
   useEffect(function startPolling() {
     const poll = async () => {
@@ -48,11 +50,15 @@ export function DonationLiveFeed({ initialDonations }: Props) {
     let es: EventSource | null = null;
 
     function connect() {
+      console.log('[sse] connecting');
       es = new EventSource('/api/donations/stream');
 
-      es.onopen = () => setIsConnected(true);
+      es.onopen = () => {
+        console.log('[sse] connected');
+        setIsConnected(true);
+      };
 
-      es.onmessage = (event) => {
+      es.addEventListener('donation', (event) => {
         const donation: Donation = JSON.parse(event.data);
         setDonationMap((prev) => {
           if (prev.has(donation.id)) {
@@ -62,14 +68,23 @@ export function DonationLiveFeed({ initialDonations }: Props) {
           next.set(donation.id, donation);
           return next;
         });
-      };
+      });
+
+      es.addEventListener('fact', (event) => {
+        const fact: CampaignFact = JSON.parse(event.data);
+        setCampaignFact(fact);
+      });
 
       // Don't close on error — EventSource will auto-reconnect
-      es.onerror = () => setIsConnected(false);
+      es.onerror = () => {
+        console.log('[sse] disconnected — reconnecting');
+        setIsConnected(false);
+      };
     }
 
     function handleVisibilityChange() {
       if (document.hidden) {
+        console.log('[sse] disconnected — tab hidden');
         es?.close();
         es = null;
         setIsConnected(false);
@@ -110,6 +125,8 @@ export function DonationLiveFeed({ initialDonations }: Props) {
         </Link>
         .
       </Text>
+
+      <DonationProgressBar fact={campaignFact} />
 
       <DonationFeed donations={donations} />
     </>
