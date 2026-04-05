@@ -37,6 +37,10 @@ const eslintConfig = [
 
       // ── Style / formatting ─────────────────────────────────────────────────
       curly: ['error', 'all'],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports', fixStyle: 'separate-type-imports' },
+      ],
 
       // ── Catching bugs / dead code ──────────────────────────────────────────
       'no-unused-vars': 'off',
