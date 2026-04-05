@@ -1,8 +1,14 @@
-import { Box, HStack, Heading, Link, List, Stack, Text } from '@chakra-ui/react';
-import { ArrowRight, ExternalLink, Map, MessageSquare, Video } from 'lucide-react';
+import { Box, HStack, Heading, Stack, Text } from '@chakra-ui/react';
+import { ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { DayClips } from '@/components/journey/DayClips';
+import { DayMapEmbed } from '@/components/journey/DayMapEmbed';
+import { DayMapLocations } from '@/components/journey/DayMapLocations';
+import { DaySource } from '@/components/journey/DaySource';
+import { DayStatsGrid } from '@/components/journey/DayStatsGrid';
+import { DayVods } from '@/components/journey/DayVods';
 import { getJourneyDay, getJourneyDays } from '@/lib/journey';
 import { journeyData } from '@/lib/journey-data';
 
@@ -33,23 +39,32 @@ export default async function DayPage({ params }: Props) {
   const content = journeyData[slug];
 
   const dateLabel = day.date.toLocaleDateString('en-AU', {
+    day: 'numeric',
+    month: 'long',
+    timeZone: 'UTC',
     weekday: 'long',
     year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'UTC',
   });
 
+  const hasRoute = content?.startPoint || content?.destination;
+
   return (
-    <Stack gap={8}>
+    <Stack gap={10}>
       {/* Header */}
       <Box>
         <Heading as="h1" mb={1} size={{ base: 'xl', md: '2xl' }}>
           {day.label}
         </Heading>
-        <Text color="fg.muted" fontSize="sm">
+        <Text color="fg.muted" fontSize="sm" mb={hasRoute ? 3 : 0}>
           {dateLabel}
         </Text>
+        {hasRoute ? (
+          <HStack color="fg.muted" flexWrap="wrap" fontSize="sm" gap={2}>
+            <Text fontWeight="medium">{content?.startPoint}</Text>
+            <ArrowRight size={14} />
+            <Text fontWeight="medium">{content?.destination}</Text>
+          </HStack>
+        ) : null}
       </Box>
 
       {!content ? (
@@ -58,8 +73,8 @@ export default async function DayPage({ params }: Props) {
         </Text>
       ) : (
         <>
-          {/* Route */}
-          {content.startPoint || content.destination ? (
+          {/* Stats */}
+          {content.stats ? (
             <Box>
               <Text
                 color="fg.muted"
@@ -69,28 +84,14 @@ export default async function DayPage({ params }: Props) {
                 mb={3}
                 textTransform="uppercase"
               >
-                Route
+                Day Stats
               </Text>
-              <HStack flexWrap="wrap" gap={4}>
-                <Box>
-                  <Text color="fg.subtle" fontSize="xs" mb={0.5}>
-                    From
-                  </Text>
-                  <Text fontWeight="semibold">{content.startPoint || 'TBD'}</Text>
-                </Box>
-                <ArrowRight size={16} />
-                <Box>
-                  <Text color="fg.subtle" fontSize="xs" mb={0.5}>
-                    To
-                  </Text>
-                  <Text fontWeight="semibold">{content.destination || 'TBD'}</Text>
-                </Box>
-              </HStack>
+              <DayStatsGrid stats={content.stats} />
             </Box>
           ) : null}
 
-          {/* Landmarks */}
-          {!!content.landmarks?.length && (
+          {/* Map */}
+          {content.mapEmbedUrl ? (
             <Box>
               <Text
                 color="fg.muted"
@@ -100,76 +101,37 @@ export default async function DayPage({ params }: Props) {
                 mb={3}
                 textTransform="uppercase"
               >
-                Featured Landmarks
+                Route Map
               </Text>
-              <List.Root gap={1.5} listStyle="none" ps={0}>
-                {content.landmarks.map((landmark) => (
-                  <List.Item fontSize="sm" key={landmark}>
-                    {landmark}
-                  </List.Item>
-                ))}
-              </List.Root>
-            </Box>
-          )}
-
-          {/* Links */}
-          {content.mapUrl || !!content.redditLinks?.length || !!content.videoLinks?.length ? (
-            <Box>
-              <Text
-                color="fg.muted"
-                fontSize="xs"
-                fontWeight="semibold"
-                letterSpacing="wide"
-                mb={3}
-                textTransform="uppercase"
-              >
-                Links
-              </Text>
-              <Stack gap={2}>
-                {content.mapUrl ? (
-                  <HStack gap={2}>
-                    <Map size={14} />
-                    <Link
-                      fontSize="sm"
-                      href={content.mapUrl}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      View Map{' '}
-                      <ExternalLink
-                        size={11}
-                        style={{ display: 'inline', verticalAlign: 'middle' }}
-                      />
-                    </Link>
-                  </HStack>
-                ) : null}
-                {content.redditLinks?.map((r) => (
-                  <HStack gap={2} key={r.url}>
-                    <MessageSquare size={14} />
-                    <Link fontSize="sm" href={r.url} rel="noopener noreferrer" target="_blank">
-                      {r.label ?? 'Reddit discussion'}{' '}
-                      <ExternalLink
-                        size={11}
-                        style={{ display: 'inline', verticalAlign: 'middle' }}
-                      />
-                    </Link>
-                  </HStack>
-                ))}
-                {content.videoLinks?.map((v) => (
-                  <HStack gap={2} key={v.url}>
-                    <Video size={14} />
-                    <Link fontSize="sm" href={v.url} rel="noopener noreferrer" target="_blank">
-                      {v.label ?? v.platform}{' '}
-                      <ExternalLink
-                        size={11}
-                        style={{ display: 'inline', verticalAlign: 'middle' }}
-                      />
-                    </Link>
-                  </HStack>
-                ))}
-              </Stack>
+              <DayMapEmbed embedUrl={content.mapEmbedUrl} />
             </Box>
           ) : null}
+
+          {/* Locations */}
+          {content.mapLocations?.length ? (
+            <Box>
+              <Text
+                color="fg.muted"
+                fontSize="xs"
+                fontWeight="semibold"
+                letterSpacing="wide"
+                mb={3}
+                textTransform="uppercase"
+              >
+                Locations
+              </Text>
+              <DayMapLocations locations={content.mapLocations} />
+            </Box>
+          ) : null}
+
+          {/* Videos */}
+          <DayVods videoLinks={content.videoLinks} />
+
+          {/* Highlights */}
+          <DayClips clips={content.twitchClips} />
+
+          {/* Source attribution */}
+          <DaySource author={content.redditAuthor} links={content.redditLinks} />
         </>
       )}
     </Stack>
