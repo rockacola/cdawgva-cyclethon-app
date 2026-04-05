@@ -4,7 +4,7 @@ import { Box, HStack, Text } from '@chakra-ui/react';
 
 import { useAnimatedValue } from '@/hooks/useAnimatedValue';
 import { formatCurrency } from '@/lib/donationUtils';
-import { CampaignFact } from '@/lib/types';
+import type { CampaignFact } from '@/lib/types';
 
 interface Props {
   fact: CampaignFact | null;

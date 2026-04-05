@@ -4,9 +4,10 @@
 export const STORAGE_KEYS = {
   DONATION_PAGE_SIZE: 'donation_page_size',
   APPEARANCE: 'appearance',
+  TIMEZONE: 'timezone',
 } as const;
 
-type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
+export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
 
 function get<T>(key: StorageKey, fallback: T): T {
   if (typeof window === 'undefined') {

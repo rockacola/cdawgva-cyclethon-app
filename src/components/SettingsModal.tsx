@@ -5,8 +5,10 @@ import { X } from 'lucide-react';
 import { useState } from 'react';
 
 import { useColorMode } from '@/components/ui/color-mode';
-import { APPEARANCE_MODES, APPEARANCE_MODE_DEFAULT, type AppearanceMode } from '@/lib/constants';
+import { APPEARANCE_MODES, APPEARANCE_MODE_DEFAULT, TIMEZONE_MODES } from '@/lib/constants';
+import type { AppearanceMode } from '@/lib/constants';
 import { STORAGE_KEYS, storage } from '@/lib/storage';
+import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
 interface Props {
   open: boolean;
@@ -18,6 +20,7 @@ export function SettingsModal({ open, onClose }: Props) {
   const [appearance, setAppearance] = useState<AppearanceMode>(() =>
     storage.get(STORAGE_KEYS.APPEARANCE, APPEARANCE_MODE_DEFAULT)
   );
+  const { setTimezoneMode, timezoneMode } = useTimezoneContext();
 
   function handleAppearanceChange(value: AppearanceMode) {
     setAppearance(value);
@@ -45,7 +48,7 @@ export function SettingsModal({ open, onClose }: Props) {
             </Dialog.Header>
 
             <Dialog.Body pb={6}>
-              <Flex align="center" justify="space-between">
+              <Flex align="center" justify="space-between" mb={4}>
                 <Text fontSize="sm" fontWeight="medium">
                   Appearance
                 </Text>
@@ -62,6 +65,32 @@ export function SettingsModal({ open, onClose }: Props) {
                           _hover={{ color: 'fg' }}
                           cursor="pointer"
                           onClick={() => handleAppearanceChange(mode)}
+                        >
+                          {mode}
+                        </Text>
+                      )}
+                    </HStack>
+                  ))}
+                </HStack>
+              </Flex>
+
+              <Flex align="center" justify="space-between">
+                <Text fontSize="sm" fontWeight="medium">
+                  Timezone
+                </Text>
+                <HStack color="fg.muted" fontSize="sm" gap={1.5}>
+                  {TIMEZONE_MODES.map((mode, i) => (
+                    <HStack gap={1.5} key={mode}>
+                      {i > 0 && <Text>|</Text>}
+                      {mode === timezoneMode ? (
+                        <Text color="fg" fontWeight="bold">
+                          {mode}
+                        </Text>
+                      ) : (
+                        <Text
+                          _hover={{ color: 'fg' }}
+                          cursor="pointer"
+                          onClick={() => setTimezoneMode(mode)}
                         >
                           {mode}
                         </Text>

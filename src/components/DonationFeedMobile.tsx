@@ -1,5 +1,8 @@
+'use client';
+
 import { Box, Stack, Text } from '@chakra-ui/react';
 
+import { DonationTime } from '@/components/DonationTime';
 import { RelativeTime } from '@/components/RelativeTime';
 import { formatAmount, isAnonymous } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
@@ -42,6 +45,8 @@ export function DonationFeedMobile({ donations }: Props) {
             ) : null}
             <Text color="fg.subtle" fontSize="xs">
               <RelativeTime timestamp={d.completed_at} />
+              {' · '}
+              <DonationTime timestamp={d.completed_at} />
             </Text>
           </Box>
         );

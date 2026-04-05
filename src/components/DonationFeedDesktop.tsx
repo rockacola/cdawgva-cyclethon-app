@@ -1,5 +1,8 @@
+'use client';
+
 import { Table, Text } from '@chakra-ui/react';
 
+import { DonationTime } from '@/components/DonationTime';
 import { RelativeTime } from '@/components/RelativeTime';
 import { formatAmountParts, isAnonymous } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
@@ -49,6 +52,7 @@ export function DonationFeedDesktop({ donations }: Props) {
               </Table.Cell>
               <Table.Cell>
                 <RelativeTime timestamp={d.completed_at} />
+                <DonationTime timestamp={d.completed_at} />
               </Table.Cell>
             </Table.Row>
           );

@@ -4,6 +4,7 @@ import { BackToTop } from '@/components/BackToTop';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { ChakraProvider } from '@/providers/ChakraProvider';
+import { TimezoneProvider } from '@/providers/TimezoneProvider';
 
 export const metadata: Metadata = {
   title: 'Cyclethon Tracker',
@@ -15,10 +16,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body>
         <ChakraProvider>
-          <Header />
-          {children}
-          <Footer />
-          <BackToTop />
+          <TimezoneProvider>
+            <Header />
+            {children}
+            <Footer />
+            <BackToTop />
+          </TimezoneProvider>
         </ChakraProvider>
       </body>
     </html>

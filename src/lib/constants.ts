@@ -22,3 +22,8 @@ export const DONATION_PAGE_SIZE_DEFAULT = 30;
 export const APPEARANCE_MODES = ['Light', 'Dark', 'System'] as const;
 export type AppearanceMode = (typeof APPEARANCE_MODES)[number];
 export const APPEARANCE_MODE_DEFAULT: AppearanceMode = 'System';
+
+// Timezone options
+export const TIMEZONE_MODES = ['JST', 'UTC', 'Local'] as const;
+export type TimezoneMode = (typeof TIMEZONE_MODES)[number];
+export const TIMEZONE_MODE_DEFAULT: TimezoneMode = 'JST';
