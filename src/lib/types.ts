@@ -17,3 +17,24 @@ export interface CampaignFact {
   goal_cent: number;
   currency: string;
 }
+
+export interface CurrencyTotal {
+  amount_cent: number;
+  count: number;
+}
+
+export interface DailyTotal {
+  by_currency: Record<string, CurrencyTotal>;
+  date: string;
+}
+
+export interface DonationsStats {
+  _meta: {
+    generated_at: string;
+    timezone: string;
+    utc_offset: string;
+  };
+  stats: {
+    daily_totals: DailyTotal[];
+  };
+}

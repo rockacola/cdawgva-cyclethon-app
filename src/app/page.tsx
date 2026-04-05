@@ -15,18 +15,41 @@ import Image from 'next/image';
 import NextLink from 'next/link';
 
 import { DonationFeed } from '@/components/DonationFeed';
-import { JourneyProgressSection } from '@/components/JourneyProgressSection';
+import { JourneySection } from '@/components/JourneySection';
 import { TrackRecord } from '@/components/TrackRecord';
 import { WhoComing } from '@/components/WhoComing';
 import { flags } from '@/lib/flags';
 import { getDonations } from '@/lib/getDonations';
+import { getStats } from '@/lib/getStats';
 
 export const metadata: Metadata = {
   title: 'Cyclethon Tracker',
 };
 
 export default async function HomePage() {
-  const { donations } = await getDonations();
+  const [{ donations }, stats] = await Promise.all([getDonations(), getStats()]);
+
+  // MOCK: inject daily totals for chart visualisation — remove this block when real data flows
+  const USE_MOCK_DATA = false;
+  if (USE_MOCK_DATA) {
+    const mockDayAmounts = [
+      11900000, 9750000, 12200000, 8830000, 13570000, 10420000, 9180000, 12850000, 11300000,
+      8640000, 9970000, 11830000, 10760000, 13240000, 24700000,
+    ];
+    const dayOneMs = Date.UTC(2026, 3, 5);
+    const mockEntry = (date: string, amount_cent: number) => ({
+      date,
+      by_currency: { USD: { amount_cent, count: Math.ceil(amount_cent / 5000) } },
+    });
+    stats.stats.daily_totals = [
+      mockEntry('2026-04-04', 1785000), // pre-event (~15% of Day 1)
+      ...mockDayAmounts.map((amount_cent, i) =>
+        mockEntry(new Date(dayOneMs + i * 86_400_000).toISOString().slice(0, 10), amount_cent)
+      ),
+      mockEntry('2026-04-20', 1428000), // post-event (~12% of Day 1)
+    ];
+  }
+  // END MOCK
 
   return (
     <>
@@ -71,7 +94,13 @@ export default async function HomePage() {
       </Box>
 
       <Container maxW="5xl" px={{ base: 3, md: 8 }}>
-        {flags.showJourneyProgress ? <JourneyProgressSection /> : null}
+        {flags.showJourneyProgress ? (
+          <JourneySection
+            dailyTotals={stats.stats.daily_totals}
+            utcOffset={stats._meta.utc_offset}
+          />
+        ) : null}
+
         {flags.showTrackRecord ? <TrackRecord /> : null}
 
         {/* Charity + Guests */}

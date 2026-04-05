@@ -4,9 +4,11 @@ const R2_BASE_URL = process.env.NEXT_PUBLIC_R2_BASE_URL;
 // Filename of the donations JSON file hosted on R2
 export const DONATIONS_FILE = 'donations-latest-100.json';
 export const DONATIONS_FULL_FILE = 'donations-full.json';
+export const DONATIONS_STATS_FILE = 'donations-stats.json';
 
 export const DONATIONS_URL = `${R2_BASE_URL}/${DONATIONS_FILE}`;
 export const DONATIONS_FULL_URL = `${R2_BASE_URL}/${DONATIONS_FULL_FILE}`;
+export const DONATIONS_STATS_URL = `${R2_BASE_URL}/${DONATIONS_STATS_FILE}`;
 
 // Server-side revalidation window in seconds (minimal cache)
 export const FETCH_CACHE_REVALIDATE = 10;
