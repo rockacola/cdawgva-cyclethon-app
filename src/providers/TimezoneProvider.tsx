@@ -4,9 +4,8 @@ import { createContext, useContext } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 
-import { TIMEZONE_MODE_DEFAULT } from '@/lib/constants';
+import { STORAGE_KEYS, TIMEZONE_MODE_DEFAULT } from '@/lib/constants';
 import type { TimezoneMode } from '@/lib/constants';
-import { STORAGE_KEYS } from '@/lib/storage';
 
 interface TimezoneContextValue {
   setTimezoneMode: Dispatch<SetStateAction<TimezoneMode>>;

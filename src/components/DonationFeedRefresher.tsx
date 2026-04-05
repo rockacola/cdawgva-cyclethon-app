@@ -12,9 +12,9 @@ import {
   DONATION_PAGE_SIZES,
   DONATION_PAGE_SIZE_DEFAULT,
   DONATION_REFETCH_INTERVAL,
+  STORAGE_KEYS,
 } from '@/lib/constants';
 import { flags } from '@/lib/flags';
-import { STORAGE_KEYS } from '@/lib/storage';
 import type { Donation, DonationsData } from '@/lib/types';
 
 interface Props {

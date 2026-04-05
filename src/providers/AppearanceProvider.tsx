@@ -1,8 +1,8 @@
 'use client';
 
+import { useTheme } from 'next-themes';
 import { createContext, useContext } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import { useTheme } from 'next-themes';
 
 import { APPEARANCE_MODE_DEFAULT } from '@/lib/constants';
 import type { AppearanceMode } from '@/lib/constants';

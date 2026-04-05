@@ -27,3 +27,10 @@ export const APPEARANCE_MODE_DEFAULT: AppearanceMode = 'System';
 export const TIMEZONE_MODES = ['JST', 'UTC', 'Local'] as const;
 export type TimezoneMode = (typeof TIMEZONE_MODES)[number];
 export const TIMEZONE_MODE_DEFAULT: TimezoneMode = 'JST';
+
+// localStorage keys
+export const STORAGE_KEYS = {
+  DONATION_PAGE_SIZE: 'donation_page_size',
+  TIMEZONE: 'timezone',
+} as const;
+export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
