@@ -32,3 +32,11 @@ export function formatAmountParts(d: Pick<Donation, 'amount_cent' | 'amount_curr
 export function isAnonymous(name: string): boolean {
   return name.toLowerCase() === 'anonymous';
 }
+
+export function formatCurrency(cents: number, currency: string): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency,
+    maximumFractionDigits: 0,
+  }).format(cents / 100);
+}

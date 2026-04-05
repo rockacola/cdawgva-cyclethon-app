@@ -2,35 +2,28 @@
 
 import { Box, HStack, Text } from '@chakra-ui/react';
 
-import type { CampaignFact } from '@/lib/types';
+import { useAnimatedValue } from '@/hooks/useAnimatedValue';
+import { formatCurrency } from '@/lib/donationUtils';
+import { CampaignFact } from '@/lib/types';
 
 interface Props {
   fact: CampaignFact | null;
 }
 
-function formatCurrency(cents: number, currency: string) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-    maximumFractionDigits: 0,
-  }).format(cents / 100);
-}
-
 export function DonationProgressBar({ fact }: Props) {
-  const pct =
-    fact && fact.goal_cent > 0
-      ? Math.min((fact.total_amount_raised_cent / fact.goal_cent) * 100, 100)
-      : 0;
+  const raisedCent = useAnimatedValue(fact?.total_amount_raised_cent ?? 0);
+  const goalCent = useAnimatedValue(fact?.goal_cent ?? 0);
+  const currency = fact?.currency ?? 'USD';
+
+  const pct = goalCent > 0 ? Math.min((raisedCent / goalCent) * 100, 100) : 0;
 
   return (
     <Box mb={6} mt={2}>
       <HStack fontSize="sm" justify="space-between" mb={1}>
         {fact ? (
           <>
-            <Text fontWeight="semibold">
-              {formatCurrency(fact.total_amount_raised_cent, fact.currency)} raised
-            </Text>
-            <Text color="fg.muted">Goal: {formatCurrency(fact.goal_cent, fact.currency)}</Text>
+            <Text fontWeight="semibold">{formatCurrency(raisedCent, currency)} raised</Text>
+            <Text color="fg.muted">Goal: {formatCurrency(goalCent, currency)}</Text>
           </>
         ) : (
           <Text color="fg.subtle">Funds raised…</Text>

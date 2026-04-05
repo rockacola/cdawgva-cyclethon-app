@@ -14,7 +14,9 @@ export function DonationFeedDesktop({ donations }: Props) {
       <Table.Header>
         <Table.Row>
           <Table.ColumnHeader w="160px">Donor</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right" w="120px">Amount</Table.ColumnHeader>
+          <Table.ColumnHeader textAlign="right" w="120px">
+            Amount
+          </Table.ColumnHeader>
           <Table.ColumnHeader>Comment</Table.ColumnHeader>
           <Table.ColumnHeader w="140px" whiteSpace="nowrap">
             Time
