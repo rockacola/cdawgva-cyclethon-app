@@ -2,6 +2,7 @@
 
 import { Flex, HStack, Input, Spinner, Text } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
+import useLocalStorageState from 'use-local-storage-state';
 
 import { DonationFeed } from '@/components/DonationFeed';
 import { RelativeTime } from '@/components/RelativeTime';
@@ -13,7 +14,7 @@ import {
   DONATION_REFETCH_INTERVAL,
 } from '@/lib/constants';
 import { flags } from '@/lib/flags';
-import { STORAGE_KEYS, storage } from '@/lib/storage';
+import { STORAGE_KEYS } from '@/lib/storage';
 import type { Donation, DonationsData } from '@/lib/types';
 
 interface Props {
@@ -25,9 +26,9 @@ export function DonationFeedRefresher({ initialDonations, initialGeneratedAt }: 
   const [donations, setDonations] = useState(initialDonations);
   const [generatedAt, setGeneratedAt] = useState(initialGeneratedAt);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [pageSize, setPageSize] = useState(() =>
-    storage.get(STORAGE_KEYS.DONATION_PAGE_SIZE, DONATION_PAGE_SIZE_DEFAULT)
-  );
+  const [pageSize, setPageSize] = useLocalStorageState(STORAGE_KEYS.DONATION_PAGE_SIZE, {
+    defaultValue: DONATION_PAGE_SIZE_DEFAULT,
+  });
 
   const [commentFilter, setCommentFilter] = useState('');
   const [fullDonations, setFullDonations] = useState<Donation[] | null>(null);
@@ -70,7 +71,6 @@ export function DonationFeedRefresher({ initialDonations, initialGeneratedAt }: 
 
   function handlePageSizeChange(value: number) {
     setPageSize(value);
-    storage.set(STORAGE_KEYS.DONATION_PAGE_SIZE, value);
   }
 
   const isFiltering = flags.donationFilter && commentFilter.trim().length > 0;
