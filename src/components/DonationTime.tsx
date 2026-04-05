@@ -13,7 +13,7 @@ export function DonationTime({ timestamp }: Props) {
   const { timezoneMode } = useTimezoneContext();
 
   return (
-    <Text color="fg.subtle" display={{ base: 'inline-block', md: undefined }} fontSize="xs">
+    <Text color="fg.subtle" display={{ base: 'inline-block', md: 'block' }} fontSize="xs">
       {formatDonationTime(timestamp, timezoneMode)}
     </Text>
   );

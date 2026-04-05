@@ -21,7 +21,7 @@ export function DonationFeedDesktop({ donations }: Props) {
             Amount
           </Table.ColumnHeader>
           <Table.ColumnHeader>Comment</Table.ColumnHeader>
-          <Table.ColumnHeader w="140px" whiteSpace="nowrap">
+          <Table.ColumnHeader minW="140px" whiteSpace="nowrap">
             Time
           </Table.ColumnHeader>
         </Table.Row>
@@ -50,7 +50,7 @@ export function DonationFeedDesktop({ donations }: Props) {
               <Table.Cell color="fg.muted" maxW="480px">
                 <Text overflowWrap="break-word">{d.donor_comment ?? ''}</Text>
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell whiteSpace="nowrap">
                 <RelativeTime timestamp={d.completed_at} />
                 <DonationTime timestamp={d.completed_at} />
               </Table.Cell>

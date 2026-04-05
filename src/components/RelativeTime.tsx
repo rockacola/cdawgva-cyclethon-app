@@ -30,14 +30,14 @@ export function RelativeTime({ timestamp, showUTC = false }: Props) {
 
   if (showUTC) {
     return (
-      <Text display={{ base: 'inline-block', md: undefined }} suppressHydrationWarning>
+      <Text display={{ base: 'inline-block', md: 'block' }} suppressHydrationWarning>
         {relative} ({utc})
       </Text>
     );
   }
 
   return (
-    <Text display={{ base: 'inline-block', md: undefined }} suppressHydrationWarning title={utc}>
+    <Text display={{ base: 'inline-block', md: 'block' }} suppressHydrationWarning title={utc}>
       {relative}
     </Text>
   );
