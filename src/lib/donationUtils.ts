@@ -33,10 +33,22 @@ export function isAnonymous(name: string): boolean {
   return name.toLowerCase() === 'anonymous';
 }
 
-const NEW_DONATION_THRESHOLD_MS = 10_000;
+const DONATION_AGE_HOT_MS = 10_000;
+const DONATION_AGE_NEW_MS = 30_000;
 
-export function isNewDonation(completedAtSeconds: number, nowMs: number): boolean {
-  return nowMs - completedAtSeconds * 1000 < NEW_DONATION_THRESHOLD_MS;
+export function getDonationBoxShadow(
+  completedAtSeconds: number,
+  nowMs: number,
+  insetWidth: number
+): string | undefined {
+  const ageMs = nowMs - completedAtSeconds * 1000;
+  if (ageMs < DONATION_AGE_HOT_MS) {
+    return `inset ${insetWidth}px 0 0 0 var(--chakra-colors-orange-400)`;
+  }
+  if (ageMs <= DONATION_AGE_NEW_MS) {
+    return `inset ${insetWidth}px 0 0 0 var(--chakra-colors-orange-200)`;
+  }
+  return undefined;
 }
 
 export function formatCurrency(cents: number, currency: string): string {
