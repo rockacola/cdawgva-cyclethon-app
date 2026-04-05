@@ -18,7 +18,9 @@ function verifyEndpoint(endpointHeader: string): boolean {
 
 export async function POST(req: NextRequest) {
   const endpoint = req.headers.get('x-tiltify-endpoint');
+  console.log('[tiltify webhook] endpoint header:', endpoint, '| env signing id:', SIGNING_ID);
   if (!endpoint || !verifyEndpoint(endpoint)) {
+    console.log('[tiltify webhook] unauthorized - mismatch or missing env var');
     return new Response('Unauthorized', { status: 401 });
   }
 
