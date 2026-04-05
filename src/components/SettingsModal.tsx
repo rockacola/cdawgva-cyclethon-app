@@ -2,31 +2,19 @@
 
 import { Dialog, Flex, HStack, IconButton, Portal, Text } from '@chakra-ui/react';
 import { X } from 'lucide-react';
-import { useState } from 'react';
 
-import { useColorMode } from '@/components/ui/color-mode';
-import { APPEARANCE_MODES, APPEARANCE_MODE_DEFAULT, TIMEZONE_MODES } from '@/lib/constants';
-import type { AppearanceMode } from '@/lib/constants';
-import { STORAGE_KEYS, storage } from '@/lib/storage';
+import { APPEARANCE_MODES, TIMEZONE_MODES } from '@/lib/constants';
+import { useAppearanceContext } from '@/providers/AppearanceProvider';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
 interface Props {
-  open: boolean;
   onClose: () => void;
+  open: boolean;
 }
 
-export function SettingsModal({ open, onClose }: Props) {
-  const { setColorMode } = useColorMode();
-  const [appearance, setAppearance] = useState<AppearanceMode>(() =>
-    storage.get(STORAGE_KEYS.APPEARANCE, APPEARANCE_MODE_DEFAULT)
-  );
+export function SettingsModal({ onClose, open }: Props) {
+  const { appearanceMode, setAppearanceMode } = useAppearanceContext();
   const { setTimezoneMode, timezoneMode } = useTimezoneContext();
-
-  function handleAppearanceChange(value: AppearanceMode) {
-    setAppearance(value);
-    storage.set(STORAGE_KEYS.APPEARANCE, value);
-    setColorMode(value.toLowerCase() as 'light' | 'dark' | 'system');
-  }
 
   return (
     <Dialog.Root
@@ -56,7 +44,7 @@ export function SettingsModal({ open, onClose }: Props) {
                   {APPEARANCE_MODES.map((mode, i) => (
                     <HStack gap={1.5} key={mode}>
                       {i > 0 && <Text>|</Text>}
-                      {mode === appearance ? (
+                      {mode === appearanceMode ? (
                         <Text color="fg" fontWeight="bold">
                           {mode}
                         </Text>
@@ -64,7 +52,7 @@ export function SettingsModal({ open, onClose }: Props) {
                         <Text
                           _hover={{ color: 'fg' }}
                           cursor="pointer"
-                          onClick={() => handleAppearanceChange(mode)}
+                          onClick={() => setAppearanceMode(mode)}
                         >
                           {mode}
                         </Text>

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { BackToTop } from '@/components/BackToTop';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
+import { AppearanceProvider } from '@/providers/AppearanceProvider';
 import { ChakraProvider } from '@/providers/ChakraProvider';
 import { TimezoneProvider } from '@/providers/TimezoneProvider';
 
@@ -16,12 +17,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body>
         <ChakraProvider>
-          <TimezoneProvider>
-            <Header />
-            {children}
-            <Footer />
-            <BackToTop />
-          </TimezoneProvider>
+          <AppearanceProvider>
+            <TimezoneProvider>
+              <Header />
+              {children}
+              <Footer />
+              <BackToTop />
+            </TimezoneProvider>
+          </AppearanceProvider>
         </ChakraProvider>
       </body>
     </html>
