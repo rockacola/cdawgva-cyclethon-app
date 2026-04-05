@@ -1,5 +1,6 @@
 'use client';
 
+import { Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 import { formatRelative, formatUTC } from '@/lib/dateUtils';
@@ -29,15 +30,15 @@ export function RelativeTime({ timestamp, showUTC = false }: Props) {
 
   if (showUTC) {
     return (
-      <span suppressHydrationWarning>
+      <Text display={{ base: 'inline-block', md: undefined }} suppressHydrationWarning>
         {relative} ({utc})
-      </span>
+      </Text>
     );
   }
 
   return (
-    <span suppressHydrationWarning title={utc}>
+    <Text display={{ base: 'inline-block', md: undefined }} suppressHydrationWarning title={utc}>
       {relative}
-    </span>
+    </Text>
   );
 }
