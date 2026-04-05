@@ -12,7 +12,7 @@ import { flags } from '@/lib/flags';
 const allNavLinks = [
   { href: '/', label: 'Home' },
   { href: '/journey', label: 'Journey', flag: flags.showJourney },
-  { href: '/donations', label: 'Donations' },
+  { href: '/donations/live', label: 'Live Donations' },
 ];
 
 const navLinks = allNavLinks.filter((link) => !('flag' in link) || link.flag);

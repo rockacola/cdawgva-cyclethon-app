@@ -12,7 +12,7 @@ export const DONATIONS_FULL_URL = `${R2_BASE_URL}/${DONATIONS_FULL_FILE}`;
 export const FETCH_CACHE_REVALIDATE = 10;
 
 // Client-side polling interval in milliseconds
-export const DONATION_REFETCH_INTERVAL = 10_000;
+export const DONATION_REFETCH_INTERVAL = 30_000;
 
 // Page size options and default for the donation feed
 export const DONATION_PAGE_SIZES = [30, 60, 100] as const;
