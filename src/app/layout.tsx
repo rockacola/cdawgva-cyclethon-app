@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 
 import { BackToTop } from '@/components/BackToTop';
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {children}
               <Footer />
               <BackToTop />
+              <Analytics />
             </TimezoneProvider>
           </AppearanceProvider>
         </ChakraProvider>
