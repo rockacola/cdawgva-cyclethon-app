@@ -4,7 +4,8 @@ import { Table, Text } from '@chakra-ui/react';
 
 import { DonationTime } from '@/components/DonationTime';
 import { RelativeTime } from '@/components/RelativeTime';
-import { formatAmountParts, isAnonymous } from '@/lib/donationUtils';
+import { useNow } from '@/hooks/useNow';
+import { formatAmountParts, isAnonymous, isNewDonation } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export function DonationFeedDesktop({ donations }: Props) {
+  const now = useNow(1000);
+
   return (
     <Table.Root size="sm" variant="outline">
       <Table.Header>
@@ -30,8 +33,13 @@ export function DonationFeedDesktop({ donations }: Props) {
         {donations.map((d) => {
           const isAnon = isAnonymous(d.donor_name);
           const { whole, cents } = formatAmountParts(d);
+          const isNew = isNewDonation(d.completed_at, now);
           return (
-            <Table.Row _hover={{ bg: 'bg.muted' }} key={d.id}>
+            <Table.Row
+              _hover={{ bg: 'bg.muted' }}
+              boxShadow={isNew ? 'inset 4px 0 0 0 var(--chakra-colors-orange-300)' : undefined}
+              key={d.id}
+            >
               <Table.Cell maxW="160px">
                 <Text
                   color={isAnon ? 'fg.subtle' : undefined}

@@ -33,6 +33,12 @@ export function isAnonymous(name: string): boolean {
   return name.toLowerCase() === 'anonymous';
 }
 
+const NEW_DONATION_THRESHOLD_MS = 10_000;
+
+export function isNewDonation(completedAtSeconds: number, nowMs: number): boolean {
+  return nowMs - completedAtSeconds * 1000 < NEW_DONATION_THRESHOLD_MS;
+}
+
 export function formatCurrency(cents: number, currency: string): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
