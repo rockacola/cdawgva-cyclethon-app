@@ -17,7 +17,7 @@ export function LiveDot({ active }: Props) {
       `}</style>
       <Box
         animation={active ? 'liveDotPulse 1.5s ease-in-out infinite' : undefined}
-        bg={active ? 'red.500' : 'fg.subtle'}
+        bgColor={active ? 'red.500' : 'fg.subtle'}
         borderRadius="full"
         flexShrink={0}
         h={3}

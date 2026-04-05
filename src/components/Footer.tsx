@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 
 export function Footer() {
   return (
-    <HStack as="footer" bg="bg.subtle" borderTopWidth="1px" mt={12} px={4} py={6}>
+    <HStack as="footer" bgColor="bg.subtle" borderTopWidth="1px" mt={12} px={4} py={6}>
       <HStack gap={4}>
         <Text color="fg.subtle" fontSize="sm">
           Cyclethon Tracker

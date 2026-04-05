@@ -1,6 +1,6 @@
 'use client';
 
-import { Table, Text } from '@chakra-ui/react';
+import { Span, Table, Text } from '@chakra-ui/react';
 
 import { DonationTime } from '@/components/DonationTime';
 import { RelativeTime } from '@/components/RelativeTime';
@@ -51,9 +51,7 @@ export function DonationFeedDesktop({ donations }: Props) {
               </Table.Cell>
               <Table.Cell textAlign="right" whiteSpace="nowrap">
                 {whole}
-                <Text as="span" color="fg.subtle">
-                  {cents}
-                </Text>
+                <Span color="fg.subtle">{cents}</Span>
               </Table.Cell>
               <Table.Cell color="fg.muted" maxW="480px">
                 <Text overflowWrap="break-word">{d.donor_comment ?? ''}</Text>

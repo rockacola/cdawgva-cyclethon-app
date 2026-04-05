@@ -20,8 +20,8 @@ export function JourneyProgress() {
     <Box position="relative" px={1}>
       {/* Connecting line */}
       <Box
-        bg="border"
-        height="2px"
+        bgColor="border"
+        h="2px"
         left={0}
         position="absolute"
         right={0}
@@ -48,7 +48,7 @@ export function JourneyProgress() {
             <Box
               _hover={isClickable ? { transform: 'scale(1.3)' } : undefined}
               aria-label={tooltip}
-              bg={isCurrent ? 'orange.400' : isPast ? 'teal.500' : 'bg.muted'}
+              bgColor={isCurrent ? 'orange.400' : isPast ? 'teal.500' : 'bg.muted'}
               borderColor={isCurrent ? 'orange.400' : isPast ? 'teal.500' : 'border'}
               borderRadius="full"
               borderWidth="2px"

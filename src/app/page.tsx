@@ -31,7 +31,7 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero */}
-      <Box bg="bg.subtle" borderBottomWidth="1px" py={{ base: 12, md: 20 }}>
+      <Box bgColor="bg.subtle" borderBottomWidth="1px" py={{ base: 12, md: 20 }}>
         <Container maxW="5xl" px={{ base: 3, md: 8 }}>
           <SimpleGrid alignItems="center" columns={{ base: 1, md: 2 }} gap={{ base: 8, md: 14 }}>
             <Stack gap={5}>

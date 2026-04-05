@@ -29,15 +29,18 @@ export function DonationProgressBar({ fact }: Props) {
           <Text color="fg.subtle">Funds raised…</Text>
         )}
       </HStack>
-      <Box bg={{ base: 'gray.300', _dark: 'gray.700' }} borderRadius="full" h={4} overflow="hidden">
+      <Box
+        bgColor={{ base: 'gray.300', _dark: 'gray.700' }}
+        borderRadius="full"
+        h={4}
+        overflow="hidden"
+      >
         <Box
-          bg={{ base: 'gray.600', _dark: 'gray.300' }}
+          bgColor={{ base: 'gray.600', _dark: 'gray.300' }}
           borderRadius="full"
           h="100%"
-          style={{
-            width: `${pct}%`,
-            transition: 'width 1s ease-out',
-          }}
+          transition="width 1s ease-out"
+          w={`${pct}%`}
         />
       </Box>
     </Box>

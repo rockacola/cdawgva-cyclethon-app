@@ -24,7 +24,7 @@ export function DayNav({ days }: Props) {
             <Link
               _hover={{ bg: 'bg.subtle', color: 'fg', textDecoration: 'none' }}
               asChild
-              bg={isActive ? 'bg.subtle' : undefined}
+              bgColor={isActive ? 'bg.subtle' : undefined}
               borderRadius="md"
               color={isActive ? 'fg' : 'fg.muted'}
               display="block"

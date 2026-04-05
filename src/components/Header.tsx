@@ -1,6 +1,6 @@
 'use client';
 
-import { Drawer, HStack, IconButton, Link, Portal, Spacer, Stack } from '@chakra-ui/react';
+import { Drawer, HStack, IconButton, Link, Portal, Spacer, Span, Stack } from '@chakra-ui/react';
 import { Home, Menu, Settings, X } from 'lucide-react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -54,7 +54,7 @@ export function Header() {
                 {href === '/' ? (
                   <Home size={18} />
                 ) : (
-                  <span style={{ fontWeight: isActive ? 600 : 400 }}>{label}</span>
+                  <Span fontWeight={isActive ? 600 : 400}>{label}</Span>
                 )}
               </NextLink>
             </Link>
@@ -101,7 +101,7 @@ export function Header() {
                       <Link
                         _hover={{ bg: 'bg.subtle', textDecoration: 'none' }}
                         asChild
-                        bg={isActive ? 'bg.subtle' : undefined}
+                        bgColor={isActive ? 'bg.subtle' : undefined}
                         borderRadius="md"
                         display="block"
                         fontWeight={isActive ? 'semibold' : 'normal'}
