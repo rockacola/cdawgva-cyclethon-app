@@ -34,6 +34,13 @@ export interface DonationsStats {
     timezone: string;
     utc_offset: string;
   };
+  campaign?: {
+    amount_raised_cent: number;
+    amount_raised_currency: string;
+    fetched_at: string;
+    goal_cent: number;
+    goal_currency: string;
+  };
   stats: {
     daily_totals: DailyTotal[];
   };

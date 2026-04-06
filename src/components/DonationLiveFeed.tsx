@@ -13,15 +13,16 @@ import type { CampaignFact, Donation, DonationsData } from '@/lib/types';
 const MAX_DONATIONS = 100;
 
 interface Props {
+  initialCampaignFact: CampaignFact | null;
   initialDonations: Donation[];
 }
 
-export function DonationLiveFeed({ initialDonations }: Props) {
+export function DonationLiveFeed({ initialCampaignFact, initialDonations }: Props) {
   const [donationMap, setDonationMap] = useState<Map<string, Donation>>(
     () => new Map(initialDonations.map((d) => [d.id, d]))
   );
   const [isConnected, setIsConnected] = useState(false);
-  const [campaignFact, setCampaignFact] = useState<CampaignFact | null>(null);
+  const [campaignFact, setCampaignFact] = useState<CampaignFact | null>(initialCampaignFact);
 
   useEffect(function startPolling() {
     const poll = async () => {
