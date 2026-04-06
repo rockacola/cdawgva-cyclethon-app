@@ -30,13 +30,13 @@ export function DonationProgressBar({ fact }: Props) {
         )}
       </HStack>
       <Box
-        bgColor={{ base: 'gray.300', _dark: 'gray.700' }}
+        bgColor={{ base: 'gray.200', _dark: 'gray.700' }}
         borderRadius="full"
         h={4}
         overflow="hidden"
       >
         <Box
-          bgColor={{ base: 'gray.600', _dark: 'gray.300' }}
+          bgColor={{ base: 'orange.500', _dark: 'orange.400' }}
           borderRadius="full"
           h="100%"
           transition="width 1s ease-out"

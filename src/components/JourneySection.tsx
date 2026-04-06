@@ -5,14 +5,21 @@ import NextLink from 'next/link';
 import { DailyDonationsChart } from '@/components/DailyDonationsChart';
 import { JourneyProgress } from '@/components/JourneyProgress';
 import { flags } from '@/lib/flags';
-import type { DailyTotal } from '@/lib/types';
+import type { CampaignFact, DailyTotal } from '@/lib/types';
+
+import { HomeDonationProgress } from './HomeDonationProgress';
 
 interface JourneySectionProps {
   dailyTotals: DailyTotal[];
+  initialCampaignFact: CampaignFact | null;
   utcOffset: string;
 }
 
-export function JourneySection({ dailyTotals, utcOffset }: JourneySectionProps) {
+export function JourneySection({
+  dailyTotals,
+  initialCampaignFact,
+  utcOffset,
+}: JourneySectionProps) {
   return (
     <Box borderBottomWidth="1px" pb={{ base: 10, md: 16 }} pt={{ base: 10, md: 16 }}>
       <HStack align="baseline" justify="space-between" mb={2}>
@@ -51,6 +58,9 @@ export function JourneySection({ dailyTotals, utcOffset }: JourneySectionProps) 
         <Box left={0} position="absolute" top={0} w="100%">
           <JourneyProgress utcOffset={utcOffset} />
         </Box>
+      </Box>
+      <Box pt={{ base: 4, md: 6 }}>
+        <HomeDonationProgress initialCampaignFact={initialCampaignFact} />
       </Box>
     </Box>
   );

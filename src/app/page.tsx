@@ -19,6 +19,7 @@ import { JourneySection } from '@/components/JourneySection';
 import { TrackRecord } from '@/components/TrackRecord';
 import { WhoComing } from '@/components/WhoComing';
 import { flags } from '@/lib/flags';
+import { getCampaignFact } from '@/lib/getCampaignFact';
 import { getDonations } from '@/lib/getDonations';
 import { getStats } from '@/lib/getStats';
 
@@ -27,7 +28,11 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [{ donations }, stats] = await Promise.all([getDonations(), getStats()]);
+  const [{ donations }, stats, initialCampaignFact] = await Promise.all([
+    getDonations(),
+    getStats(),
+    getCampaignFact(),
+  ]);
 
   // MOCK: inject daily totals for chart visualisation — remove this block when real data flows
   const USE_MOCK_DATA = false;
@@ -97,6 +102,7 @@ export default async function HomePage() {
         {flags.showJourneyProgress ? (
           <JourneySection
             dailyTotals={stats.stats.daily_totals}
+            initialCampaignFact={initialCampaignFact}
             utcOffset={stats._meta.utc_offset}
           />
         ) : null}
