@@ -53,8 +53,7 @@ export function JourneySection({
         ahead is still unwritten.
       </Text>
       <Box minH="60px" position="relative">
-        {/* Show chart from Day 3 (2026-04-07) onward. Month is 0-indexed: 3 = April */}
-        {Date.now() >= Date.UTC(2026, 3, 7) && <DailyDonationsChart dailyTotals={dailyTotals} />}
+        <DailyDonationsChart dailyTotals={dailyTotals} />
         <Box left={0} position="absolute" top={0} w="100%">
           <JourneyProgress utcOffset={utcOffset} />
         </Box>

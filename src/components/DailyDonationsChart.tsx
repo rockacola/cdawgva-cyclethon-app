@@ -133,7 +133,7 @@ export function DailyDonationsChart({ dailyTotals }: DailyDonationsChartProps) {
   const barAxisMax = maxDollars > 0 ? maxDollars / 0.75 : 1;
 
   return (
-    <ResponsiveContainer height={200} width="100%">
+    <ResponsiveContainer height={240} width="100%">
       <ComposedChart data={data} margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
         <YAxis domain={[0, barAxisMax]} hide yAxisId="bars" />
         <YAxis hide orientation="right" yAxisId="line" />

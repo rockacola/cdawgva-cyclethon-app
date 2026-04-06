@@ -23,7 +23,7 @@ export function DonationProgressBar({ fact }: Props) {
         {fact ? (
           <>
             <Text fontWeight="semibold">{formatCurrency(raisedCent, currency)} raised</Text>
-            <Text color="fg.muted">Goal: {formatCurrency(goalCent, currency)}</Text>
+            <Text color="fg.muted">Current goal: {formatCurrency(goalCent, currency)}</Text>
           </>
         ) : (
           <Text color="fg.subtle">Funds raised…</Text>
