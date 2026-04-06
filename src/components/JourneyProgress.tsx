@@ -84,7 +84,7 @@ export function JourneyProgress({ utcOffset }: JourneyProgressProps) {
           const isPast = dayStr < todayStr;
           const isCurrent = dayStr === todayStr;
           const isClickable = flags.showJourneyDotLinks && (isPast || isCurrent);
-          const showLabel = day === 1 || day === 15;
+          const showLabel = day === 1 || day === 15 || isCurrent;
 
           const tooltip = `${label} · ${date.toLocaleDateString('en-AU', {
             month: 'short',
