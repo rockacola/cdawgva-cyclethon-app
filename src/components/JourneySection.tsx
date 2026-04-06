@@ -49,8 +49,8 @@ export function JourneySection({
         ) : null}
       </HStack>
       <Text color="fg.muted" fontSize="sm" mb={6}>
-        15 days of cycling across Japan, one day at a time. The road ahead is long and everything
-        ahead is still unwritten.
+        The route is mapped. The rest is up to all of us. Fifteen days of ground to cover,
+        milestones to hit, and targets to shatter. One day at a time.
       </Text>
       <Box minH="60px" position="relative">
         <DailyDonationsChart dailyTotals={dailyTotals} />

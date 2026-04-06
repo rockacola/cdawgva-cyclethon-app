@@ -148,14 +148,6 @@ export function DailyDonationsChart({ dailyTotals }: DailyDonationsChartProps) {
           )}
           cursor={{ fill: 'transparent' }}
         />
-        <Bar
-          activeBar={{ fill: barColorActive }}
-          barSize={barSize}
-          dataKey="dollars"
-          fill={barColor}
-          radius={[2, 2, 0, 0]}
-          yAxisId="bars"
-        />
         <Line
           dataKey="cumulative"
           dot={false}
@@ -163,6 +155,14 @@ export function DailyDonationsChart({ dailyTotals }: DailyDonationsChartProps) {
           strokeWidth={2}
           type="monotone"
           yAxisId="line"
+        />
+        <Bar
+          activeBar={{ fill: barColorActive }}
+          barSize={barSize}
+          dataKey="dollars"
+          fill={barColor}
+          radius={[2, 2, 0, 0]}
+          yAxisId="bars"
         />
       </ComposedChart>
     </ResponsiveContainer>
