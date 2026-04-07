@@ -1,21 +1,42 @@
 'use client';
 
-import { Drawer, HStack, IconButton, Link, Portal, Spacer, Span, Stack } from '@chakra-ui/react';
+import {
+  Box,
+  Drawer,
+  HStack,
+  IconButton,
+  Link,
+  Portal,
+  Spacer,
+  Span,
+  Stack,
+} from '@chakra-ui/react';
 import { Home, Menu, Settings, X } from 'lucide-react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import { SettingsModal } from '@/components/SettingsModal';
 import { flags } from '@/lib/flags';
 
+const standaloneNavLinks = [{ href: '/journey', label: 'Journey', flag: flags.showJourney }];
+
+const donationNavLinks = [
+  { href: '/donations/live', label: 'Live' },
+  { href: '/donations/top', label: 'Top' },
+];
+
+// Flat list for mobile drawer
 const allNavLinks = [
   { href: '/', label: 'Home' },
   { href: '/journey', label: 'Journey', flag: flags.showJourney },
   { href: '/donations/live', label: 'Live Donations' },
+  { href: '/donations/top', label: 'Top Donors' },
 ];
 
 const navLinks = allNavLinks.filter((link) => !('flag' in link) || link.flag);
+const visibleStandaloneLinks = standaloneNavLinks.filter((link) => link.flag);
+const visibleDonationLinks = donationNavLinks.filter((link) => !('flag' in link) || link.flag);
 
 export function Header() {
   const pathname = usePathname();
@@ -41,8 +62,20 @@ export function Header() {
 
       {/* Desktop nav */}
       <HStack display={{ base: 'none', md: 'flex' }} gap={6}>
-        {navLinks.map(({ href, label }) => {
-          const isActive = href === '/' ? pathname === href : pathname.startsWith(href);
+        {/* Home */}
+        <Link
+          _hover={{ color: 'fg', textDecoration: 'none' }}
+          asChild
+          color={pathname === '/' ? 'fg' : 'fg.muted'}
+        >
+          <NextLink aria-label="Home" href="/">
+            <Home size={18} />
+          </NextLink>
+        </Link>
+
+        {/* Standalone links (e.g. Journey) */}
+        {visibleStandaloneLinks.map(({ href, label }) => {
+          const isActive = pathname.startsWith(href);
           return (
             <Link
               _hover={{ color: 'fg', textDecoration: 'none' }}
@@ -50,16 +83,46 @@ export function Header() {
               color={isActive ? 'fg' : 'fg.muted'}
               key={href}
             >
-              <NextLink aria-label={label} href={href}>
-                {href === '/' ? (
-                  <Home size={18} />
-                ) : (
-                  <Span fontWeight={isActive ? 600 : 400}>{label}</Span>
-                )}
+              <NextLink href={href}>
+                <Span fontWeight={isActive ? 600 : 400}>{label}</Span>
               </NextLink>
             </Link>
           );
         })}
+
+        {/* Donations group */}
+        <HStack bg="bg.subtle" borderRadius="lg" borderWidth="1px" gap={0} px={1} py={1}>
+          <Span color="fg.muted" fontSize="sm" opacity={0.4} px={2}>
+            Donations
+          </Span>
+          <Box alignSelf="stretch" borderLeftWidth="1px" />
+          {visibleDonationLinks.map(({ href, label }, i) => {
+            const isActive = pathname.startsWith(href);
+            return (
+              <Fragment key={href}>
+                {i > 0 && (
+                  <Span color="fg.subtle" fontSize="xs" opacity={0.4} userSelect="none">
+                    |
+                  </Span>
+                )}
+                <Link
+                  _hover={{ color: 'fg', textDecoration: 'none' }}
+                  asChild
+                  borderRadius="md"
+                  color={isActive ? 'fg' : 'fg.muted'}
+                  px={2}
+                  py={0.5}
+                >
+                  <NextLink href={href}>
+                    <Span fontSize="sm" fontWeight={isActive ? 600 : 400}>
+                      {label}
+                    </Span>
+                  </NextLink>
+                </Link>
+              </Fragment>
+            );
+          })}
+        </HStack>
       </HStack>
 
       <Spacer />

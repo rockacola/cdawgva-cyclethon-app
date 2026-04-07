@@ -3,17 +3,18 @@
 import { Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
-import { formatRelative, formatUTC } from '@/lib/dateUtils';
+import { formatRelative } from '@/lib/dateUtils';
+import { formatAbsoluteTime } from '@/lib/timeUtils';
+import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
 interface Props {
   timestamp: number; // unix epoch seconds
-  showUTC?: boolean;
+  showAbsoluteTime?: boolean;
 }
 
-export function RelativeTime({ timestamp, showUTC = false }: Props) {
-  const date = new Date(timestamp * 1000);
-  const utc = formatUTC(date);
-  const [relative, setRelative] = useState<string>(formatRelative(date));
+export function RelativeTime({ timestamp, showAbsoluteTime = false }: Props) {
+  const { timezoneMode } = useTimezoneContext();
+  const [relative, setRelative] = useState<string>(formatRelative(new Date(timestamp * 1000)));
 
   useEffect(
     function syncRelativeTime() {
@@ -28,16 +29,21 @@ export function RelativeTime({ timestamp, showUTC = false }: Props) {
     [timestamp]
   );
 
-  if (showUTC) {
+  if (showAbsoluteTime) {
+    const absolute = formatAbsoluteTime(timestamp, timezoneMode);
     return (
       <Text display={{ base: 'inline-block', md: 'block' }} suppressHydrationWarning>
-        {relative} ({utc})
+        {relative} ({absolute})
       </Text>
     );
   }
 
   return (
-    <Text display={{ base: 'inline-block', md: 'block' }} suppressHydrationWarning title={utc}>
+    <Text
+      display={{ base: 'inline-block', md: 'block' }}
+      suppressHydrationWarning
+      title={formatAbsoluteTime(timestamp, timezoneMode)}
+    >
       {relative}
     </Text>
   );

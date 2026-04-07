@@ -84,11 +84,17 @@ export function DonationFeedRefresher({ initialDonations, initialGeneratedAt }: 
     <>
       {!!generatedAt && (
         <Flex align="center" flexWrap="wrap" gap={2} mb={4}>
-          <Text color="fg.muted" fontSize={{ base: 'xs', md: 'sm' }}>
-            Last checked:{' '}
-            <RelativeTime showUTC timestamp={Math.floor(new Date(generatedAt).getTime() / 1000)} />
-            {isRefreshing ? <Spinner color="blue.300" ml={2} size="sm" /> : null}
-          </Text>
+          <HStack color="fg.muted" fontSize={{ base: 'xs', md: 'sm' }} gap={1}>
+            <Text fontWeight="medium"> Last checked:</Text>
+            <HStack gap={1}>
+              <RelativeTime
+                showAbsoluteTime
+                timestamp={Math.floor(new Date(generatedAt).getTime() / 1000)}
+              />
+              {isRefreshing ? <Spinner color="blue.300" ml={2} size="sm" /> : null}
+            </HStack>
+          </HStack>
+
           <HStack color="fg.muted" fontSize="xs" gap={1.5} ml="auto" whiteSpace="nowrap">
             {DONATION_PAGE_SIZES.map((n, i) => (
               <HStack gap={1.5} key={n}>

@@ -30,6 +30,10 @@ export const TIMEZONE_MODES = ['JST', 'UTC', 'Local'] as const;
 export type TimezoneMode = (typeof TIMEZONE_MODES)[number];
 export const TIMEZONE_MODE_DEFAULT: TimezoneMode = 'JST';
 
+// Top donors leaderboard display limits
+export const TOP_DONORS_CARDS = 3;
+export const TOP_DONORS_TABLE_END = 10;
+
 // localStorage keys
 export const STORAGE_KEYS = {
   DONATION_PAGE_SIZE: 'donation_page_size',

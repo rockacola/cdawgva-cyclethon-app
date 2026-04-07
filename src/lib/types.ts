@@ -12,6 +12,13 @@ export interface DonationsData {
   donations: Donation[];
 }
 
+export interface DonorTotal {
+  amount_cent: number;
+  amount_currency: string;
+  count: number;
+  donor_name: string;
+}
+
 export interface CampaignFact {
   total_amount_raised_cent: number;
   goal_cent: number;

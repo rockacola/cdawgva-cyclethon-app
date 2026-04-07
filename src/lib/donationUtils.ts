@@ -1,4 +1,43 @@
-import type { Donation } from '@/lib/types';
+import type { Donation, DonorTotal } from '@/lib/types';
+
+const TRACKED_CURRENCY = 'USD';
+
+export function aggregateByDonor(donations: Donation[]): DonorTotal[] {
+  const map = new Map<string, DonorTotal>();
+  for (const d of donations) {
+    const existing = map.get(d.donor_name);
+    if (existing) {
+      existing.amount_cent += d.amount_cent;
+      existing.count += 1;
+    } else {
+      map.set(d.donor_name, {
+        amount_cent: d.amount_cent,
+        amount_currency: d.amount_currency,
+        count: 1,
+        donor_name: d.donor_name,
+      });
+    }
+  }
+  return Array.from(map.values()).sort((a, b) => b.amount_cent - a.amount_cent);
+}
+
+export function topByTransaction(donations: Donation[]): Donation[] {
+  return [...donations].sort((a, b) => b.amount_cent - a.amount_cent);
+}
+
+export function filterAndWarnCurrency(donations: Donation[]): Donation[] {
+  const otherCurrencies = [
+    ...new Set(donations.map((d) => d.amount_currency).filter((c) => c !== TRACKED_CURRENCY)),
+  ];
+  if (otherCurrencies.length > 0) {
+    console.warn(
+      '[TopDonors] Non-USD currencies detected — rankings only reflect USD donations. ' +
+        'Multi-currency support needed for: ' +
+        otherCurrencies.join(', ')
+    );
+  }
+  return donations.filter((d) => d.amount_currency === TRACKED_CURRENCY);
+}
 
 const numberFormat = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
