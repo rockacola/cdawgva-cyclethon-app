@@ -1,11 +1,12 @@
 'use client';
 
-import { useBreakpointValue } from '@chakra-ui/react';
+import { Center, Spinner, useBreakpointValue } from '@chakra-ui/react';
 import { Bar, ComposedChart, Line, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
 import type { NameType, Payload, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import type { TooltipProps } from 'recharts/types/component/Tooltip';
 
 import { useColorModeValue } from '@/components/ui/color-mode';
+import { useDailyTotals } from '@/hooks/useDailyTotals';
 import type { DailyTotal } from '@/lib/types';
 
 const DAY_COUNT = 15;
@@ -113,11 +114,8 @@ function ChartTooltip({
   );
 }
 
-interface DailyDonationsChartProps {
-  dailyTotals: DailyTotal[];
-}
-
-export function DailyDonationsChart({ dailyTotals }: DailyDonationsChartProps) {
+export function DailyDonationsChart() {
+  const { dailyTotals, isLoading } = useDailyTotals();
   const barSize = useBreakpointValue({ base: 12, md: 18 });
   const barColor = useColorModeValue('#7dd3fc', '#7dd3fc'); // sky.300
   const barColorActive = useColorModeValue('#38bdf8', '#38bdf8'); // sky.400
@@ -126,17 +124,32 @@ export function DailyDonationsChart({ dailyTotals }: DailyDonationsChartProps) {
   const tooltipBorder = useColorModeValue('#e5e7eb', '#374151');
   const tooltipText = useColorModeValue('#111827', '#f9fafb');
 
+  if (isLoading) {
+    return (
+      <Center height={240} width="100%">
+        <Spinner color="blue.300" />
+      </Center>
+    );
+  }
+
   const data = buildChartData(dailyTotals);
 
   // Scale bar axis so the tallest bar fills 75% of the chart height
   const maxDollars = Math.max(...data.map((d) => d.dollars));
   const barAxisMax = maxDollars > 0 ? maxDollars / 0.75 : 1;
+  // Prevents the line from stretching to fill the chart when cumulative total is still low
+  const lineCumulativeMinCeiling = 1_000_000;
 
   return (
     <ResponsiveContainer height={240} width="100%">
       <ComposedChart data={data} margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
         <YAxis domain={[0, barAxisMax]} hide yAxisId="bars" />
-        <YAxis hide orientation="right" yAxisId="line" />
+        <YAxis
+          domain={[0, (max: number) => Math.max(max, lineCumulativeMinCeiling)]}
+          hide
+          orientation="right"
+          yAxisId="line"
+        />
         <Tooltip
           content={(props) => (
             <ChartTooltip

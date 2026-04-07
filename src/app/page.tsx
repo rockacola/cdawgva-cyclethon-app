@@ -101,7 +101,6 @@ export default async function HomePage() {
       <Container maxW="5xl" px={{ base: 3, md: 8 }}>
         {flags.showJourneyProgress ? (
           <JourneySection
-            dailyTotals={stats.stats.daily_totals}
             initialCampaignFact={initialCampaignFact}
             utcOffset={stats._meta.utc_offset}
           />
