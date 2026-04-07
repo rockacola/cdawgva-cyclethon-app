@@ -29,10 +29,10 @@ const donationNavLinks = [
 // Flat list for mobile drawer
 const allNavLinks = [
   { href: '/', label: 'Home' },
-  { href: '/journey', label: 'Journey' },
   { href: '/donations/live', label: 'Live Donations' },
   { href: '/donations/search', label: 'Search Donations' },
   { href: '/donations/top', label: 'Top Donors' },
+  { href: '/journey', label: 'Journey' },
 ];
 
 export function Header() {
