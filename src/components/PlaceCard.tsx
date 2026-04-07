@@ -13,11 +13,12 @@ interface Props {
 export function PlaceCard({ amount, name, place, subLabel }: Props) {
   return (
     <Card.Root
-      _hover={{
-        boxShadow: '0 10px 15px -3px var(--chakra-colors-gray-300)',
+      _dark={{
+        boxShadow: 'none',
       }}
+      _hover={{ boxShadow: '0 10px 15px -3px rgba(0,0,0,0.12)' }}
       borderColor="transparent"
-      boxShadow="0 4px 6px -1px var(--chakra-colors-gray-300)"
+      boxShadow="0 4px 6px -1px rgba(0,0,0,0.08)"
       transition="box-shadow 0.3s ease"
     >
       <Card.Body gap={2} p={4}>
