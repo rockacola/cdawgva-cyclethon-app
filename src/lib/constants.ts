@@ -34,6 +34,10 @@ export const TIMEZONE_MODE_DEFAULT: TimezoneMode = 'JST';
 export const TOP_DONORS_CARDS = 3;
 export const TOP_DONORS_TABLE_END = 20;
 
+// Activity chart bar counts per breakpoint
+export const ACTIVITY_CHART_BARS_MOBILE = 30;
+export const ACTIVITY_CHART_BARS_DESKTOP = 60;
+
 // localStorage keys
 export const STORAGE_KEYS = {
   DONATION_PAGE_SIZE: 'donation_page_size',

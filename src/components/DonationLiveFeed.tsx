@@ -4,6 +4,7 @@ import { Flex, Heading, Link, Text } from '@chakra-ui/react';
 import { ExternalLink } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
+import { DonationActivityChart } from '@/components/DonationActivityChart';
 import { DonationFeed } from '@/components/DonationFeed';
 import { DonationProgressBar } from '@/components/DonationProgressBar';
 import { LiveDot } from '@/components/LiveDot';
@@ -126,6 +127,8 @@ export function DonationLiveFeed({ initialCampaignFact, initialDonations }: Prop
         </Link>
         .
       </Text>
+
+      <DonationActivityChart />
 
       <DonationProgressBar fact={campaignFact} />
 
