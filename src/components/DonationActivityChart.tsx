@@ -93,8 +93,8 @@ export function DonationActivityChart() {
     useBreakpointValue({ base: ACTIVITY_CHART_BARS_MOBILE, md: ACTIVITY_CHART_BARS_DESKTOP }) ??
     ACTIVITY_CHART_BARS_DESKTOP;
 
-  const barColor = useColorModeValue('#7dd3fc', '#7dd3fc');
-  const barColorActive = useColorModeValue('#38bdf8', '#38bdf8');
+  const barColor = useColorModeValue('#a5b4fc', '#a5b4fc'); // indigo.300
+  const barColorActive = useColorModeValue('#818cf8', '#818cf8'); // indigo.400
   const tooltipBg = useColorModeValue('#ffffff', '#1f2937');
   const tooltipBorder = useColorModeValue('#e5e7eb', '#374151');
   const tooltipText = useColorModeValue('#111827', '#f9fafb');

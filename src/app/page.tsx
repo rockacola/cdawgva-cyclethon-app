@@ -64,13 +64,17 @@ export default async function HomePage() {
           <SimpleGrid alignItems="center" columns={{ base: 1, md: 2 }} gap={{ base: 8, md: 14 }}>
             <Stack gap={5}>
               <HStack flexWrap="wrap" gap={2}>
-                <Badge variant="subtle">15 Days</Badge>
-                <Badge variant="subtle">Japan · 2026</Badge>
+                <Badge bgColor="indigo.100" color="gray.600" size="sm" variant="subtle">
+                  15 Days
+                </Badge>
+                <Badge bgColor="indigo.100" color="gray.600" size="sm" variant="subtle">
+                  Japan · 2026
+                </Badge>
               </HStack>
               <Heading as="h1" lineHeight="1.1" size={{ base: '3xl', md: '4xl' }}>
-                They're back.
+                They're back
                 <br />
-                On bikes.
+                On the road
                 <br />
                 Again.
               </Heading>
@@ -180,12 +184,7 @@ export default async function HomePage() {
           </Text>
           <DonationFeed donations={donations.slice(0, 10)} />
           <HStack justify="flex-end" mt={4}>
-            <Link
-              _hover={{ color: 'fg', textDecoration: 'none' }}
-              asChild
-              color="fg.muted"
-              fontSize="sm"
-            >
+            <Link _hover={{ textDecoration: 'none' }} asChild fontSize="sm">
               <NextLink href="/donations">
                 <HStack gap={1}>
                   <Text>View all donations</Text>

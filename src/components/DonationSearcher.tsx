@@ -261,6 +261,7 @@ export function DonationSearcher({ initialDonations }: Props) {
             Filter
           </Text>
           <Input
+            _dark={{ bg: 'gray.800' }}
             bg="bg.muted"
             onChange={(e) => handleFilterChange(e.target.value)}
             placeholder="Search by donor name or comment..."
@@ -270,6 +271,7 @@ export function DonationSearcher({ initialDonations }: Props) {
           />
           <HStack gap={3}>
             <Input
+              _dark={{ bg: 'gray.800' }}
               bg="bg.muted"
               min={0}
               onChange={(e) => handleAmountMinChange(e.target.value)}
@@ -280,6 +282,7 @@ export function DonationSearcher({ initialDonations }: Props) {
               variant="subtle"
             />
             <Input
+              _dark={{ bg: 'gray.800' }}
               bg="bg.muted"
               min={0}
               onChange={(e) => handleAmountMaxChange(e.target.value)}

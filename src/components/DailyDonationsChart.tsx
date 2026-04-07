@@ -117,8 +117,8 @@ function ChartTooltip({
 export function DailyDonationsChart() {
   const { dailyTotals, isLoading } = useDailyTotals();
   const barSize = useBreakpointValue({ base: 12, md: 18 });
-  const barColor = useColorModeValue('#7dd3fc', '#7dd3fc'); // sky.300
-  const barColorActive = useColorModeValue('#38bdf8', '#38bdf8'); // sky.400
+  const barColor = useColorModeValue('#a5b4fc', '#a5b4fc'); // indigo.300
+  const barColorActive = useColorModeValue('#818cf8', '#818cf8'); // indigo.400
   const lineColor = useColorModeValue('#f97316', '#fb923c'); // orange.500 / orange.400
   const tooltipBg = useColorModeValue('#ffffff', '#1f2937');
   const tooltipBorder = useColorModeValue('#e5e7eb', '#374151');

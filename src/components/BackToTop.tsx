@@ -29,7 +29,7 @@ export function BackToTop() {
       bottom={6}
       boxShadow="md"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      opacity={0.4}
+      opacity={0.3}
       position="fixed"
       right={{ base: 4, md: 8 }}
       size="md"

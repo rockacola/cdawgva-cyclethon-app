@@ -12,7 +12,14 @@ interface Props {
 
 export function PlaceCard({ amount, name, place, subLabel }: Props) {
   return (
-    <Card.Root variant="outline">
+    <Card.Root
+      _hover={{
+        boxShadow: '0 10px 15px -3px var(--chakra-colors-gray-300)',
+      }}
+      borderColor="transparent"
+      boxShadow="0 4px 6px -1px var(--chakra-colors-gray-300)"
+      transition="box-shadow 0.3s ease"
+    >
       <Card.Body gap={2} p={4}>
         <HStack gap={2} justify="space-between">
           <HStack flex={1} gap={2} minW={0}>
