@@ -114,7 +114,7 @@ export function DonationLiveFeed({ initialCampaignFact, initialDonations }: Prop
 
   return (
     <>
-      <Flex align="center" gap={3} mb={2}>
+      <Flex align="center" gap={4} mb={2}>
         <Heading as="h1" size={{ base: 'xl', md: '2xl' }}>
           Live Donations
         </Heading>
