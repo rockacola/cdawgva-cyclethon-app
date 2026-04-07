@@ -1,15 +1,14 @@
 import { Box, HStack, Link, Stack, Text } from '@chakra-ui/react';
 import { ExternalLink, MessageSquare } from 'lucide-react';
 
-import type { RedditLink } from '@/lib/journey-data';
-
 interface Props {
-  author?: string;
-  links?: RedditLink[];
+  redditAuthor?: string;
+  redditLabel?: string;
+  redditUrl?: string;
 }
 
-export function DaySource({ author, links }: Props) {
-  if (!author && !links?.length) {
+export function DaySource({ redditAuthor, redditLabel, redditUrl }: Props) {
+  if (!redditAuthor && !redditUrl) {
     return null;
   }
 
@@ -22,26 +21,26 @@ export function DaySource({ author, links }: Props) {
         </Text>
       </HStack>
       <Stack gap={1.5}>
-        {author ? (
+        {redditAuthor ? (
           <Text color="fg.muted" fontSize="sm">
             Infographics by{' '}
             <Link
-              href={`https://old.reddit.com/user/${author}`}
+              href={`https://old.reddit.com/user/${redditAuthor}`}
               rel="noopener noreferrer"
               target="_blank"
             >
-              u/{author}
+              u/{redditAuthor}
             </Link>
           </Text>
         ) : null}
-        {links?.map((link) => (
-          <HStack fontSize="sm" gap={2} key={link.url}>
-            <Link href={link.url} rel="noopener noreferrer" target="_blank">
-              {link.label ?? 'Reddit post'}{' '}
+        {redditUrl ? (
+          <HStack fontSize="sm" gap={2}>
+            <Link href={redditUrl} rel="noopener noreferrer" target="_blank">
+              {redditLabel ?? 'Reddit post'}{' '}
               <ExternalLink size={11} style={{ display: 'inline', verticalAlign: 'middle' }} />
             </Link>
           </HStack>
-        ))}
+        ) : null}
       </Stack>
     </Box>
   );

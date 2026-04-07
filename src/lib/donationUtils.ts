@@ -25,6 +25,17 @@ export function topByTransaction(donations: Donation[]): Donation[] {
   return [...donations].sort((a, b) => b.amount_cent - a.amount_cent);
 }
 
+export function getTopDonationsForDay(
+  donations: Donation[],
+  start: number,
+  end: number
+): Donation[] {
+  return donations
+    .filter((d) => d.completed_at >= start && d.completed_at < end)
+    .sort((a, b) => b.amount_cent - a.amount_cent)
+    .slice(0, 10);
+}
+
 export function filterAndWarnCurrency(donations: Donation[]): Donation[] {
   const otherCurrencies = [
     ...new Set(donations.map((d) => d.amount_currency).filter((c) => c !== TRACKED_CURRENCY)),

@@ -7,19 +7,49 @@ import { usePathname } from 'next/navigation';
 import type { JourneyDay } from '@/lib/journey';
 
 interface Props {
+  availableDaySlugs: Set<string>;
   days: JourneyDay[];
 }
 
-export function DayNav({ days }: Props) {
+export function DayNav({ availableDaySlugs, days }: Props) {
   const pathname = usePathname();
 
   return (
     <Box as="nav" overflowX={{ base: 'auto', md: 'visible' }} w={{ base: 'full', md: '44' }}>
       {/* Mobile: horizontal scroll */}
       <Stack direction={{ base: 'row', md: 'column' }} gap={1} pb={{ base: 2, md: 0 }}>
-        {days.map(({ slug, label, date }) => {
+        {days.map(({ date, label, slug }) => {
           const href = `/journey/${slug}`;
           const isActive = pathname === href;
+          const hasData = availableDaySlugs.has(slug);
+
+          const dateLabel = date.toLocaleDateString('en-AU', {
+            day: 'numeric',
+            month: 'short',
+            timeZone: 'UTC',
+          });
+
+          if (!hasData) {
+            return (
+              <Box
+                borderRadius="md"
+                cursor="default"
+                key={slug}
+                opacity={0.35}
+                px={3}
+                py={1.5}
+                whiteSpace="nowrap"
+              >
+                <Text color="fg.muted" fontSize="sm">
+                  {label}
+                </Text>
+                <Text color="fg.subtle" fontSize="xs">
+                  {dateLabel}
+                </Text>
+              </Box>
+            );
+          }
+
           return (
             <Link
               _hover={{ bg: 'bg.subtle', color: 'fg', textDecoration: 'none' }}
@@ -37,11 +67,7 @@ export function DayNav({ days }: Props) {
               <NextLink href={href}>
                 <Text fontSize="sm">{label}</Text>
                 <Text color="fg.subtle" fontSize="xs">
-                  {date.toLocaleDateString('en-AU', {
-                    month: 'short',
-                    day: 'numeric',
-                    timeZone: 'UTC',
-                  })}
+                  {dateLabel}
                 </Text>
               </NextLink>
             </Link>

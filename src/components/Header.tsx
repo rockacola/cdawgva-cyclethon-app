@@ -17,9 +17,8 @@ import { usePathname } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
 
 import { SettingsModal } from '@/components/SettingsModal';
-import { flags } from '@/lib/flags';
 
-const standaloneNavLinks = [{ href: '/journey', label: 'Journey', flag: flags.showJourney }];
+const standaloneNavLinks = [{ href: '/journey', label: 'Journey' }];
 
 const donationNavLinks = [
   { href: '/donations/live', label: 'Live' },
@@ -30,15 +29,11 @@ const donationNavLinks = [
 // Flat list for mobile drawer
 const allNavLinks = [
   { href: '/', label: 'Home' },
-  { href: '/journey', label: 'Journey', flag: flags.showJourney },
+  { href: '/journey', label: 'Journey' },
   { href: '/donations/live', label: 'Live Donations' },
   { href: '/donations/search', label: 'Search Donations' },
   { href: '/donations/top', label: 'Top Donors' },
 ];
-
-const navLinks = allNavLinks.filter((link) => !('flag' in link) || link.flag);
-const visibleStandaloneLinks = standaloneNavLinks.filter((link) => link.flag);
-const visibleDonationLinks = donationNavLinks.filter((link) => !('flag' in link) || link.flag);
 
 export function Header() {
   const pathname = usePathname();
@@ -75,30 +70,13 @@ export function Header() {
           </NextLink>
         </Link>
 
-        {/* Standalone links (e.g. Journey) */}
-        {visibleStandaloneLinks.map(({ href, label }) => {
-          const isActive = pathname.startsWith(href);
-          return (
-            <Link
-              _hover={{ color: 'fg', textDecoration: 'none' }}
-              asChild
-              color={isActive ? 'fg' : 'fg.muted'}
-              key={href}
-            >
-              <NextLink href={href}>
-                <Span fontWeight={isActive ? 600 : 400}>{label}</Span>
-              </NextLink>
-            </Link>
-          );
-        })}
-
         {/* Donations group */}
         <HStack bg="bg.subtle" borderRadius="lg" borderWidth="1px" gap={0} px={1} py={1}>
           <Span color="fg.muted" fontSize="sm" opacity={0.4} px={2}>
             Donations
           </Span>
           <Box alignSelf="stretch" borderLeftWidth="1px" />
-          {visibleDonationLinks.map(({ href, label }, i) => {
+          {donationNavLinks.map(({ href, label }, i) => {
             const isActive = pathname.startsWith(href);
             return (
               <Fragment key={href}>
@@ -125,6 +103,24 @@ export function Header() {
             );
           })}
         </HStack>
+
+        {/* Standalone links (e.g. Journey) */}
+        {standaloneNavLinks.map(({ href, label }) => {
+          const isActive = pathname.startsWith(href);
+          return (
+            <Link
+              _hover={{ color: 'fg', textDecoration: 'none' }}
+              asChild
+              color={isActive ? 'fg' : 'fg.muted'}
+              fontSize="sm"
+              key={href}
+            >
+              <NextLink href={href}>
+                <Span fontWeight={isActive ? 600 : 400}>{label}</Span>
+              </NextLink>
+            </Link>
+          );
+        })}
       </HStack>
 
       <Spacer />
@@ -160,7 +156,7 @@ export function Header() {
               </Drawer.CloseTrigger>
               <Drawer.Body pt={12}>
                 <Stack gap={1}>
-                  {navLinks.map(({ href, label }) => {
+                  {allNavLinks.map(({ href, label }) => {
                     const isActive = href === '/' ? pathname === href : pathname.startsWith(href);
                     return (
                       <Link
