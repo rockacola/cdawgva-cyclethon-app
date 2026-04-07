@@ -32,7 +32,7 @@ export const TIMEZONE_MODE_DEFAULT: TimezoneMode = 'JST';
 
 // Top donors leaderboard display limits
 export const TOP_DONORS_CARDS = 3;
-export const TOP_DONORS_TABLE_END = 10;
+export const TOP_DONORS_TABLE_END = 20;
 
 // localStorage keys
 export const STORAGE_KEYS = {
