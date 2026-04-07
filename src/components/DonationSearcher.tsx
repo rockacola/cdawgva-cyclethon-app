@@ -1,14 +1,14 @@
 'use client';
 
 import { Box, Flex, Grid, HStack, Heading, Input, Stack, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { DonationFeed } from '@/components/DonationFeed';
 import type { SortDir, SortKey } from '@/components/DonationFeedDesktop';
 import { LastChecked } from '@/components/LastChecked';
-import { DONATIONS_FULL_URL, DONATION_REFETCH_INTERVAL } from '@/lib/constants';
-import { filterAndWarnCurrency } from '@/lib/donationUtils';
-import type { Donation, DonationsData } from '@/lib/types';
+import { useDonations } from '@/contexts/DonationsContext';
+import { useDonationsPolling } from '@/hooks/useDonationsPolling';
+import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 
 const SEARCH_PAGE_SIZES = [10, 30, 60, 100] as const;
 const SEARCH_PAGE_SIZE_DEFAULT = 10;
@@ -20,16 +20,9 @@ const SORT_LABELS: Record<SortKey, string> = {
   time: 'Time',
 };
 
-interface Props {
-  initialDonations: Donation[];
-}
-
-export function DonationSearcher({ initialDonations }: Props) {
-  const [donations, setDonations] = useState<Donation[]>(() =>
-    filterAndWarnCurrency(initialDonations)
-  );
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastCheckedAt, setLastCheckedAt] = useState<number>(() => Math.floor(Date.now() / 1000));
+export function DonationSearcher() {
+  const { donations, isRefreshing, lastCheckedAt } = useDonations();
+  useDonationsPolling(DONATION_REFETCH_INTERVAL);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(SEARCH_PAGE_SIZE_DEFAULT);
   const [filterAmountMax, setFilterAmountMax] = useState('');
@@ -37,25 +30,6 @@ export function DonationSearcher({ initialDonations }: Props) {
   const [filterText, setFilterText] = useState('');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
-
-  useEffect(function startPolling() {
-    const poll = async () => {
-      setIsRefreshing(true);
-      try {
-        const res = await fetch(DONATIONS_FULL_URL, { cache: 'no-store' });
-        const data: DonationsData = await res.json();
-        setDonations(filterAndWarnCurrency(data.donations));
-        setLastCheckedAt(Math.floor(Date.now() / 1000));
-      } catch {
-        // silently ignore poll failures
-      } finally {
-        setIsRefreshing(false);
-      }
-    };
-
-    const id = setInterval(poll, DONATION_REFETCH_INTERVAL);
-    return () => clearInterval(id);
-  }, []);
 
   function handleSort(key: SortKey) {
     if (key === sortKey) {
