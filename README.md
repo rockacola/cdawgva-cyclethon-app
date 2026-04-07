@@ -2,7 +2,12 @@
 
 A live donation tracker for the [CDawgVA Cyclethon 5](https://tiltify.com/@cdawgva/cyclethon-5) charity event: a cross-Japan cycling challenge raising money for charity.
 
-The app polls a live donation feed and displays supporters in a real-time table, with relative timestamps, formatted amounts, and a configurable page size.
+The app polls a live donation feed and provides several views across the donation data:
+
+- **Live** — real-time table of incoming donations with relative timestamps and formatted amounts
+- **Top Donors** — leaderboard ranked by total amount donated
+- **Search** — full donation history with text search (donor name, comment), amount range filtering, sorting, and pagination
+- **Journey** — progress tracker for the cycling route
 
 ## Stack
 

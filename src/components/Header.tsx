@@ -23,6 +23,7 @@ const standaloneNavLinks = [{ href: '/journey', label: 'Journey', flag: flags.sh
 
 const donationNavLinks = [
   { href: '/donations/live', label: 'Live' },
+  { href: '/donations/search', label: 'Search' },
   { href: '/donations/top', label: 'Top' },
 ];
 
@@ -31,6 +32,7 @@ const allNavLinks = [
   { href: '/', label: 'Home' },
   { href: '/journey', label: 'Journey', flag: flags.showJourney },
   { href: '/donations/live', label: 'Live Donations' },
+  { href: '/donations/search', label: 'Search Donations' },
   { href: '/donations/top', label: 'Top Donors' },
 ];
 

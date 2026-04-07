@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 
 import { DonationFeed } from '@/components/DonationFeed';
-import { RelativeTime } from '@/components/RelativeTime';
+import { LastChecked } from '@/components/LastChecked';
 import {
   DONATIONS_FULL_URL,
   DONATIONS_URL,
@@ -84,16 +84,10 @@ export function DonationFeedRefresher({ initialDonations, initialGeneratedAt }: 
     <>
       {!!generatedAt && (
         <Flex align="center" flexWrap="wrap" gap={2} mb={4}>
-          <HStack color="fg.muted" fontSize={{ base: 'xs', md: 'sm' }} gap={1}>
-            <Text fontWeight="medium"> Last checked:</Text>
-            <HStack gap={1}>
-              <RelativeTime
-                showAbsoluteTime
-                timestamp={Math.floor(new Date(generatedAt).getTime() / 1000)}
-              />
-              {isRefreshing ? <Spinner color="blue.300" ml={2} size="sm" /> : null}
-            </HStack>
-          </HStack>
+          <LastChecked
+            isRefreshing={isRefreshing}
+            timestamp={Math.floor(new Date(generatedAt).getTime() / 1000)}
+          />
 
           <HStack color="fg.muted" fontSize="xs" gap={1.5} ml="auto" whiteSpace="nowrap">
             {DONATION_PAGE_SIZES.map((n, i) => (

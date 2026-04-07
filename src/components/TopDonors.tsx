@@ -1,10 +1,10 @@
 'use client';
 
-import { HStack, Heading, Stack, Text } from '@chakra-ui/react';
+import { Heading, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 import { DonorLeaderboard } from '@/components/DonorLeaderboard';
-import { RelativeTime } from '@/components/RelativeTime';
+import { LastChecked } from '@/components/LastChecked';
 import { TransactionLeaderboard } from '@/components/TransactionLeaderboard';
 import { DONATIONS_FULL_URL, DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 import { filterAndWarnCurrency } from '@/lib/donationUtils';
@@ -18,10 +18,12 @@ export function TopDonors({ initialDonations }: Props) {
   const [donations, setDonations] = useState<Donation[]>(() =>
     filterAndWarnCurrency(initialDonations)
   );
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastCheckedAt, setLastCheckedAt] = useState<number>(() => Math.floor(Date.now() / 1000));
 
   useEffect(function startPolling() {
     const poll = async () => {
+      setIsRefreshing(true);
       try {
         const res = await fetch(DONATIONS_FULL_URL, { cache: 'no-store' });
         const data: DonationsData = await res.json();
@@ -29,6 +31,8 @@ export function TopDonors({ initialDonations }: Props) {
         setLastCheckedAt(Math.floor(Date.now() / 1000));
       } catch {
         // silently ignore poll failures
+      } finally {
+        setIsRefreshing(false);
       }
     };
 
@@ -46,12 +50,7 @@ export function TopDonors({ initialDonations }: Props) {
           Every donation, big or small, is part of what makes this possible. Together, this
           community is what turns a cycling stream into something that genuinely changes lives.
         </Text>
-        <HStack color="fg.muted" fontSize={{ base: 'xs', md: 'sm' }} gap={1}>
-          <Text fontWeight="medium"> Last checked:</Text>
-          <Text>
-            <RelativeTime showAbsoluteTime timestamp={lastCheckedAt} />
-          </Text>
-        </HStack>
+        <LastChecked isRefreshing={isRefreshing} timestamp={lastCheckedAt} />
       </Stack>
 
       <Stack gap={4}>

@@ -8,24 +8,52 @@ import { useNow } from '@/hooks/useNow';
 import { formatAmountParts, getDonationBoxShadow, isAnonymous } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 
+export type SortDir = 'asc' | 'desc';
+export type SortKey = 'amount' | 'comment' | 'name' | 'time';
+
 interface Props {
   donations: Donation[];
+  onSort?: (key: SortKey) => void;
+  sortDir?: SortDir;
+  sortKey?: SortKey;
 }
 
-export function DonationFeedDesktop({ donations }: Props) {
+function sortIndicator(col: SortKey, sortKey?: SortKey, sortDir?: SortDir): string {
+  if (col !== sortKey) {
+    return '';
+  }
+  return sortDir === 'asc' ? ' ↑' : ' ↓';
+}
+
+export function DonationFeedDesktop({ donations, onSort, sortDir, sortKey }: Props) {
   const now = useNow(1000);
+  const headerProps = onSort ? { _hover: { color: 'fg' }, cursor: 'pointer' as const } : {};
 
   return (
     <Table.Root size="sm" variant="outline">
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeader w="160px">Donor</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right" w="120px">
-            Amount
+          <Table.ColumnHeader {...headerProps} onClick={() => onSort?.('name')} w="160px">
+            Donor{sortIndicator('name', sortKey, sortDir)}
           </Table.ColumnHeader>
-          <Table.ColumnHeader>Comment</Table.ColumnHeader>
-          <Table.ColumnHeader minW="140px" whiteSpace="nowrap">
-            Time
+          <Table.ColumnHeader
+            {...headerProps}
+            onClick={() => onSort?.('amount')}
+            textAlign="right"
+            w="120px"
+          >
+            Amount{sortIndicator('amount', sortKey, sortDir)}
+          </Table.ColumnHeader>
+          <Table.ColumnHeader {...headerProps} minW="200px" onClick={() => onSort?.('comment')}>
+            Comment{sortIndicator('comment', sortKey, sortDir)}
+          </Table.ColumnHeader>
+          <Table.ColumnHeader
+            {...headerProps}
+            minW="140px"
+            onClick={() => onSort?.('time')}
+            whiteSpace="nowrap"
+          >
+            Time{sortIndicator('time', sortKey, sortDir)}
           </Table.ColumnHeader>
         </Table.Row>
       </Table.Header>
@@ -53,7 +81,7 @@ export function DonationFeedDesktop({ donations }: Props) {
                 {whole}
                 <Span color="fg.subtle">{cents}</Span>
               </Table.Cell>
-              <Table.Cell color="fg.muted" maxW="480px">
+              <Table.Cell color="fg.muted" maxW="480px" minW="200px">
                 <Text overflowWrap="break-word">{d.donor_comment ?? ''}</Text>
               </Table.Cell>
               <Table.Cell whiteSpace="nowrap">
