@@ -10,21 +10,22 @@ import {
   MS_TO_KMH,
   MS_TO_MPH,
   celsiusToFahrenheit,
+  formatMinutesToCyclingTime,
 } from '@/lib/unitConversions';
 
 type Props = Pick<
   DayEntry,
-  'avgSpeedKmh' | 'avgTempCelsius' | 'caloriesBurnt' | 'distanceKm' | 'timeCycling' | 'windSpeedMs'
+  'avgTempCelsius' | 'caloriesBurnt' | 'distanceKm' | 'timeCycling' | 'windSpeedMs'
 >;
 
 export function DayStatsGrid({
-  avgSpeedKmh,
   avgTempCelsius,
   caloriesBurnt,
   distanceKm,
   timeCycling,
   windSpeedMs,
 }: Props) {
+  const avgSpeedKmh = distanceKm! / (timeCycling! / 60);
   const statItems: StatCardProps[] = [
     {
       color: '#3b82f6',
@@ -37,20 +38,20 @@ export function DayStatsGrid({
       color: '#8b5cf6',
       icon: <Timer size={16} />,
       label: 'Cycling Time',
-      value: timeCycling!,
+      value: formatMinutesToCyclingTime(timeCycling!),
     },
     {
       color: '#f97316',
-      conversion: `≈ ${(avgSpeedKmh! * KM_TO_MI).toFixed(2)} mph`,
+      conversion: `≈ ${(avgSpeedKmh * KM_TO_MI).toFixed(2)} mph`,
       icon: <Gauge size={16} />,
-      label: 'Avg Speed',
-      value: `${avgSpeedKmh} km/h`,
+      label: 'Average Speed',
+      value: `${avgSpeedKmh.toFixed(2)} km/h`,
     },
     {
       color: '#06b6d4',
       conversion: `≈ ${celsiusToFahrenheit(avgTempCelsius!).toFixed(1)}°F`,
       icon: <Thermometer size={16} />,
-      label: 'Avg Temp',
+      label: 'Average Temperature',
       value: `${avgTempCelsius}°C`,
     },
     {

@@ -34,11 +34,10 @@ export interface DayEntry {
   amountRaised?: number;
   amountRaisedCurrency?: string;
   totalAmountRaised?: number;
-  avgSpeedKmh?: number;
   avgTempCelsius?: number;
   caloriesBurnt?: number;
   distanceKm?: number;
-  timeCycling?: string;
+  timeCycling?: number;
   windSpeedMs?: number;
 
   // map
@@ -66,7 +65,6 @@ export const journeyData: DayEntry[] = [
     destination: 'Mutsu-Yokohama',
     amountRaised: 119155,
     amountRaisedCurrency: 'USD',
-    avgSpeedKmh: 20.13,
     avgTempCelsius: 18.8,
     caloriesBurnt: 4313,
     distanceKm: 75.8,
@@ -102,7 +100,7 @@ export const journeyData: DayEntry[] = [
     redditLabel: 'Day 1 Cyclethon 5 Infographics',
     redditUrl: 'https://old.reddit.com/r/CDawgVA/comments/1sd4vzm/day_1_cyclethon_5_infographics/',
     startPoint: 'Cape Oma',
-    timeCycling: '6h 58m',
+    timeCycling: 418,
     twitchClips: [
       { id: 'clip-placeholder-1' },
       { id: 'clip-placeholder-2' },
@@ -118,7 +116,6 @@ export const journeyData: DayEntry[] = [
     amountRaised: 51799,
     amountRaisedCurrency: 'USD',
     totalAmountRaised: 170659,
-    avgSpeedKmh: 19.3,
     avgTempCelsius: 7.8,
     caloriesBurnt: 3709,
     distanceKm: 74.1,
@@ -128,7 +125,7 @@ export const journeyData: DayEntry[] = [
     redditLabel: 'Day 2 Cyclethon 5 Infographics',
     redditUrl: 'https://old.reddit.com/r/CDawgVA/comments/1sdtr6z/day_2_cyclethon_5_infographics/',
     startPoint: 'Mutsu-Yokohama',
-    timeCycling: '3h 53m',
+    timeCycling: 233,
     twitchUrl: 'https://www.twitch.tv/videos/2740993163',
     windSpeedMs: 14.8,
     youtubeUrl: 'https://www.youtube.com/watch?v=QKokuTTh_58',
@@ -139,7 +136,6 @@ export const journeyData: DayEntry[] = [
     amountRaised: 84457,
     amountRaisedCurrency: 'USD',
     totalAmountRaised: 255116,
-    avgSpeedKmh: 14.54,
     avgTempCelsius: 7.2,
     caloriesBurnt: 4758,
     distanceKm: 90.95,
@@ -149,7 +145,7 @@ export const journeyData: DayEntry[] = [
     redditLabel: 'Day 3 Cyclethon 5 Infographics',
     redditUrl: 'https://old.reddit.com/r/CDawgVA/comments/1sev03w/day_3_cyclethon_5_infographics/',
     startPoint: 'Aomori Station',
-    timeCycling: '6h 31m',
+    timeCycling: 391,
     twitchUrl: 'https://bingobaker.com/#67fad5a4f7be3f0b',
     windSpeedMs: 26.91,
     youtubeUrl: 'https://youtu.be/wo9rOMyJ0fM?si=7B4fSmk5d0ZVHz8Y',

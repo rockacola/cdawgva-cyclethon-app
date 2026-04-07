@@ -121,7 +121,6 @@ export default async function DayPage({ params }: Props) {
       {/* Stats */}
       {content?.distanceKm !== undefined ? (
         <DayStatsGrid
-          avgSpeedKmh={content.avgSpeedKmh!}
           avgTempCelsius={content.avgTempCelsius!}
           caloriesBurnt={content.caloriesBurnt!}
           distanceKm={content.distanceKm}
