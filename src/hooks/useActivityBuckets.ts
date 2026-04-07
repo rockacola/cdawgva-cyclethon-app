@@ -125,9 +125,24 @@ export function useActivityBuckets(): ActivityBucket[] {
   }, []);
 
   useEffect(function advanceWindow() {
-    // Snap currentBucket to the new 15-min boundary each time the window slides forward.
-    const id = setInterval(() => setCurrentBucket(snapToCurrentBucket()), BUCKET_SECONDS * 1000);
-    return () => clearInterval(id);
+    // Align the first tick to the next 15-min wall-clock boundary, then repeat every 15 min.
+    // Using a plain setInterval from mount time causes the bucket to advance up to ~15 min late
+    // because the interval phase drifts from the actual bucket boundaries.
+    const bucketMs = BUCKET_SECONDS * 1000;
+    const msToNextBucket = bucketMs - (Date.now() % bucketMs);
+    let intervalId: ReturnType<typeof setInterval> | undefined;
+
+    const timeoutId = setTimeout(() => {
+      setCurrentBucket(snapToCurrentBucket());
+      intervalId = setInterval(() => setCurrentBucket(snapToCurrentBucket()), bucketMs);
+    }, msToNextBucket);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalId !== undefined) {
+        clearInterval(intervalId);
+      }
+    };
   }, []);
 
   // Recompute whenever donations refresh, the window slides (currentBucket), or timezone changes.

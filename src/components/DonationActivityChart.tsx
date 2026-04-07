@@ -100,8 +100,8 @@ export function DonationActivityChart() {
   const tooltipText = useColorModeValue('#111827', '#f9fafb');
 
   const latestBuckets = buckets.slice(-barCount);
-  const maxCount = Math.max(...latestBuckets.map((b) => b.count), 1);
-  const yAxisMax = Math.ceil(maxCount / 0.75);
+  const maxAmount = Math.max(...latestBuckets.map((b) => b.amountCent), 1);
+  const yAxisMax = Math.ceil(maxAmount / 0.75);
   const timeZone = timezoneToIANA(timezoneMode);
 
   return (
@@ -128,7 +128,7 @@ export function DonationActivityChart() {
         />
         <Bar
           activeBar={{ fill: barColorActive }}
-          dataKey="count"
+          dataKey="amountCent"
           fill={barColor}
           radius={[2, 2, 0, 0]}
         />
