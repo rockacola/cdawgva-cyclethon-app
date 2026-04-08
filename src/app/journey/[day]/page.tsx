@@ -147,7 +147,7 @@ export default async function DayPage({ params }: Props) {
       ) : null}
 
       {/* Locations */}
-      {flags.showJourneyLocations && content?.mapLocations?.length ? (
+      {content?.mapLocations?.length ? (
         <Box>
           <Text
             color="fg.muted"

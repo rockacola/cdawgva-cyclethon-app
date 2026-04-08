@@ -3,15 +3,20 @@ export interface MapLocationSocial {
   url: string;
 }
 
+export type MapLocationCategory =
+  | 'Dining'
+  | 'Event'
+  | 'Landmark'
+  | 'Rest Stop'
+  | 'Terminal'
+  | 'Tour';
+
 export interface MapLocation {
-  address?: string;
-  blurb: string;
+  category: MapLocationCategory;
   googleMapsUrl?: string;
   id: string;
-  imageUrl?: string;
   socials?: MapLocationSocial[];
   title: string;
-  twitchTimestampUrl?: string;
   websiteUrl?: string;
 }
 
@@ -71,28 +76,44 @@ export const journeyData: DayEntry[] = [
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
     mapLocations: [
       {
-        address: 'Oma, Shimokita District, Aomori, Japan',
-        blurb:
-          'The dramatic starting point of Day 1. Cape Oma (大間崎) sits at the very northernmost tip of Honshū island, jutting into the Tsugaru Strait just 17.5 km from Hokkaido. The region is world-renowned for its premium bluefin tuna (o-maguro), hauled from the fast, cold currents where the Pacific Ocean meets the Sea of Japan.',
-        googleMapsUrl: 'https://maps.google.com/?q=Cape+Oma+Aomori+Japan',
-        id: 'cape-oma',
-        title: 'Cape Oma (大間崎)',
+        category: 'Terminal',
+        googleMapsUrl: 'https://maps.google.com/?cid=16479926693861552529',
+        id: 'd1-loc-1',
+        title: 'Maguro Monument (Tuna Statue of Honshu North Edge)',
+        websiteUrl: 'https://oma-wide.net/menu/omazaki/',
       },
       {
-        address: 'Oma, Shimokita District, Aomori 039-4601, Japan',
-        blurb:
-          "Oma Town lives and breathes tuna. Its fishermen are famous for landing some of the world's largest bluefin tuna — record catches that regularly fetch tens of millions of yen at Tokyo's Toyosu Market. The town celebrates its prized fish with a giant tuna statue, dedicated restaurants, and a bold tuna-themed manhole cover.",
-        googleMapsUrl: 'https://maps.google.com/?q=Oma+Town+Aomori+Japan',
-        id: 'oma-town',
-        title: 'Oma Town (大間町)',
+        category: 'Landmark',
+        googleMapsUrl: 'https://maps.google.com/?cid=13450471678049929364',
+        id: 'd1-loc-2',
+        title: 'Kuwabatadai Mutsu Hamanasu Line Stone Monument',
+        websiteUrl:
+          'https://www.bousai.go.jp/jishin/nihonkaiko_chishima/hokkaido/pdf/chishima_manga.pdf',
       },
       {
-        address: 'Yokohama, Kamikita District, Aomori, Japan',
-        blurb:
-          'The colourful finish line for Day 1. Mutsu-Yokohama is nicknamed "Nanohana Town" for its sweeping rapeseed fields that erupt in brilliant yellow every spring. Spanning over 220 hectares, it is Japan\'s largest canola-producing municipality — a spectacular sight when rolling through on a bike.',
-        googleMapsUrl: 'https://maps.google.com/?q=Mutsu+Yokohama+Aomori+Japan',
-        id: 'mutsu-yokohama',
-        title: 'Mutsu-Yokohama (横浜町)',
+        category: 'Dining',
+        googleMapsUrl: 'https://maps.google.com/?cid=2378892243340516275',
+        id: 'd1-loc-3',
+        title: 'Ushitora Coffee',
+        websiteUrl: 'http://ushitoracoffee.com/',
+      },
+      {
+        category: 'Rest Stop',
+        googleMapsUrl: 'https://maps.google.com/?cid=15781784636915904652',
+        id: 'd1-loc-4',
+        title: 'Lawson Mutsu Yanagimachi 1-chome',
+      },
+      {
+        category: 'Rest Stop',
+        googleMapsUrl: 'https://maps.google.com/?cid=8935616282557506387',
+        id: 'd1-loc-5',
+        title: 'Lawson Mutsu Okunai Shop',
+      },
+      {
+        category: 'Terminal',
+        googleMapsUrl: 'https://maps.google.com/?cid=17825440544961928775',
+        id: 'd1-loc-6',
+        title: 'Mutsu-Yokohama Station',
       },
     ],
     mapUrl: 'https://www.google.com/maps/d/viewer?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
@@ -120,6 +141,73 @@ export const journeyData: DayEntry[] = [
     caloriesBurnt: 3709,
     distanceKm: 74.1,
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
+    mapLocations: [
+      {
+        category: 'Terminal',
+        googleMapsUrl: 'https://maps.google.com/?cid=17825440544961928775',
+        id: 'd2-loc-1',
+        title: 'Mutsu-Yokohama Station',
+      },
+      {
+        category: 'Rest Stop',
+        googleMapsUrl: 'https://maps.google.com/?cid=5259525789346455091',
+        id: 'd2-loc-2',
+        title: 'Hamanasu Roadside Café',
+      },
+      {
+        category: 'Event',
+        googleMapsUrl: 'https://www.google.com.au/maps/place/40°55\'02.4"N+141°11\'25.2"E/',
+        id: 'd2-loc-3',
+        title: 'Quick stop to diagnose bike issue',
+      },
+      {
+        category: 'Rest Stop',
+        googleMapsUrl: 'https://maps.google.com/?cid=9940405137050285818',
+        id: 'd2-loc-4',
+        title: 'Lawson Noheji Tanabumichi',
+      },
+      {
+        category: 'Rest Stop',
+        googleMapsUrl: 'https://maps.google.com/?cid=7993017785954344840',
+        id: 'd2-loc-5',
+        title: 'Lawson Hiranai Kominato',
+      },
+      {
+        category: 'Landmark',
+        googleMapsUrl: 'https://maps.google.com/?cid=11906412819564480605',
+        id: 'd2-loc-6',
+        title: 'Hotate Ohashi',
+        websiteUrl:
+          'http://www.thr.mlit.go.jp/aomori/syutu/aokoku/aokoku-sisetu/hotate/hotate_oohashi.html',
+      },
+      {
+        category: 'Dining',
+        googleMapsUrl: 'https://maps.google.com/?cid=13816311655652063301',
+        id: 'd2-loc-7',
+        socials: [{ platform: 'Instagram', url: 'https://www.instagram.com/isamu_sato777/?hl=ja' }],
+        title: 'Tsurukameya Shokudo',
+      },
+      {
+        category: 'Event',
+        googleMapsUrl: 'https://www.google.com.au/maps/place/40°49\'36.2"N+140°48\'48.7"E',
+        id: 'd2-loc-8',
+        title: 'Stop to take a car ride to Koyasan Aomoribetsuin',
+      },
+      {
+        category: 'Tour',
+        googleMapsUrl: 'https://maps.google.com/?cid=14918925083774958918',
+        id: 'd2-loc-9',
+        title: 'Koyasan Aomoribetsuin',
+        websiteUrl:
+          'http://showa-daibutu.com/guide/%E9%AB%98%E9%87%8E%E5%B1%B1%E9%9D%92%E6%A3%AE%E5%88%A5%E9%99%A2/',
+      },
+      {
+        category: 'Terminal',
+        googleMapsUrl: 'https://maps.google.com/?cid=8427433769269076318',
+        id: 'd2-loc-10',
+        title: 'Aomori Station',
+      },
+    ],
     mapUrl: 'https://www.google.com/maps/d/u/1/edit?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
     redditAuthor: 'fatalzan',
     redditLabel: 'Day 2 Cyclethon 5 Infographics',
@@ -140,6 +228,70 @@ export const journeyData: DayEntry[] = [
     caloriesBurnt: 4758,
     distanceKm: 90.95,
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
+    mapLocations: [
+      {
+        category: 'Terminal',
+        googleMapsUrl: 'https://maps.google.com/?cid=8427433769269076318',
+        id: 'd3-loc-1',
+        title: 'Aomori Station',
+      },
+      {
+        category: 'Tour',
+        googleMapsUrl: 'https://maps.google.com/?cid=14282572961377107010',
+        id: 'd3-loc-2',
+        title: 'Nebuta Museum WA RASSE',
+        websiteUrl: 'http://www.nebuta.jp/warasse/',
+      },
+      {
+        category: 'Rest Stop',
+        googleMapsUrl: 'https://maps.google.com/?cid=5939235032055357764',
+        id: 'd3-loc-3',
+        title: 'FamilyMart Aomori Daishaka-nishi',
+      },
+      {
+        category: 'Rest Stop',
+        googleMapsUrl: 'https://maps.google.com/?cid=8598372354747298628',
+        id: 'd3-loc-4',
+        title: 'Lawson Tsuruta Kizutsu Store',
+      },
+      {
+        category: 'Dining',
+        googleMapsUrl: 'https://maps.google.com/?cid=13564023784280791504',
+        id: 'd3-loc-5',
+        title: 'Ramen shop',
+      },
+      {
+        category: 'Event',
+        googleMapsUrl:
+          "https://www.google.com/maps/place/40%C2%B045'02.0%22N+140%C2%B008'40.7%22E/@40.7505556,140.1420586,17z/",
+        id: 'd3-loc-6',
+        title: 'Technical Stop',
+      },
+      {
+        category: 'Event',
+        googleMapsUrl: 'https://www.google.com/maps/dir//40.75213888888889,140.14669444444445',
+        id: 'd3-loc-7',
+        title: 'Flat Tire',
+      },
+      {
+        category: 'Event',
+        googleMapsUrl: 'https://www.google.com/maps/dir//40.75055555555556,140.1446388888889',
+        id: 'd3-loc-8',
+        title: 'Emergency Stop',
+      },
+      {
+        category: 'Rest Stop',
+        googleMapsUrl: 'https://maps.google.com/?cid=2511115448289044863',
+        id: 'd3-loc-9',
+        title: 'FamilyMart Fukaura Seki',
+      },
+      {
+        category: 'Terminal',
+        googleMapsUrl: 'https://maps.google.com/?cid=14806150503861375762',
+        id: 'd3-loc-10',
+        title: 'Fukaura Station',
+      },
+    ],
     mapUrl: 'https://www.google.com/maps/d/u/1/edit?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
     redditAuthor: 'fatalzan',
     redditLabel: 'Day 3 Cyclethon 5 Infographics',
