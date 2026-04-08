@@ -10,6 +10,12 @@ import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
 const BUCKET_SECONDS = 15 * 60;
 
+/**
+ * Exponent for the power scale applied to bar heights.
+ * 1.0 = linear (no compression), 0.5 = square root, 0.3 = heavy compression.
+ */
+const SCALE_EXPONENT = 0.7;
+
 interface Props {
   buckets: ActivityBucket[];
   height?: number;
@@ -24,13 +30,16 @@ export function DonationBarChart({ buckets, height = 90 }: Props) {
   const tooltipBorder = useColorModeValue('#e5e7eb', '#374151');
   const tooltipText = useColorModeValue('#111827', '#f9fafb');
 
-  const maxAmount = Math.max(...buckets.map((b) => b.amountCent), 1);
-  const yAxisMax = Math.ceil(maxAmount / 0.75);
+  const logScale = (v: number) => Math.pow(v, SCALE_EXPONENT);
+  const scaledBuckets = buckets.map((b) => ({ ...b, scaledAmount: logScale(b.amountCent) }));
+
+  const maxScaled = Math.max(...scaledBuckets.map((b) => b.scaledAmount), 1);
+  const yAxisMax = Math.ceil(maxScaled / 0.75);
   const timeZone = timezoneToIANA(timezoneMode);
 
   return (
     <ResponsiveContainer height={height} width="100%">
-      <BarChart data={buckets} margin={{ bottom: 0, left: 0, right: 0, top: 4 }}>
+      <BarChart data={scaledBuckets} margin={{ bottom: 0, left: 0, right: 0, top: 4 }}>
         <YAxis domain={[0, yAxisMax]} hide />
         <Tooltip
           content={(props) => {
@@ -52,7 +61,7 @@ export function DonationBarChart({ buckets, height = 90 }: Props) {
         />
         <Bar
           activeBar={{ fill: barColorActive }}
-          dataKey="amountCent"
+          dataKey="scaledAmount"
           fill={barColor}
           radius={[2, 2, 0, 0]}
         />
