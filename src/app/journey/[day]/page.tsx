@@ -53,6 +53,7 @@ export default async function DayPage({ params }: Props) {
             </Heading>
             {hasRoute ? (
               <Stack
+                alignItems="center"
                 direction="row"
                 flexWrap="wrap"
                 fontSize={{ base: 'xl', md: '2xl' }}
