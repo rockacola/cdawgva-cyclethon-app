@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 
 import { DayClips } from '@/components/journey/DayClips';
 import { DayDonationChart } from '@/components/journey/DayDonationChart';
+import { DayDonationWar } from '@/components/journey/DayDonationWar';
 import { DayMapEmbed } from '@/components/journey/DayMapEmbed';
 import { DayMapLocations } from '@/components/journey/DayMapLocations';
 import { DaySource } from '@/components/journey/DaySource';
@@ -182,6 +183,11 @@ export default async function DayPage({ params }: Props) {
           <Box mt={4}>
             <DayTopDonations dateStr={day.date.toISOString().slice(0, 10)} />
           </Box>
+          {content?.donationWars?.length ? (
+            <Box mt={4}>
+              <DayDonationWar wars={content.donationWars} />
+            </Box>
+          ) : null}
         </Box>
       ) : null}
 

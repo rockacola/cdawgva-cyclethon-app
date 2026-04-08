@@ -27,6 +27,13 @@ export interface TwitchClip {
   title?: string;
 }
 
+export interface DonationWarEntry {
+  endTimestamp: number;
+  startTimestamp: number;
+  title: string;
+  type: 'anime' | 'country';
+}
+
 export interface DayEntry {
   // identity
   dayKey: string;
@@ -59,6 +66,7 @@ export interface DayEntry {
   youtubeUrl?: string;
 
   // complex lists
+  donationWars?: DonationWarEntry[];
   landmarks?: string[];
   mapLocations?: MapLocation[];
   twitchClips?: TwitchClip[];
@@ -311,6 +319,14 @@ export const journeyData: DayEntry[] = [
     avgTempCelsius: 8.49,
     caloriesBurnt: 5685,
     distanceKm: 105.5,
+    donationWars: [
+      {
+        endTimestamp: 1775628180,
+        startTimestamp: 1775626440,
+        title: 'Donation War - by Country',
+        type: 'country',
+      },
+    ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
     mapLocations: [
       {

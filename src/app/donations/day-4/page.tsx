@@ -6,13 +6,13 @@ import { useMemo } from 'react';
 import { DonationTime } from '@/components/DonationTime';
 import { DonorName } from '@/components/DonorName';
 import { useDonations } from '@/contexts/DonationsContext';
-import { detectCountryFromComment, formatAmount } from '@/lib/donationUtils';
+import { countryCodeToName, detectCountryFromComment, formatAmount } from '@/lib/donationUtils';
 import { formatDonationTime } from '@/lib/timeUtils';
 import type { Donation } from '@/lib/types';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
 const START_TIMESTAMP = 1775626440; // 2026-04-08 2:34pm JST
-const END_TIMESTAMP = 1775628240; // 2026-04-08 3:04pm JST
+const END_TIMESTAMP = 1775628180; // 2026-04-08 3:03pm JST
 
 export default function Day4Page() {
   const { donations } = useDonations();
@@ -84,7 +84,7 @@ export default function Day4Page() {
                 {countryStats.map((row, i) => (
                   <Table.Row key={row.country}>
                     <Table.Cell>{i === 0 ? '\u{1F451}' : i + 1}</Table.Cell>
-                    <Table.Cell>{row.country}</Table.Cell>
+                    <Table.Cell>{countryCodeToName(row.country)}</Table.Cell>
                     <Table.Cell textAlign="right">{row.count}</Table.Cell>
                     <Table.Cell textAlign="right">
                       {formatAmount({
@@ -155,7 +155,10 @@ export default function Day4Page() {
                   </Table.Cell>
                   <Table.Cell textAlign="right">{formatAmount(d)}</Table.Cell>
                   <Table.Cell fontSize="sm">
-                    {detectCountryFromComment(d.donor_comment) || '—'}
+                    {(() => {
+                      const c = detectCountryFromComment(d.donor_comment);
+                      return c ? countryCodeToName(c) : '—';
+                    })()}
                   </Table.Cell>
                   <Table.Cell fontSize="sm">{d.donor_comment || '—'}</Table.Cell>
                 </Table.Row>
