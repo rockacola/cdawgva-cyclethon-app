@@ -176,7 +176,9 @@ export default async function DayPage({ params }: Props) {
           >
             Donation Activity
           </Text>
-          <DayDonationChart dateStr={day.date.toISOString().slice(0, 10)} />
+          <Box bg="bg.subtle" borderRadius="md" p={3}>
+            <DayDonationChart dateStr={day.date.toISOString().slice(0, 10)} />
+          </Box>
           <Box mt={4}>
             <DayTopDonations dateStr={day.date.toISOString().slice(0, 10)} />
           </Box>

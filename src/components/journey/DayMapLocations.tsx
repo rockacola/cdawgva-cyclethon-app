@@ -60,7 +60,7 @@ function TimelineItem({
   const color = getCategoryColor(location.category);
 
   return (
-    <HStack align="flex-start" gap={0}>
+    <HStack align="stretch" gap={0}>
       {/* Timeline rail */}
       <Stack align="center" flexShrink={0} gap={0} w="40px">
         <Box
