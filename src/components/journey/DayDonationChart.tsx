@@ -12,5 +12,5 @@ export function DayDonationChart({ dateStr }: Props) {
   const { donations } = useDonations();
   const buckets = useDayActivityBuckets(dateStr, donations);
 
-  return <DonationBarChart buckets={buckets} height={160} />;
+  return <DonationBarChart buckets={buckets} />;
 }

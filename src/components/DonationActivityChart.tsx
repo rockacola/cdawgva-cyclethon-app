@@ -1,6 +1,6 @@
 'use client';
 
-import { useBreakpointValue } from '@chakra-ui/react';
+import { Box, useBreakpointValue } from '@chakra-ui/react';
 
 import { DonationBarChart } from '@/components/DonationBarChart';
 import { useActivityBuckets } from '@/hooks/useActivityBuckets';
@@ -12,5 +12,9 @@ export function DonationActivityChart() {
     useBreakpointValue({ base: ACTIVITY_CHART_BARS_MOBILE, md: ACTIVITY_CHART_BARS_DESKTOP }) ??
     ACTIVITY_CHART_BARS_DESKTOP;
 
-  return <DonationBarChart buckets={buckets.slice(-barCount)} />;
+  return (
+    <Box bg="bg.subtle" borderRadius="md">
+      <DonationBarChart buckets={buckets.slice(-barCount)} />
+    </Box>
+  );
 }
