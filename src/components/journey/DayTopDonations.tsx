@@ -1,11 +1,11 @@
 'use client';
 
-import { Span, Table, Text } from '@chakra-ui/react';
+import { Box, Span, Table, Text } from '@chakra-ui/react';
 import { Crown } from 'lucide-react';
 import { useMemo } from 'react';
 
 import { useDonations } from '@/contexts/DonationsContext';
-import { formatAmount, getTopDonationsForDay, isAnonymous } from '@/lib/donationUtils';
+import { formatAmountParts, getTopDonationsForDay, isAnonymous } from '@/lib/donationUtils';
 import { getJSTDayBounds } from '@/lib/timezoneUtils';
 
 interface Props {
@@ -31,7 +31,7 @@ export function DayTopDonations({ dateStr }: Props) {
     <Table.Root size="sm" variant="outline">
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeader w={10}>#</Table.ColumnHeader>
+          <Table.ColumnHeader textAlign="center" w={10} />
           <Table.ColumnHeader>Donor</Table.ColumnHeader>
           <Table.ColumnHeader textAlign="right">Amount</Table.ColumnHeader>
         </Table.Row>
@@ -42,11 +42,13 @@ export function DayTopDonations({ dateStr }: Props) {
           return (
             <Table.Row key={d.id}>
               <Table.Cell>
-                {i === 0 ? (
-                  <Crown color="#eab308" size={14} />
-                ) : (
-                  <Text color="fg.subtle">{i + 1}</Text>
-                )}
+                <Box display="flex" justifyContent="center">
+                  {i === 0 ? (
+                    <Crown color="#eab308" size={14} />
+                  ) : (
+                    <Text color="fg.subtle">{i + 1}</Text>
+                  )}
+                </Box>
               </Table.Cell>
               <Table.Cell>
                 <Span
@@ -62,7 +64,15 @@ export function DayTopDonations({ dateStr }: Props) {
                 ) : null}
               </Table.Cell>
               <Table.Cell textAlign="right" whiteSpace="nowrap">
-                {formatAmount(d)}
+                {(() => {
+                  const { whole, cents } = formatAmountParts(d);
+                  return (
+                    <>
+                      {whole}
+                      <Span color="fg.subtle">{cents}</Span>
+                    </>
+                  );
+                })()}
               </Table.Cell>
             </Table.Row>
           );
