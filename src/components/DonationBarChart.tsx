@@ -16,6 +16,12 @@ const BUCKET_SECONDS = 15 * 60;
  */
 const SCALE_EXPONENT = 0.7;
 
+/**
+ * How much of the container height the tallest bar fills.
+ * 1.0 = touches the top, 0.9 = 90% height, 0.75 = 75% height.
+ */
+const BAR_HEIGHT_RATIO = 0.92;
+
 interface Props {
   buckets: ActivityBucket[];
   height?: number;
@@ -34,7 +40,7 @@ export function DonationBarChart({ buckets, height = 90 }: Props) {
   const scaledBuckets = buckets.map((b) => ({ ...b, scaledAmount: logScale(b.amountCent) }));
 
   const maxScaled = Math.max(...scaledBuckets.map((b) => b.scaledAmount), 1);
-  const yAxisMax = Math.ceil(maxScaled / 0.75);
+  const yAxisMax = maxScaled / BAR_HEIGHT_RATIO;
   const timeZone = timezoneToIANA(timezoneMode);
 
   return (
