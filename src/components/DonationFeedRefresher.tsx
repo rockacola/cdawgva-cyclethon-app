@@ -1,20 +1,18 @@
 'use client';
 
-import { Flex, HStack, Input, Spinner, Text } from '@chakra-ui/react';
-import { useEffect, useRef, useState } from 'react';
+import { Flex, HStack, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 
 import { DonationFeed } from '@/components/DonationFeed';
 import { LastChecked } from '@/components/LastChecked';
 import {
-  DONATIONS_FULL_URL,
   DONATIONS_URL,
   DONATION_PAGE_SIZES,
   DONATION_PAGE_SIZE_DEFAULT,
   DONATION_REFETCH_INTERVAL,
   STORAGE_KEYS,
 } from '@/lib/constants';
-import { flags } from '@/lib/flags';
 import type { Donation, DonationsData } from '@/lib/types';
 
 interface Props {
@@ -29,11 +27,6 @@ export function DonationFeedRefresher({ initialDonations, initialGeneratedAt }: 
   const [pageSize, setPageSize] = useLocalStorageState(STORAGE_KEYS.DONATION_PAGE_SIZE, {
     defaultValue: DONATION_PAGE_SIZE_DEFAULT,
   });
-
-  const [commentFilter, setCommentFilter] = useState('');
-  const [fullDonations, setFullDonations] = useState<Donation[] | null>(null);
-  const [isLoadingFull, setIsLoadingFull] = useState(false);
-  const hasFetchedFull = useRef(false);
 
   useEffect(function startPolling() {
     const fetchLatest = async () => {
@@ -52,33 +45,13 @@ export function DonationFeedRefresher({ initialDonations, initialGeneratedAt }: 
     return () => clearInterval(id);
   }, []);
 
-  async function handleCommentFilterChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    setCommentFilter(value);
-
-    if (value && !hasFetchedFull.current) {
-      hasFetchedFull.current = true;
-      setIsLoadingFull(true);
-      try {
-        const res = await fetch(DONATIONS_FULL_URL, { cache: 'no-store' });
-        const data: DonationsData = await res.json();
-        setFullDonations(data.donations);
-      } finally {
-        setIsLoadingFull(false);
-      }
-    }
-  }
-
   function handlePageSizeChange(value: number) {
     setPageSize(value);
   }
 
-  const isFiltering = flags.donationFilter && commentFilter.trim().length > 0;
-  const sourceData = isFiltering && fullDonations ? fullDonations : donations;
-  const filteredDonations = isFiltering
-    ? sourceData.filter((d) => d.donor_comment?.toLowerCase().includes(commentFilter.toLowerCase()))
-    : sourceData;
-  const visibleDonations = isFiltering ? filteredDonations : filteredDonations.slice(0, pageSize);
+  const sourceData = donations;
+  const filteredDonations = sourceData;
+  const visibleDonations = filteredDonations.slice(0, pageSize);
 
   return (
     <>
@@ -110,27 +83,6 @@ export function DonationFeedRefresher({ initialDonations, initialGeneratedAt }: 
           </HStack>
         </Flex>
       )}
-
-      {flags.donationFilter ? (
-        <>
-          <Flex align="center" gap={2} mb={6} position="relative">
-            <Input
-              onChange={handleCommentFilterChange}
-              placeholder="Filter by comment…"
-              size="sm"
-              value={commentFilter}
-            />
-            {isLoadingFull ? <Spinner position="absolute" right={3} size="xs" /> : null}
-          </Flex>
-
-          {isFiltering ? (
-            <Text color="fg.muted" fontSize="xs" mb={4}>
-              {filteredDonations.length} match{filteredDonations.length !== 1 ? 'es' : ''}
-              {isLoadingFull ? ' (loading full dataset…)' : ''}
-            </Text>
-          ) : null}
-        </>
-      ) : null}
 
       <DonationFeed donations={visibleDonations} />
     </>

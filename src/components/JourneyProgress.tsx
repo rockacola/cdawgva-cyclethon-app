@@ -6,6 +6,7 @@ import NextLink from 'next/link';
 import { todayInOffset } from '@/lib/dateUtils';
 import { flags } from '@/lib/flags';
 import { getJourneyDays } from '@/lib/journey';
+import { journeyData } from '@/lib/journey-data';
 
 // Date strings in the same timezone as the stats payload
 const EVENT_START_DATE = '2026-04-05'; // Day 1
@@ -16,6 +17,9 @@ const DOT_SIZE = { base: '14px', md: '18px' };
 interface JourneyProgressProps {
   utcOffset: string;
 }
+
+// Days that have actual content in journey-data.ts (not empty stubs)
+const availableDays = new Set(journeyData.filter((d) => d.destination).map((d) => d.dayKey));
 
 export function JourneyProgress({ utcOffset }: JourneyProgressProps) {
   const days = getJourneyDays();
@@ -83,7 +87,9 @@ export function JourneyProgress({ utcOffset }: JourneyProgressProps) {
           const dayStr = date.toISOString().slice(0, 10);
           const isPast = dayStr < todayStr;
           const isCurrent = dayStr === todayStr;
-          const isClickable = flags.showJourneyDotLinks && (isPast || isCurrent);
+          // Only link to days that have journey page content populated
+          const isClickable =
+            flags.showJourneyDotLinks && (isPast || isCurrent) && availableDays.has(slug);
           const showLabel = day === 1 || day === 15 || isCurrent;
 
           const tooltip = `${label} · ${date.toLocaleDateString('en-AU', {

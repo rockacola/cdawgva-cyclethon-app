@@ -1,8 +1,4 @@
 export const flags = {
-  donationFilter: false,
-  showJourneyAllDaysLink: false,
-  showJourneyDotLinks: false,
+  showJourneyDotLinks: true,
   showJourneyHighlightVods: false,
-  showJourneyProgress: true,
-  showTrackRecord: false,
 };

@@ -16,9 +16,7 @@ import NextLink from 'next/link';
 
 import { DonationFeed } from '@/components/DonationFeed';
 import { JourneySection } from '@/components/JourneySection';
-import { TrackRecord } from '@/components/TrackRecord';
 import { WhoComing } from '@/components/WhoComing';
-import { flags } from '@/lib/flags';
 import { getCampaignFact } from '@/lib/getCampaignFact';
 import { getDonations } from '@/lib/getDonations';
 import { getStats } from '@/lib/getStats';
@@ -103,14 +101,10 @@ export default async function HomePage() {
       </Box>
 
       <Container maxW="5xl" px={{ base: 3, md: 8 }}>
-        {flags.showJourneyProgress ? (
-          <JourneySection
-            initialCampaignFact={initialCampaignFact}
-            utcOffset={stats._meta.utc_offset}
-          />
-        ) : null}
-
-        {flags.showTrackRecord ? <TrackRecord /> : null}
+        <JourneySection
+          initialCampaignFact={initialCampaignFact}
+          utcOffset={stats._meta.utc_offset}
+        />
 
         {/* Charity + Guests */}
         <SimpleGrid

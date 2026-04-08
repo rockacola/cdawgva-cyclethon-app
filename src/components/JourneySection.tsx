@@ -1,10 +1,7 @@
-import { Box, HStack, Link, Text } from '@chakra-ui/react';
-import { ArrowRight } from 'lucide-react';
-import NextLink from 'next/link';
+import { Box, HStack, Text } from '@chakra-ui/react';
 
 import { DailyDonationsChart } from '@/components/DailyDonationsChart';
 import { JourneyProgress } from '@/components/JourneyProgress';
-import { flags } from '@/lib/flags';
 import type { CampaignFact } from '@/lib/types';
 
 import { HomeDonationProgress } from './HomeDonationProgress';
@@ -27,21 +24,6 @@ export function JourneySection({ initialCampaignFact, utcOffset }: JourneySectio
         >
           The Journey
         </Text>
-        {flags.showJourneyAllDaysLink ? (
-          <Link
-            _hover={{ color: 'fg', textDecoration: 'none' }}
-            asChild
-            color="fg.muted"
-            fontSize="xs"
-          >
-            <NextLink href="/journey">
-              <HStack gap={1}>
-                <Text>All days</Text>
-                <ArrowRight size={12} />
-              </HStack>
-            </NextLink>
-          </Link>
-        ) : null}
       </HStack>
       <Text color="fg.muted" fontSize="sm" mb={6}>
         The route is mapped. The rest is up to all of us. Fifteen days of ground to cover,
