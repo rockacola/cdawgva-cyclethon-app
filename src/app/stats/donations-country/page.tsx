@@ -2,6 +2,7 @@
 
 import { Box, Container, Heading, Span, Table, Text } from '@chakra-ui/react';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 import { CountryWarTable } from '@/components/CountryWarTable';
 import { DonationTime } from '@/components/DonationTime';
@@ -16,6 +17,14 @@ import { formatDonationTime } from '@/lib/timeUtils';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
 export default function DonationsCountryPage() {
+  return (
+    <Suspense>
+      <DonationsCountryContent />
+    </Suspense>
+  );
+}
+
+function DonationsCountryContent() {
   const { donations } = useDonations();
   const { timezoneMode } = useTimezoneContext();
   const searchParams = useSearchParams();
