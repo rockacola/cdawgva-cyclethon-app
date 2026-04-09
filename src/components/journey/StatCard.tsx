@@ -11,36 +11,39 @@ export interface StatCardProps {
 
 export function StatCard({ color, conversion, icon, label, value }: StatCardProps) {
   return (
-    <Box borderRadius="lg" borderWidth="1px" p={3}>
+    <Box alignItems="flex-start" borderRadius="lg" borderWidth="1px" display="flex" gap={2.5} p={3}>
       <Box
         alignItems="center"
         borderRadius="md"
         display="inline-flex"
+        flexShrink={0}
         justifyContent="center"
-        mb={2}
+        mt={0.5}
         p={1.5}
         style={{ backgroundColor: `${color}22`, color }}
       >
         {icon}
       </Box>
-      <Text
-        color="fg.muted"
-        fontSize="xs"
-        fontWeight="semibold"
-        letterSpacing="wide"
-        mb={0.5}
-        textTransform="uppercase"
-      >
-        {label}
-      </Text>
-      <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight="bold" lineHeight="1.2">
-        {value}
-      </Text>
-      {conversion ? (
-        <Text color="fg.subtle" fontSize="xs" mt={0.5}>
-          {conversion}
+      <Box>
+        <Text
+          color="fg.muted"
+          fontSize="xs"
+          fontWeight="semibold"
+          letterSpacing="wide"
+          mb={0.5}
+          textTransform="uppercase"
+        >
+          {label}
         </Text>
-      ) : null}
+        <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight="bold" lineHeight="1.2">
+          {value}
+        </Text>
+        {conversion ? (
+          <Text color="fg.subtle" fontSize="xs" mt={0.5}>
+            {conversion}
+          </Text>
+        ) : null}
+      </Box>
     </Box>
   );
 }

@@ -11,6 +11,7 @@ import { DaySource } from '@/components/journey/DaySource';
 import { DayStatsGrid } from '@/components/journey/DayStatsGrid';
 import { DayTopDonations } from '@/components/journey/DayTopDonations';
 import { DayYouTubeEmbed } from '@/components/journey/DayYouTubeEmbed';
+import { FundraiseCard } from '@/components/journey/FundraiseCard';
 import { flags } from '@/lib/flags';
 import { getJourneyDay } from '@/lib/journey';
 import { journeyData } from '@/lib/journey-data';
@@ -42,7 +43,7 @@ export default async function DayPage({ params }: Props) {
     <Stack gap={10}>
       <Stack align="flex-start" direction={{ base: 'column', lg: 'row' }} gap={6}>
         {/* Left: header + amounts */}
-        <Stack flex={1} gap={5} minW={0}>
+        <Stack flex={1} gap={5} minW={0} width="100%">
           {/* Header */}
           <Box>
             <Text color="fg.muted" fontSize="sm" mb={1}>
@@ -70,43 +71,17 @@ export default async function DayPage({ params }: Props) {
           {/* Amount raised */}
           {content?.amountRaised !== undefined ? (
             <SimpleGrid columns={2} gap={3}>
-              <Box borderRadius="xl" borderWidth="1px" p={4}>
-                <Text
-                  color="fg.muted"
-                  fontSize="xs"
-                  fontWeight="semibold"
-                  letterSpacing="wide"
-                  mb={1}
-                  textTransform="uppercase"
-                >
-                  Day Raised
-                </Text>
-                <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold" lineHeight="1.2">
-                  ${content.amountRaised.toLocaleString()}
-                </Text>
-                <Text color="fg.subtle" fontSize="xs" mt={0.5}>
-                  {content.amountRaisedCurrency}
-                </Text>
-              </Box>
+              <FundraiseCard
+                amount={content.amountRaised}
+                currency={content.amountRaisedCurrency}
+                label="Day Raised"
+              />
               {content.totalAmountRaised !== undefined ? (
-                <Box borderRadius="xl" borderWidth="1px" p={4}>
-                  <Text
-                    color="fg.muted"
-                    fontSize="xs"
-                    fontWeight="semibold"
-                    letterSpacing="wide"
-                    mb={1}
-                    textTransform="uppercase"
-                  >
-                    Total Raised
-                  </Text>
-                  <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold" lineHeight="1.2">
-                    ${content.totalAmountRaised.toLocaleString()}
-                  </Text>
-                  <Text color="fg.subtle" fontSize="xs" mt={0.5}>
-                    {content.amountRaisedCurrency}
-                  </Text>
-                </Box>
+                <FundraiseCard
+                  amount={content.totalAmountRaised}
+                  currency={content.amountRaisedCurrency}
+                  label="Total Raised"
+                />
               ) : null}
             </SimpleGrid>
           ) : null}

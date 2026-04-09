@@ -51,7 +51,7 @@ export function DayStatsGrid({
       color: '#06b6d4',
       conversion: `≈ ${celsiusToFahrenheit(avgTempCelsius!).toFixed(1)}°F`,
       icon: <Thermometer size={16} />,
-      label: 'Average Temperature',
+      label: 'Average Temp',
       value: `${avgTempCelsius}°C`,
     },
     {
