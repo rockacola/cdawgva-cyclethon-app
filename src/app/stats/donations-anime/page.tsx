@@ -37,9 +37,9 @@ function DonationsAnimeContent() {
     (d) => d.completed_at >= startTimestamp && d.completed_at <= endTimestamp
   );
 
-  const noAnimeDonations = filteredDonations.filter(
-    (d) => d.donor_comment && !detectAnimeFromComment(d.donor_comment)
-  );
+  const noAnimeDonations = filteredDonations
+    .filter((d) => d.donor_comment && !detectAnimeFromComment(d.donor_comment))
+    .sort((a, b) => b.amount_cent - a.amount_cent);
 
   const totalDonationsInCents = filteredDonations.reduce((sum, d) => sum + d.amount_cent, 0);
 
