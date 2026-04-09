@@ -22,17 +22,26 @@ export function useTranslations(namespace: string) {
   const { resolvedLocale } = useLocaleContext();
 
   const t = useCallback(
-    (key: string): string => {
+    (key: string, params?: Record<string, string | number>): string => {
       const section = messages[resolvedLocale]?.[namespace];
+      let template: string | undefined;
       if (section && key in section) {
-        return section[key];
+        template = section[key];
+      } else {
+        const fallback = messages.EN?.[namespace];
+        if (fallback && key in fallback) {
+          template = fallback[key];
+        }
       }
-      // Fallback to EN
-      const fallback = messages.EN?.[namespace];
-      if (fallback && key in fallback) {
-        return fallback[key];
+      if (!template) {
+        return key;
       }
-      return key;
+      if (params) {
+        return template.replace(/\{(\w+)\}/g, (_, k: string) =>
+          k in params ? String(params[k]) : `{${k}}`
+        );
+      }
+      return template;
     },
     [resolvedLocale, namespace]
   );

@@ -4,7 +4,9 @@ import { Box, Link, Stack, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { useTranslations } from '@/hooks/useTranslations';
 import type { JourneyDay } from '@/lib/journey';
+import { useLocaleContext } from '@/providers/LocaleProvider';
 
 interface Props {
   availableDaySlugs: Set<string>;
@@ -13,17 +15,21 @@ interface Props {
 
 export function DayNav({ availableDaySlugs, days }: Props) {
   const pathname = usePathname();
+  const t = useTranslations('dayNav');
+  const { resolvedLocale } = useLocaleContext();
+  const dateLocale = resolvedLocale === 'JP' ? 'ja-JP' : 'en-US';
 
   return (
     <Box as="nav" overflowX={{ base: 'auto', md: 'visible' }} w={{ base: 'full', md: '44' }}>
       {/* Mobile: horizontal scroll */}
       <Stack direction={{ base: 'row', md: 'column' }} gap={1} pb={{ base: 2, md: 0 }}>
-        {days.map(({ date, label, slug }) => {
+        {days.map(({ date, day, slug }) => {
           const href = `/journey/${slug}`;
           const isActive = pathname === href;
           const hasData = availableDaySlugs.has(slug);
 
-          const dateLabel = date.toLocaleDateString('en-AU', {
+          const dayLabel = t('dayLabel', { day });
+          const dateLabel = date.toLocaleDateString(dateLocale, {
             day: 'numeric',
             month: 'short',
             timeZone: 'UTC',
@@ -41,7 +47,7 @@ export function DayNav({ availableDaySlugs, days }: Props) {
                 whiteSpace="nowrap"
               >
                 <Text color="fg.muted" fontSize="sm">
-                  {label}
+                  {dayLabel}
                 </Text>
                 <Text color="fg.subtle" fontSize="xs">
                   {dateLabel}
@@ -65,7 +71,7 @@ export function DayNav({ availableDaySlugs, days }: Props) {
               whiteSpace="nowrap"
             >
               <NextLink href={href}>
-                <Text fontSize="sm">{label}</Text>
+                <Text fontSize="sm">{dayLabel}</Text>
                 <Text color="fg.subtle" fontSize="xs">
                   {dateLabel}
                 </Text>

@@ -1,4 +1,7 @@
 {
+  "dayNav": {
+    "dayLabel": "Day {day}"
+  },
   "header": {
     "donations": "Donations",
     "home": "Home",

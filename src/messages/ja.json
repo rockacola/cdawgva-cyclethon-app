@@ -1,4 +1,7 @@
 {
+  "dayNav": {
+    "dayLabel": "{day}日目"
+  },
   "header": {
     "donations": "寄付",
     "home": "ホーム",
