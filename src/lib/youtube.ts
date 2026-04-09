@@ -16,8 +16,3 @@ export function getYouTubeVideoId(url: string): string | null {
     return null;
   }
 }
-
-export function getYouTubeEmbedUrl(url: string): string | null {
-  const id = getYouTubeVideoId(url);
-  return id ? `https://www.youtube.com/embed/${id}` : null;
-}
