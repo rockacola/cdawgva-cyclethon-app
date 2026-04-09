@@ -22,6 +22,11 @@ const SCALE_EXPONENT = 0.7;
  */
 const BAR_HEIGHT_RATIO = 0.92;
 
+/**
+ * Minimum Y-axis ceiling in cents so small donations don't look oversized at off-peak.
+ */
+const MIN_Y_AXIS_CENTS = 100_000; // $1,000
+
 interface Props {
   buckets: ActivityBucket[];
   height?: number;
@@ -39,7 +44,8 @@ export function DonationBarChart({ buckets, height = 90 }: Props) {
   const logScale = (v: number) => Math.pow(v, SCALE_EXPONENT);
   const scaledBuckets = buckets.map((b) => ({ ...b, scaledAmount: logScale(b.amountCent) }));
 
-  const maxScaled = Math.max(...scaledBuckets.map((b) => b.scaledAmount), 1);
+  const minScaled = logScale(MIN_Y_AXIS_CENTS);
+  const maxScaled = Math.max(...scaledBuckets.map((b) => b.scaledAmount), minScaled);
   const yAxisMax = maxScaled / BAR_HEIGHT_RATIO;
   const timeZone = timezoneToIANA(timezoneMode);
 
