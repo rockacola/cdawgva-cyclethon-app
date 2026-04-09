@@ -277,6 +277,12 @@ const MANUAL_ALIASES: Record<string, string[]> = {
   trigun: ['trigun'],
   'samurai-champloo': ['samurai\\s+champloo'],
   vivy: ['vivy'],
+  'yuri-on-ice': ['yuri!*\\s+on\\s+ice'],
+  'suzumiya-haruhi-no-shoushitsu': [
+    'haruhi\\s+suzumiya',
+    'suzumiya\\s+haruhi',
+    'melancholy\\s+of\\s+haruhi',
+  ],
   'sora-yori-mo-tooi-basho': [
     'a\\s+place\\s+further\\s+th[ae]n\\s+the\\s+universe',
     'sora\\s+yori',

@@ -201,7 +201,7 @@ const ANIME_PATTERNS: [string, string, RegExp][] = [
   [
     'suzumiya-haruhi-no-shoushitsu',
     'The Disappearance of Haruhi Suzumiya',
-    /\b(The\s+Disappearance\s+of\s+Haruhi\s+Suzumiya|Suzumiya\s+Haruhi\s+no\s+Shoushitsu)\b/i,
+    /\b(The\s+Disappearance\s+of\s+Haruhi\s+Suzumiya|Suzumiya\s+Haruhi\s+no\s+Shoushitsu|melancholy\s+of\s+haruhi|haruhi\s+suzumiya|suzumiya\s+haruhi)\b/i,
   ],
   [
     'jojo-no-kimyou-na-bouken',
@@ -1083,7 +1083,7 @@ const ANIME_PATTERNS: [string, string, RegExp][] = [
     'Tales of Saiunkoku',
     /\b(Saiunkoku\s+Monogatari|Tales\s+of\s+Saiunkoku)\b/i,
   ],
-  ['yuri-on-ice', 'Yuri!!! On ICE', /\b(Yuri!!!\s+on\s+Ice)\b/i],
+  ['yuri-on-ice', 'Yuri!!! On ICE', /\b(Yuri!!!\s+on\s+Ice|yuri!*\s+on\s+ice)\b/i],
   [
     'zombieland-saga-revenge',
     'Zombie Land Saga Revenge',
@@ -1419,6 +1419,8 @@ const ANIME_PATTERNS: [string, string, RegExp][] = [
   ['monster-musume', 'Monster Musume', /\b(monster\s+musume|mon\s+musu)\b/i],
   ['juuni-kokuki', 'Twelve Kingdoms', /\b(twelve\s+kingdoms|juuni\s+kokuki)\b/i],
   ['eromanga-sensei', 'Eromanga Sensei', /\b(eromanga\s+sensei)\b/i],
+  ['cory-in-the-house', 'Cory in the House', /\b(cory\s+in\s+the\s+house)\b/i],
+  ['robotech', 'Robotech', /\b(robotech)\b/i],
 ];
 
 export function detectAnimeFromComment(comment: string | null | undefined): string | null {
