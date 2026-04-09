@@ -2,6 +2,7 @@
 
 import { Box, Text } from '@chakra-ui/react';
 
+import { AnimeWarTable } from '@/components/AnimeWarTable';
 import { CountryWarTable } from '@/components/CountryWarTable';
 import { useDonations } from '@/contexts/DonationsContext';
 import type { TimezoneMode } from '@/lib/constants';
@@ -29,6 +30,13 @@ export function DayDonationWar({ wars }: Props) {
         >
           {war.type === 'country' ? (
             <CountryWarTable
+              donations={donations.filter(
+                (d) => d.completed_at >= war.startTimestamp && d.completed_at <= war.endTimestamp
+              )}
+              maxCount={TOP_N}
+            />
+          ) : war.type === 'anime' ? (
+            <AnimeWarTable
               donations={donations.filter(
                 (d) => d.completed_at >= war.startTimestamp && d.completed_at <= war.endTimestamp
               )}
