@@ -39,7 +39,7 @@ export function DonorLeaderboard({ donations }: Props) {
             key={donor.donor_name}
             name={donor.donor_name}
             place={i + 1}
-            subLabel={`${donor.count} ${donor.count === 1 ? 'donation' : 'donations'}`}
+            subLabel={`${donor.count.toLocaleString()} ${donor.count === 1 ? 'donation' : 'donations'}`}
           />
         ))}
       </Box>
@@ -60,7 +60,7 @@ export function DonorLeaderboard({ donations }: Props) {
                 <Table.Cell>
                   <DonorName name={donor.donor_name} />
                   <Span color="fg.subtle" fontSize="xs" ml={1.5}>
-                    ({donor.count} {donor.count === 1 ? 'donation' : 'donations'})
+                    ({donor.count.toLocaleString()} {donor.count === 1 ? 'donation' : 'donations'})
                   </Span>
                 </Table.Cell>
                 <Table.Cell textAlign="right">
