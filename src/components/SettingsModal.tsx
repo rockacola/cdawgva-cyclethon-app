@@ -3,8 +3,18 @@
 import { Dialog, Flex, HStack, IconButton, Portal, Text } from '@chakra-ui/react';
 import { X } from 'lucide-react';
 
-import { APPEARANCE_MODES, TIMEZONE_MODES } from '@/lib/constants';
+import { useTranslations } from '@/hooks/useTranslations';
+import {
+  APPEARANCE_MODES,
+  APPEARANCE_TRANSLATION_KEYS,
+  LOCALE_LABELS,
+  LOCALE_MODES,
+  TIMEZONE_MODES,
+  TIMEZONE_TRANSLATION_KEYS,
+} from '@/lib/constants';
+import { flags } from '@/lib/flags';
 import { useAppearanceContext } from '@/providers/AppearanceProvider';
+import { useLocaleContext } from '@/providers/LocaleProvider';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
 interface Props {
@@ -14,7 +24,9 @@ interface Props {
 
 export function SettingsModal({ onClose, open }: Props) {
   const { appearanceMode, setAppearanceMode } = useAppearanceContext();
+  const { localeMode, setLocaleMode } = useLocaleContext();
   const { setTimezoneMode, timezoneMode } = useTimezoneContext();
+  const t = useTranslations('settings');
 
   return (
     <Dialog.Root
@@ -27,7 +39,7 @@ export function SettingsModal({ onClose, open }: Props) {
         <Dialog.Positioner>
           <Dialog.Content>
             <Dialog.Header>
-              <Dialog.Title>Settings</Dialog.Title>
+              <Dialog.Title>{t('title')}</Dialog.Title>
               <Dialog.CloseTrigger asChild>
                 <IconButton aria-label="Close settings" size="sm" variant="ghost">
                   <X size={16} />
@@ -38,7 +50,7 @@ export function SettingsModal({ onClose, open }: Props) {
             <Dialog.Body pb={6}>
               <Flex align="center" justify="space-between" mb={4}>
                 <Text fontSize="sm" fontWeight="medium">
-                  Appearance
+                  {t('appearance')}
                 </Text>
                 <HStack color="fg.muted" fontSize="sm" gap={1.5}>
                   {APPEARANCE_MODES.map((mode, i) => (
@@ -46,7 +58,7 @@ export function SettingsModal({ onClose, open }: Props) {
                       {i > 0 && <Text>|</Text>}
                       {mode === appearanceMode ? (
                         <Text color="fg" fontWeight="bold">
-                          {mode}
+                          {t(APPEARANCE_TRANSLATION_KEYS[mode])}
                         </Text>
                       ) : (
                         <Text
@@ -54,7 +66,7 @@ export function SettingsModal({ onClose, open }: Props) {
                           cursor="pointer"
                           onClick={() => setAppearanceMode(mode)}
                         >
-                          {mode}
+                          {t(APPEARANCE_TRANSLATION_KEYS[mode])}
                         </Text>
                       )}
                     </HStack>
@@ -62,9 +74,9 @@ export function SettingsModal({ onClose, open }: Props) {
                 </HStack>
               </Flex>
 
-              <Flex align="center" justify="space-between">
+              <Flex align="center" justify="space-between" mb={4}>
                 <Text fontSize="sm" fontWeight="medium">
-                  Timezone
+                  {t('timezone')}
                 </Text>
                 <HStack color="fg.muted" fontSize="sm" gap={1.5}>
                   {TIMEZONE_MODES.map((mode, i) => (
@@ -72,7 +84,7 @@ export function SettingsModal({ onClose, open }: Props) {
                       {i > 0 && <Text>|</Text>}
                       {mode === timezoneMode ? (
                         <Text color="fg" fontWeight="bold">
-                          {mode}
+                          {t(TIMEZONE_TRANSLATION_KEYS[mode])}
                         </Text>
                       ) : (
                         <Text
@@ -80,13 +92,44 @@ export function SettingsModal({ onClose, open }: Props) {
                           cursor="pointer"
                           onClick={() => setTimezoneMode(mode)}
                         >
-                          {mode}
+                          {t(TIMEZONE_TRANSLATION_KEYS[mode])}
                         </Text>
                       )}
                     </HStack>
                   ))}
                 </HStack>
               </Flex>
+
+              {flags.showLanguageSettings ? (
+                <Flex align="center" justify="space-between">
+                  <Text fontSize="sm" fontWeight="medium">
+                    {t('language')}
+                  </Text>
+                  <HStack color="fg.muted" fontSize="sm" gap={1.5}>
+                    {LOCALE_MODES.map((mode, i) => {
+                      const label = mode === 'System' ? t('languageSystem') : LOCALE_LABELS[mode];
+                      return (
+                        <HStack gap={1.5} key={mode}>
+                          {i > 0 && <Text>|</Text>}
+                          {mode === localeMode ? (
+                            <Text color="fg" fontWeight="bold">
+                              {label}
+                            </Text>
+                          ) : (
+                            <Text
+                              _hover={{ color: 'fg' }}
+                              cursor="pointer"
+                              onClick={() => setLocaleMode(mode)}
+                            >
+                              {label}
+                            </Text>
+                          )}
+                        </HStack>
+                      );
+                    })}
+                  </HStack>
+                </Flex>
+              ) : null}
             </Dialog.Body>
           </Dialog.Content>
         </Dialog.Positioner>

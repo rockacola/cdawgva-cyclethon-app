@@ -1,0 +1,15 @@
+{
+  "settings": {
+    "appearance": "外観",
+    "appearanceDark": "ダーク",
+    "appearanceLight": "ライト",
+    "appearanceSystem": "システム",
+    "language": "言語",
+    "languageSystem": "システム",
+    "timezone": "タイムゾーン",
+    "timezoneJST": "JST",
+    "timezoneLocal": "ローカル",
+    "timezoneUTC": "UTC",
+    "title": "設定"
+  }
+}

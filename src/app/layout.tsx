@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { AppearanceProvider } from '@/providers/AppearanceProvider';
 import { ChakraProvider } from '@/providers/ChakraProvider';
+import { LocaleProvider } from '@/providers/LocaleProvider';
 import { TimezoneProvider } from '@/providers/TimezoneProvider';
 
 export const metadata: Metadata = {
@@ -19,13 +20,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ChakraProvider>
           <AppearanceProvider>
-            <TimezoneProvider>
-              <Header />
-              {children}
-              <Footer />
-              <BackToTop />
-              <Analytics />
-            </TimezoneProvider>
+            <LocaleProvider>
+              <TimezoneProvider>
+                <Header />
+                {children}
+                <Footer />
+                <BackToTop />
+                <Analytics />
+              </TimezoneProvider>
+            </LocaleProvider>
           </AppearanceProvider>
         </ChakraProvider>
       </body>

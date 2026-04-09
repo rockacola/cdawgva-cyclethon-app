@@ -1,0 +1,15 @@
+{
+  "settings": {
+    "appearance": "Appearance",
+    "appearanceDark": "Dark",
+    "appearanceLight": "Light",
+    "appearanceSystem": "System",
+    "language": "Language",
+    "languageSystem": "System",
+    "timezone": "Timezone",
+    "timezoneJST": "JST",
+    "timezoneLocal": "Local",
+    "timezoneUTC": "UTC",
+    "title": "Settings"
+  }
+}

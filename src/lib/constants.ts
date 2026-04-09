@@ -30,6 +30,29 @@ export const TIMEZONE_MODES = ['JST', 'UTC', 'Local'] as const;
 export type TimezoneMode = (typeof TIMEZONE_MODES)[number];
 export const TIMEZONE_MODE_DEFAULT: TimezoneMode = 'JST';
 
+// Locale options
+export const LOCALE_MODES = ['EN', 'JP', 'System'] as const;
+export type LocaleMode = (typeof LOCALE_MODES)[number];
+export const LOCALE_MODE_DEFAULT: LocaleMode = 'System';
+
+export const LOCALE_LABELS: Record<LocaleMode, string> = {
+  EN: 'English',
+  JP: '日本語',
+  System: 'System',
+};
+
+export const APPEARANCE_TRANSLATION_KEYS: Record<AppearanceMode, string> = {
+  Dark: 'appearanceDark',
+  Light: 'appearanceLight',
+  System: 'appearanceSystem',
+};
+
+export const TIMEZONE_TRANSLATION_KEYS: Record<TimezoneMode, string> = {
+  JST: 'timezoneJST',
+  Local: 'timezoneLocal',
+  UTC: 'timezoneUTC',
+};
+
 // Top donors leaderboard display limits
 export const TOP_DONORS_CARDS = 3;
 export const TOP_DONORS_TABLE_END = 20;
@@ -41,6 +64,7 @@ export const ACTIVITY_CHART_BARS_DESKTOP = 60;
 // localStorage keys
 export const STORAGE_KEYS = {
   DONATION_PAGE_SIZE: 'donation_page_size',
+  LOCALE: 'locale',
   TIMEZONE: 'timezone',
 } as const;
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
