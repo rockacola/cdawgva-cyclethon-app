@@ -1,4 +1,4 @@
-import { HStack, Link, Text } from '@chakra-ui/react';
+import { HStack, Link, Spacer, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 export function Footer() {
@@ -20,6 +20,11 @@ export function Footer() {
           <NextLink href="/about">About</NextLink>
         </Link>
       </HStack>
+      <Spacer />
+      <Text color="fg.subtle" fontSize="xs" opacity={0.5}>
+        v{process.env.APP_VERSION}
+      </Text>
+      <Spacer />
     </HStack>
   );
 }
