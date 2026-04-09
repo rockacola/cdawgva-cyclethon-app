@@ -128,10 +128,10 @@ export function Header() {
       <IconButton
         aria-label="Open settings"
         onClick={() => setSettingsOpen(true)}
-        size="sm"
-        variant="ghost"
+        size="md"
+        variant="outline"
       >
-        <Settings size={18} />
+        <Settings size={20} />
       </IconButton>
 
       <SettingsModal onClose={() => setSettingsOpen(false)} open={settingsOpen} />
