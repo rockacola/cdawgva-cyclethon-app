@@ -1,5 +1,5 @@
 export const flags = {
   showJourneyDotLinks: true,
   showJourneyHighlightVods: false,
-  showLanguageSettings: false,
+  showLanguageSettings: true,
 };
