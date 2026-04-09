@@ -7,6 +7,7 @@ import { DonorName } from '@/components/DonorName';
 import { PlaceCard } from '@/components/PlaceCard';
 import { TOP_DONORS_CARDS, TOP_DONORS_TABLE_END } from '@/lib/constants';
 import { formatAmount, topByTransaction } from '@/lib/donationUtils';
+import { getEventDayLabel } from '@/lib/journey';
 import type { Donation } from '@/lib/types';
 
 interface Props {
@@ -31,7 +32,13 @@ export function TransactionLeaderboard({ donations }: Props) {
         mb={6}
       >
         {cards.map((d, i) => (
-          <PlaceCard amount={formatAmount(d)} key={d.id} name={d.donor_name} place={i + 1} />
+          <PlaceCard
+            amount={formatAmount(d)}
+            key={d.id}
+            name={d.donor_name}
+            place={i + 1}
+            subLabel={getEventDayLabel(d.completed_at)}
+          />
         ))}
       </Box>
 
@@ -49,7 +56,10 @@ export function TransactionLeaderboard({ donations }: Props) {
               <Table.Row key={d.id}>
                 <Table.Cell color="fg.subtle">{TOP_DONORS_CARDS + i + 1}</Table.Cell>
                 <Table.Cell>
-                  <DonorName name={d.donor_name} />
+                  <DonorName name={d.donor_name} />{' '}
+                  <Text as="span" color="fg.subtle" fontSize="xs">
+                    ({getEventDayLabel(d.completed_at)})
+                  </Text>
                 </Table.Cell>
                 <Table.Cell textAlign="right">{formatAmount(d)}</Table.Cell>
               </Table.Row>
