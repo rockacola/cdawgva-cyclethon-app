@@ -4,6 +4,7 @@ import { Box, Span, Table, Text } from '@chakra-ui/react';
 import { Crown } from 'lucide-react';
 import { useMemo } from 'react';
 
+import { useTranslations } from '@/hooks/useTranslations';
 import { animeIdToName, detectAnimeFromComment } from '@/lib/animePatterns';
 import { formatAmountParts } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function AnimeWarTable({ donations, maxCount }: Props) {
+  const t = useTranslations('dayPage');
   const animeStats = useMemo(
     function aggregateByAnime() {
       const map = new Map<string, { count: number; sumCent: number }>();
@@ -51,9 +53,9 @@ export function AnimeWarTable({ donations, maxCount }: Props) {
       <Table.Header>
         <Table.Row>
           <Table.ColumnHeader textAlign="center" w={10} />
-          <Table.ColumnHeader>Anime</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right">Count</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right">Total</Table.ColumnHeader>
+          <Table.ColumnHeader>{t('anime')}</Table.ColumnHeader>
+          <Table.ColumnHeader textAlign="right">{t('count')}</Table.ColumnHeader>
+          <Table.ColumnHeader textAlign="right">{t('total')}</Table.ColumnHeader>
         </Table.Row>
       </Table.Header>
       <Table.Body>

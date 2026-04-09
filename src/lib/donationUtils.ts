@@ -1,3 +1,4 @@
+import COUNTRY_NAMES_JP from '@/lib/countryNamesJp';
 import type { Donation, DonorTotal } from '@/lib/types';
 
 // Each entry: [ISO 3166-1 alpha-3 code, ...patterns to match (case-insensitive, word-boundary)]
@@ -455,7 +456,10 @@ const COUNTRY_NAMES: Record<string, string> = {
   ZWE: 'Zimbabwe',
 };
 
-export function countryCodeToName(code: string): string {
+export function countryCodeToName(code: string, locale: string = 'EN'): string {
+  if (locale === 'JP') {
+    return COUNTRY_NAMES_JP[code] ?? COUNTRY_NAMES[code] ?? code;
+  }
   return COUNTRY_NAMES[code] ?? code;
 }
 

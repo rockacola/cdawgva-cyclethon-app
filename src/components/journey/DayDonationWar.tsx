@@ -5,9 +5,11 @@ import { Box, Text } from '@chakra-ui/react';
 import { AnimeWarTable } from '@/components/AnimeWarTable';
 import { CountryWarTable } from '@/components/CountryWarTable';
 import { useDonations } from '@/contexts/DonationsContext';
+import { useTranslations } from '@/hooks/useTranslations';
 import type { TimezoneMode } from '@/lib/constants';
 import type { DonationWarEntry } from '@/lib/journey-data';
 import { formatDonationTime } from '@/lib/timeUtils';
+import { useLocaleContext } from '@/providers/LocaleProvider';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
 const TOP_N = 10;
@@ -58,18 +60,21 @@ function DonationWarCard({
   timezoneMode: TimezoneMode;
   war: DonationWarEntry;
 }) {
+  const t = useTranslations('dayPage');
+  const { resolvedLocale } = useLocaleContext();
+  const displayTitle = resolvedLocale === 'JP' ? (war.titleJp ?? war.title) : war.title;
+
   return (
     <Box>
       <Text color="fg.muted" fontSize="sm" fontWeight="semibold" mb={1}>
-        {war.title}
+        {displayTitle}
       </Text>
       <Text color="fg.muted" fontSize="xs">
-        {formatDonationTime(war.startTimestamp, timezoneMode)} –{' '}
-        {formatDonationTime(war.endTimestamp, timezoneMode)} {timezoneMode}
+        {formatDonationTime(war.startTimestamp, timezoneMode, resolvedLocale)} –{' '}
+        {formatDonationTime(war.endTimestamp, timezoneMode, resolvedLocale)} {timezoneMode}
       </Text>
       <Text color="fg.muted" fontSize="xs" mb={3}>
-        The amount shown here is a running estimate and may not exactly match the figure shown on
-        the stream.
+        {t('disclaimer')}
       </Text>
       {children}
     </Box>

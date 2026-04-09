@@ -17,6 +17,7 @@ export interface MapLocation {
   id: string;
   socials?: MapLocationSocial[];
   title: string;
+  titleJp?: string;
   websiteUrl?: string;
 }
 
@@ -31,6 +32,7 @@ export interface DonationWarEntry {
   endTimestamp: number;
   startTimestamp: number;
   title: string;
+  titleJp?: string;
   type: 'anime' | 'country';
 }
 
@@ -40,7 +42,9 @@ export interface DayEntry {
 
   // route
   destination: string;
+  destinationJp?: string;
   startPoint: string;
+  startPointJp?: string;
 
   // stats
   amountRaised?: number;
@@ -76,6 +80,7 @@ export const journeyData: DayEntry[] = [
   {
     dayKey: 'day-1',
     destination: 'Mutsu-Yokohama',
+    destinationJp: 'むつ横浜',
     amountRaised: 119155,
     amountRaisedCurrency: 'USD',
     avgTempCelsius: 18.8,
@@ -88,6 +93,7 @@ export const journeyData: DayEntry[] = [
         googleMapsUrl: 'https://maps.google.com/?cid=16479926693861552529',
         id: 'd1-loc-1',
         title: 'Maguro Monument (Tuna Statue of Honshu North Edge)',
+        titleJp: 'まぐろ一本釣の町おおま石像',
         websiteUrl: 'https://oma-wide.net/menu/omazaki/',
       },
       {
@@ -95,6 +101,7 @@ export const journeyData: DayEntry[] = [
         googleMapsUrl: 'https://maps.google.com/?cid=13450471678049929364',
         id: 'd1-loc-2',
         title: 'Kuwabatadai Mutsu Hamanasu Line Stone Monument',
+        titleJp: '桑畑台 むつはまなすライン 石碑',
         websiteUrl:
           'https://www.bousai.go.jp/jishin/nihonkaiko_chishima/hokkaido/pdf/chishima_manga.pdf',
       },
@@ -103,6 +110,7 @@ export const journeyData: DayEntry[] = [
         googleMapsUrl: 'https://maps.google.com/?cid=2378892243340516275',
         id: 'd1-loc-3',
         title: 'Ushitora Coffee',
+        titleJp: '艮珈琲店',
         websiteUrl: 'http://ushitoracoffee.com/',
       },
       {
@@ -110,18 +118,21 @@ export const journeyData: DayEntry[] = [
         googleMapsUrl: 'https://maps.google.com/?cid=15781784636915904652',
         id: 'd1-loc-4',
         title: 'Lawson Mutsu Yanagimachi 1-chome',
+        titleJp: 'ローソン むつ柳町一丁目店',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=8935616282557506387',
         id: 'd1-loc-5',
         title: 'Lawson Mutsu Okunai Shop',
+        titleJp: 'ローソン むつ奥内店',
       },
       {
         category: 'Terminal',
         googleMapsUrl: 'https://maps.google.com/?cid=17825440544961928775',
         id: 'd1-loc-6',
         title: 'Mutsu-Yokohama Station',
+        titleJp: '陸奥横浜駅',
       },
     ],
     mapUrl: 'https://www.google.com/maps/d/viewer?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
@@ -129,6 +140,7 @@ export const journeyData: DayEntry[] = [
     redditLabel: 'Day 1 Cyclethon 5 Infographics',
     redditUrl: 'https://old.reddit.com/r/CDawgVA/comments/1sd4vzm/day_1_cyclethon_5_infographics/',
     startPoint: 'Cape Oma',
+    startPointJp: '大間崎',
     timeCycling: 418,
     twitchClips: [
       { id: 'clip-placeholder-1' },
@@ -142,6 +154,7 @@ export const journeyData: DayEntry[] = [
   {
     dayKey: 'day-2',
     destination: 'Aomori Station',
+    destinationJp: '青森駅',
     amountRaised: 51799,
     amountRaisedCurrency: 'USD',
     totalAmountRaised: 170659,
@@ -155,36 +168,42 @@ export const journeyData: DayEntry[] = [
         googleMapsUrl: 'https://maps.google.com/?cid=17825440544961928775',
         id: 'd2-loc-1',
         title: 'Mutsu-Yokohama Station',
+        titleJp: '陸奥横浜駅',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=5259525789346455091',
         id: 'd2-loc-2',
         title: 'Hamanasu Roadside Café',
+        titleJp: 'はまなすドライブイン',
       },
       {
         category: 'Event',
         googleMapsUrl: 'https://www.google.com.au/maps/place/40°55\'02.4"N+141°11\'25.2"E/',
         id: 'd2-loc-3',
-        title: 'Quick stop to diagnose bike issue',
+        title: 'Short stop to fix a bike issue',
+        titleJp: '自転車トラブル確認',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=9940405137050285818',
         id: 'd2-loc-4',
         title: 'Lawson Noheji Tanabumichi',
+        titleJp: 'ローソン 野辺地田名部道店',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=7993017785954344840',
         id: 'd2-loc-5',
         title: 'Lawson Hiranai Kominato',
+        titleJp: 'ローソン 平内小湊店',
       },
       {
         category: 'Landmark',
         googleMapsUrl: 'https://maps.google.com/?cid=11906412819564480605',
         id: 'd2-loc-6',
-        title: 'Hotate Ohashi',
+        title: 'Hotate Brdge',
+        titleJp: 'ほたて大橋',
         websiteUrl:
           'http://www.thr.mlit.go.jp/aomori/syutu/aokoku/aokoku-sisetu/hotate/hotate_oohashi.html',
       },
@@ -194,18 +213,21 @@ export const journeyData: DayEntry[] = [
         id: 'd2-loc-7',
         socials: [{ platform: 'Instagram', url: 'https://www.instagram.com/isamu_sato777/?hl=ja' }],
         title: 'Tsurukameya Shokudo',
+        titleJp: '鶴亀屋食堂',
       },
       {
         category: 'Event',
         googleMapsUrl: 'https://www.google.com.au/maps/place/40°49\'36.2"N+140°48\'48.7"E',
         id: 'd2-loc-8',
-        title: 'Stop to take a car ride to Koyasan Aomoribetsuin',
+        title: 'Car transfer to Koyasan Aomoribetsuin',
+        titleJp: '高野山青森別院への車移動',
       },
       {
         category: 'Tour',
         googleMapsUrl: 'https://maps.google.com/?cid=14918925083774958918',
         id: 'd2-loc-9',
         title: 'Koyasan Aomoribetsuin',
+        titleJp: '高野山 青森別院',
         websiteUrl:
           'http://showa-daibutu.com/guide/%E9%AB%98%E9%87%8E%E5%B1%B1%E9%9D%92%E6%A3%AE%E5%88%A5%E9%99%A2/',
       },
@@ -214,6 +236,7 @@ export const journeyData: DayEntry[] = [
         googleMapsUrl: 'https://maps.google.com/?cid=8427433769269076318',
         id: 'd2-loc-10',
         title: 'Aomori Station',
+        titleJp: '青森駅',
       },
     ],
     mapUrl: 'https://www.google.com/maps/d/u/1/edit?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
@@ -221,6 +244,7 @@ export const journeyData: DayEntry[] = [
     redditLabel: 'Day 2 Cyclethon 5 Infographics',
     redditUrl: 'https://old.reddit.com/r/CDawgVA/comments/1sdtr6z/day_2_cyclethon_5_infographics/',
     startPoint: 'Mutsu-Yokohama',
+    startPointJp: 'むつ横浜',
     timeCycling: 233,
     twitchUrl: 'https://www.twitch.tv/videos/2740993163',
     windSpeedMs: 14.8,
@@ -229,6 +253,7 @@ export const journeyData: DayEntry[] = [
   {
     dayKey: 'day-3',
     destination: 'Fukaura Station',
+    destinationJp: '深浦駅',
     amountRaised: 84457,
     amountRaisedCurrency: 'USD',
     totalAmountRaised: 255116,
@@ -242,12 +267,14 @@ export const journeyData: DayEntry[] = [
         googleMapsUrl: 'https://maps.google.com/?cid=8427433769269076318',
         id: 'd3-loc-1',
         title: 'Aomori Station',
+        titleJp: '青森駅',
       },
       {
         category: 'Tour',
         googleMapsUrl: 'https://maps.google.com/?cid=14282572961377107010',
         id: 'd3-loc-2',
         title: 'Nebuta Museum WA RASSE',
+        titleJp: 'ねぶたの家 ワ･ラッセ',
         websiteUrl: 'http://www.nebuta.jp/warasse/',
       },
       {
@@ -255,18 +282,21 @@ export const journeyData: DayEntry[] = [
         googleMapsUrl: 'https://maps.google.com/?cid=5939235032055357764',
         id: 'd3-loc-3',
         title: 'FamilyMart Aomori Daishaka-nishi',
+        titleJp: 'ファミリーマート 青森大釈迦西店',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=8598372354747298628',
         id: 'd3-loc-4',
         title: 'Lawson Tsuruta Kizutsu Store',
+        titleJp: 'ローソン 鶴田木筒店',
       },
       {
         category: 'Dining',
         googleMapsUrl: 'https://maps.google.com/?cid=13564023784280791504',
         id: 'd3-loc-5',
         title: 'Ramen shop',
+        titleJp: 'ラーメンショップ森田店',
       },
       {
         category: 'Event',
@@ -274,30 +304,35 @@ export const journeyData: DayEntry[] = [
           "https://www.google.com/maps/place/40%C2%B045'02.0%22N+140%C2%B008'40.7%22E/@40.7505556,140.1420586,17z/",
         id: 'd3-loc-6',
         title: 'Technical Stop',
+        titleJp: '機材確認のための停止',
       },
       {
         category: 'Event',
         googleMapsUrl: 'https://www.google.com/maps/dir//40.75213888888889,140.14669444444445',
         id: 'd3-loc-7',
         title: 'Flat Tire',
+        titleJp: 'パンク',
       },
       {
         category: 'Event',
         googleMapsUrl: 'https://www.google.com/maps/dir//40.75055555555556,140.1446388888889',
         id: 'd3-loc-8',
         title: 'Emergency Stop',
+        titleJp: '緊急停止',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=2511115448289044863',
         id: 'd3-loc-9',
         title: 'FamilyMart Fukaura Seki',
+        titleJp: 'ファミリーマート 深浦関店',
       },
       {
         category: 'Terminal',
         googleMapsUrl: 'https://maps.google.com/?cid=14806150503861375762',
         id: 'd3-loc-10',
         title: 'Fukaura Station',
+        titleJp: '深浦駅',
       },
     ],
     mapUrl: 'https://www.google.com/maps/d/u/1/edit?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
@@ -305,6 +340,7 @@ export const journeyData: DayEntry[] = [
     redditLabel: 'Day 3 Cyclethon 5 Infographics',
     redditUrl: 'https://old.reddit.com/r/CDawgVA/comments/1sev03w/day_3_cyclethon_5_infographics/',
     startPoint: 'Aomori Station',
+    startPointJp: '青森駅',
     timeCycling: 391,
     twitchUrl: 'https://bingobaker.com/#67fad5a4f7be3f0b',
     windSpeedMs: 26.91,
@@ -313,6 +349,7 @@ export const journeyData: DayEntry[] = [
   {
     dayKey: 'day-4',
     destination: 'Okubo Station',
+    destinationJp: '大久保駅',
     amountRaised: 50979,
     amountRaisedCurrency: 'USD',
     totalAmountRaised: 306095,
@@ -324,6 +361,7 @@ export const journeyData: DayEntry[] = [
         endTimestamp: 1775628180,
         startTimestamp: 1775626440,
         title: 'Donation War - by Country',
+        titleJp: '寄付対決（国別）',
         type: 'country',
       },
     ],
@@ -334,48 +372,56 @@ export const journeyData: DayEntry[] = [
         googleMapsUrl: 'https://maps.google.com/?cid=14806150503861375762',
         id: 'd4-loc-1',
         title: 'Fukaura Station',
+        titleJp: '深浦駅',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=16945426892651169587',
         id: 'd4-loc-2',
         title: 'Jūniko Station',
+        titleJp: '十二湖駅',
       },
       {
         category: 'Dining',
         googleMapsUrl: 'https://maps.google.com/?cid=109651786732343566',
         id: 'd4-loc-3',
         title: 'Ikoi no Lodge resthouse',
+        titleJp: 'レストハウス・いこいのロッヂ',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=11119227074632662490',
         id: 'd4-loc-4',
         title: 'Lawson Noshiro Ochiai',
+        titleJp: 'ローソン 能代落合店',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=9071523953498329836',
         id: 'd4-loc-5',
         title: 'Lawson Mitane Town Kado Shop',
+        titleJp: 'ローソン 三種町鹿渡店',
       },
       {
         category: 'Event',
         googleMapsUrl: 'https://maps.google.com/?cid=5601088048703282514',
         id: 'd4-loc-6',
         title: 'Pit In Masaka',
+        titleJp: 'ピットイン真坂',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=16433241975714706565',
         id: 'd4-loc-7',
         title: 'Lawson Ikawa Sakura Station',
+        titleJp: 'ローソン 井川さくら駅前店',
       },
       {
         category: 'Terminal',
         googleMapsUrl: 'https://maps.google.com/?cid=13918436445634512470',
         id: 'd4-loc-8',
         title: 'Ōkubo Station',
+        titleJp: '大久保駅',
       },
     ],
     mapUrl: 'https://www.google.com/maps/d/u/1/edit?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
@@ -383,6 +429,7 @@ export const journeyData: DayEntry[] = [
     redditLabel: 'Day 4 Cyclethon 5 Infographics',
     redditUrl: 'https://old.reddit.com/r/CDawgVA/comments/1sfouvd/day_4_cyclethon_5_infographics/',
     startPoint: 'Fukaura Station',
+    startPointJp: '深浦駅',
     timeCycling: 356,
     twitchUrl: 'https://www.twitch.tv/videos/2742572727',
     windSpeedMs: 17.9,
@@ -395,12 +442,14 @@ export const journeyData: DayEntry[] = [
     caloriesBurnt: 5716,
     dayKey: 'day-5',
     destination: 'Kisakata Station',
+    destinationJp: '象潟駅',
     distanceKm: 86.1,
     donationWars: [
       {
         endTimestamp: 1775712240,
         startTimestamp: 1775707200,
         title: 'Donation War - by Anime',
+        titleJp: '寄付対決（アニメ別）',
         type: 'anime',
       },
     ],
@@ -411,12 +460,14 @@ export const journeyData: DayEntry[] = [
         googleMapsUrl: 'https://maps.google.com/?cid=13918436445634512470',
         id: 'd5-loc-1',
         title: 'Ōkubo Station',
+        titleJp: '大久保駅',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=14239258970418660475',
         id: 'd5-loc-2',
         title: 'Akita City Port Tower Selion',
+        titleJp: '道の駅 あきた港 ポートタワー セリオン',
         websiteUrl: 'http://www.selion-akita.com/',
       },
       {
@@ -424,12 +475,14 @@ export const journeyData: DayEntry[] = [
         googleMapsUrl: 'https://maps.google.com/?cid=1153065054667740169',
         id: 'd5-loc-3',
         title: 'GajRaaj',
+        titleJp: 'ガジュラージュ',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=296905126825903912',
         id: 'd5-loc-4',
         title: 'FamilyMart Yurihonjo Iwaki',
+        titleJp: 'ファミリーマート 由利本荘岩城店',
       },
       {
         category: 'Event',
@@ -437,18 +490,21 @@ export const journeyData: DayEntry[] = [
           'https://www.google.com/maps/place/Kamibayashi-4-21+Konoura,+Nikaho,+Akita+018-0311,+Japan/@39.2603469,139.9169477,17z/',
         id: 'd5-loc-5',
         title: 'Sakura Viewing',
+        titleJp: '花見',
       },
       {
         category: 'Rest Stop',
         googleMapsUrl: 'https://maps.google.com/?cid=296905126825903912',
         id: 'd5-loc-6',
         title: 'Lawson Honjo Ishiwaki',
+        titleJp: 'ローソン 本荘石脇店',
       },
       {
         category: 'Terminal',
         googleMapsUrl: 'https://maps.google.com/?cid=15549417925211908634',
         id: 'd5-loc-7',
         title: 'Kisakata Station',
+        titleJp: '象潟駅',
       },
     ],
     mapUrl: 'https://www.google.com/maps/d/u/1/edit?mid=1Ji6KbdKTivj14EPpP2MB0-NNfRj-9s8',
@@ -456,6 +512,7 @@ export const journeyData: DayEntry[] = [
     redditLabel: 'Day 5 Cyclethon 5 Infographics',
     redditUrl: 'https://old.reddit.com/r/CDawgVA/comments/1sgrwik/day_5_cyclethon_5_infographics/',
     startPoint: 'Ōkubo Station',
+    startPointJp: '大久保駅',
     timeCycling: 319,
     totalAmountRaised: 353851,
     twitchUrl: 'https://www.twitch.tv/videos/2743372346',

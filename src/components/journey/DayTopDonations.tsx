@@ -5,6 +5,7 @@ import { Crown } from 'lucide-react';
 import { useMemo } from 'react';
 
 import { useDonations } from '@/contexts/DonationsContext';
+import { useTranslations } from '@/hooks/useTranslations';
 import { formatAmountParts, getTopDonationsForDay, isAnonymous } from '@/lib/donationUtils';
 import { getJSTDayBounds } from '@/lib/timezoneUtils';
 
@@ -14,6 +15,7 @@ interface Props {
 
 export function DayTopDonations({ dateStr }: Props) {
   const { donations } = useDonations();
+  const t = useTranslations('dayPage');
 
   const topDonations = useMemo(
     function computeTopDonations() {
@@ -32,8 +34,8 @@ export function DayTopDonations({ dateStr }: Props) {
       <Table.Header>
         <Table.Row>
           <Table.ColumnHeader textAlign="center" w={10} />
-          <Table.ColumnHeader>Donor</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right">Amount</Table.ColumnHeader>
+          <Table.ColumnHeader>{t('donor')}</Table.ColumnHeader>
+          <Table.ColumnHeader textAlign="right">{t('amount')}</Table.ColumnHeader>
         </Table.Row>
       </Table.Header>
       <Table.Body>

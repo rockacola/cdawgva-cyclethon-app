@@ -1,11 +1,14 @@
+'use client';
+
 import { Box, Image, SimpleGrid, Text } from '@chakra-ui/react';
 import { Clapperboard } from 'lucide-react';
 
+import { useTranslations } from '@/hooks/useTranslations';
 import type { TwitchClip } from '@/lib/journey-data';
 
 const DEFAULT_PLACEHOLDER_COUNT = 4;
 
-function ClipCard({ clip }: { clip: TwitchClip }) {
+function ClipCard({ clip, clipComingSoon }: { clip: TwitchClip; clipComingSoon: string }) {
   if (clip.embedUrl) {
     return (
       <Box borderRadius="xl" borderWidth="1px" overflow="hidden" style={{ aspectRatio: '16/9' }}>
@@ -50,7 +53,7 @@ function ClipCard({ clip }: { clip: TwitchClip }) {
         <Clapperboard size={22} />
       </Box>
       <Text color="fg.subtle" fontSize="xs" textAlign="center">
-        {clip.title ?? 'Clip coming soon'}
+        {clip.title ?? clipComingSoon}
       </Text>
     </Box>
   );
@@ -65,6 +68,7 @@ interface Props {
 }
 
 export function DayClips({ clips }: Props) {
+  const t = useTranslations('dayPage');
   const displayClips = clips?.length ? clips : defaultClips;
 
   return (
@@ -77,11 +81,11 @@ export function DayClips({ clips }: Props) {
         mb={3}
         textTransform="uppercase"
       >
-        Highlights
+        {t('highlights')}
       </Text>
       <SimpleGrid columns={{ base: 2, md: 4 }} gap={4}>
         {displayClips.map((clip) => (
-          <ClipCard clip={clip} key={clip.id} />
+          <ClipCard clip={clip} clipComingSoon={t('clipComingSoon')} key={clip.id} />
         ))}
       </SimpleGrid>
     </Box>

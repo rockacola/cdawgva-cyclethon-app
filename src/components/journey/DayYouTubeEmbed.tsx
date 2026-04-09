@@ -1,7 +1,10 @@
+'use client';
+
 import { Box, Button, Link, Stack } from '@chakra-ui/react';
 import { PlayCircle, Tv2 } from 'lucide-react';
 import Image from 'next/image';
 
+import { useTranslations } from '@/hooks/useTranslations';
 import { getYouTubeVideoId } from '@/lib/youtube';
 
 const TWITCH_COLOR = '#9146FF';
@@ -13,6 +16,7 @@ interface Props {
 }
 
 export function DayYouTubeEmbed({ twitchUrl, youtubeUrl }: Props) {
+  const t = useTranslations('dayPage');
   const id = getYouTubeVideoId(youtubeUrl);
   if (!id) {
     return null;
@@ -46,7 +50,7 @@ export function DayYouTubeEmbed({ twitchUrl, youtubeUrl }: Props) {
           target="_blank"
         >
           <PlayCircle size={15} />
-          Watch on YouTube
+          {t('watchOnYouTube')}
         </Link>
       </Button>
 
@@ -65,7 +69,7 @@ export function DayYouTubeEmbed({ twitchUrl, youtubeUrl }: Props) {
             target="_blank"
           >
             <Tv2 size={15} />
-            Watch on Twitch
+            {t('watchOnTwitch')}
           </Link>
         </Button>
       ) : null}

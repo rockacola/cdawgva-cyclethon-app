@@ -4,12 +4,14 @@ import { Box, Span, Table, Text } from '@chakra-ui/react';
 import { Crown } from 'lucide-react';
 import { useMemo } from 'react';
 
+import { useTranslations } from '@/hooks/useTranslations';
 import {
   countryCodeToName,
   detectCountryFromComment,
   formatAmountParts,
 } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
+import { useLocaleContext } from '@/providers/LocaleProvider';
 
 interface Props {
   donations: Donation[];
@@ -17,6 +19,8 @@ interface Props {
 }
 
 export function CountryWarTable({ donations, maxCount }: Props) {
+  const t = useTranslations('dayPage');
+  const { resolvedLocale } = useLocaleContext();
   const countryStats = useMemo(
     function aggregateByCountry() {
       const map = new Map<string, { count: number; sumCent: number }>();
@@ -54,9 +58,9 @@ export function CountryWarTable({ donations, maxCount }: Props) {
       <Table.Header>
         <Table.Row>
           <Table.ColumnHeader textAlign="center" w={10} />
-          <Table.ColumnHeader>Country</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right">Count</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right">Total</Table.ColumnHeader>
+          <Table.ColumnHeader>{t('country')}</Table.ColumnHeader>
+          <Table.ColumnHeader textAlign="right">{t('count')}</Table.ColumnHeader>
+          <Table.ColumnHeader textAlign="right">{t('total')}</Table.ColumnHeader>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -67,7 +71,7 @@ export function CountryWarTable({ donations, maxCount }: Props) {
                 {i === 0 ? <Crown color="var(--chakra-colors-yellow-400)" size={16} /> : i + 1}
               </Box>
             </Table.Cell>
-            <Table.Cell>{countryCodeToName(row.country)}</Table.Cell>
+            <Table.Cell>{countryCodeToName(row.country, resolvedLocale)}</Table.Cell>
             <Table.Cell textAlign="right">{row.count}</Table.Cell>
             <Table.Cell textAlign="right" whiteSpace="nowrap">
               {(() => {

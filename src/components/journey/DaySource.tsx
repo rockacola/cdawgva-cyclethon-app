@@ -1,5 +1,9 @@
+'use client';
+
 import { Box, HStack, Link, Stack, Text } from '@chakra-ui/react';
 import { ExternalLink, MessageSquare } from 'lucide-react';
+
+import { useTranslations } from '@/hooks/useTranslations';
 
 interface Props {
   redditAuthor?: string;
@@ -8,6 +12,8 @@ interface Props {
 }
 
 export function DaySource({ redditAuthor, redditLabel, redditUrl }: Props) {
+  const t = useTranslations('dayPage');
+
   if (!redditAuthor && !redditUrl) {
     return null;
   }
@@ -17,13 +23,13 @@ export function DaySource({ redditAuthor, redditLabel, redditUrl }: Props) {
       <HStack gap={2} mb={2}>
         <MessageSquare size={15} />
         <Text fontSize="sm" fontWeight="semibold">
-          Data Source
+          {t('dataSource')}
         </Text>
       </HStack>
       <Stack gap={1.5}>
         {redditAuthor ? (
           <Text color="fg.muted" fontSize="sm">
-            Infographics by{' '}
+            {t('infographicsBy')}{' '}
             <Link
               href={`https://old.reddit.com/user/${redditAuthor}`}
               rel="noopener noreferrer"
@@ -36,7 +42,7 @@ export function DaySource({ redditAuthor, redditLabel, redditUrl }: Props) {
         {redditUrl ? (
           <HStack fontSize="sm" gap={2}>
             <Link href={redditUrl} rel="noopener noreferrer" target="_blank">
-              {redditLabel ?? 'Reddit post'}{' '}
+              {redditLabel ?? t('redditPost')}{' '}
               <ExternalLink size={11} style={{ display: 'inline', verticalAlign: 'middle' }} />
             </Link>
           </HStack>

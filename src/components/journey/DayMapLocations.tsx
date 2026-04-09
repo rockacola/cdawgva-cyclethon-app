@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, HStack, Link, Stack, Text } from '@chakra-ui/react';
 import {
   Camera,
@@ -11,7 +13,18 @@ import {
   Wrench,
 } from 'lucide-react';
 
+import { useTranslations } from '@/hooks/useTranslations';
 import type { MapLocation, MapLocationCategory } from '@/lib/journey-data';
+import { useLocaleContext } from '@/providers/LocaleProvider';
+
+const CATEGORY_TRANSLATION_KEYS: Record<MapLocationCategory, string> = {
+  Dining: 'categoryDining',
+  Event: 'categoryEvent',
+  Landmark: 'categoryLandmark',
+  'Rest Stop': 'categoryRestStop',
+  Terminal: 'categoryTerminal',
+  Tour: 'categoryTour',
+};
 
 function getCategoryIcon(category: MapLocationCategory) {
   switch (category) {
@@ -48,13 +61,21 @@ function getCategoryColor(category: MapLocationCategory) {
 }
 
 function TimelineItem({
+  categoryLabel,
+  displayTitle,
+  googleMapsLabel,
   index,
   isLast,
   location,
+  websiteLabel,
 }: {
+  categoryLabel: string;
+  displayTitle: string;
+  googleMapsLabel: string;
   index: number;
   isLast: boolean;
   location: MapLocation;
+  websiteLabel: string;
 }) {
   const Icon = getCategoryIcon(location.category);
   const color = getCategoryColor(location.category);
@@ -95,11 +116,11 @@ function TimelineItem({
             py={0.5}
             textTransform="uppercase"
           >
-            {location.category}
+            {categoryLabel}
           </Text>
         </HStack>
         <Text fontWeight="bold" mb={1}>
-          {location.title}
+          {displayTitle}
         </Text>
         <HStack flexWrap="wrap" gap={3}>
           {location.googleMapsUrl ? (
@@ -111,7 +132,7 @@ function TimelineItem({
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                Google Maps{' '}
+                {googleMapsLabel}{' '}
                 <ExternalLink size={10} style={{ display: 'inline', verticalAlign: 'middle' }} />
               </Link>
             </HStack>
@@ -125,7 +146,7 @@ function TimelineItem({
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                Website{' '}
+                {websiteLabel}{' '}
                 <ExternalLink size={10} style={{ display: 'inline', verticalAlign: 'middle' }} />
               </Link>
             </HStack>
@@ -150,10 +171,22 @@ interface Props {
 }
 
 export function DayMapLocations({ locations }: Props) {
+  const { resolvedLocale } = useLocaleContext();
+  const t = useTranslations('dayPage');
+
   return (
     <Stack gap={0}>
       {locations.map((loc, i) => (
-        <TimelineItem index={i} isLast={i === locations.length - 1} key={loc.id} location={loc} />
+        <TimelineItem
+          categoryLabel={t(CATEGORY_TRANSLATION_KEYS[loc.category])}
+          displayTitle={resolvedLocale === 'JP' ? (loc.titleJp ?? loc.title) : loc.title}
+          googleMapsLabel={t('googleMaps')}
+          index={i}
+          isLast={i === locations.length - 1}
+          key={loc.id}
+          location={loc}
+          websiteLabel={t('website')}
+        />
       ))}
     </Stack>
   );

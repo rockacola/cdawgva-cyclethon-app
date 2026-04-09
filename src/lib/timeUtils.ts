@@ -39,11 +39,16 @@ export function formatAbsoluteTime(timestamp: number, mode: TimezoneMode): strin
   return `${get('year')}-${get('month')}-${get('day')} ${get('hour')}:${get('minute')} ${label}`;
 }
 
-export function formatDonationTime(timestamp: number, mode: TimezoneMode): string {
+export function formatDonationTime(
+  timestamp: number,
+  mode: TimezoneMode,
+  locale: string = 'EN'
+): string {
   const date = new Date(timestamp * 1000);
   const timeZone = getTimezoneId(mode);
+  const intlLocale = locale === 'JP' ? 'ja-JP' : 'en-US';
 
-  const time = new Intl.DateTimeFormat('en-US', {
+  const time = new Intl.DateTimeFormat(intlLocale, {
     hour: 'numeric',
     hour12: true,
     minute: '2-digit',
@@ -54,7 +59,11 @@ export function formatDonationTime(timestamp: number, mode: TimezoneMode): strin
     return time;
   }
 
-  const day = new Intl.DateTimeFormat('en-US', { day: 'numeric', timeZone }).format(date);
-  const month = new Intl.DateTimeFormat('en-US', { month: 'short', timeZone }).format(date);
+  const day = new Intl.DateTimeFormat(intlLocale, { day: 'numeric', timeZone }).format(date);
+  const month = new Intl.DateTimeFormat(intlLocale, { month: 'short', timeZone }).format(date);
+
+  if (locale === 'JP') {
+    return `${month}${day}日 ${time}`;
+  }
   return `${day} ${month}, ${time}`;
 }
