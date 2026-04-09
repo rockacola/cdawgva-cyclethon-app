@@ -2,13 +2,14 @@
 
 import { Box, Container, Heading, Span, Table, Text } from '@chakra-ui/react';
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 
 import { AnimeWarTable } from '@/components/AnimeWarTable';
 import { DonationTime } from '@/components/DonationTime';
 import { DonorName } from '@/components/DonorName';
 import { useDonations } from '@/contexts/DonationsContext';
-import { animeIdToName, detectAnimeFromComment } from '@/lib/animePatterns';
+import { ANIME_DATA_FETCHED_AT, animeIdToName, detectAnimeFromComment } from '@/lib/animePatterns';
+import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 import { formatAmountParts } from '@/lib/donationUtils';
 import { formatDonationTime } from '@/lib/timeUtils';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
@@ -22,9 +23,17 @@ export default function DonationsAnimePage() {
 }
 
 function DonationsAnimeContent() {
-  const { donations } = useDonations();
+  const { donations, refresh } = useDonations();
   const { timezoneMode } = useTimezoneContext();
   const searchParams = useSearchParams();
+
+  useEffect(
+    function pollDonations() {
+      const id = setInterval(refresh, DONATION_REFETCH_INTERVAL);
+      return () => clearInterval(id);
+    },
+    [refresh]
+  );
 
   const startTimestamp = Number(searchParams.get('start')) || 0;
   const endTimestamp = Number(searchParams.get('end')) || Infinity;
@@ -46,12 +55,15 @@ function DonationsAnimeContent() {
           Donations: {formatDonationTime(startTimestamp, timezoneMode)} –{' '}
           {formatDonationTime(endTimestamp, timezoneMode)} {timezoneMode}
         </Heading>
-        <Text color="fg.muted" fontSize="sm" mb={6}>
+        <Text color="fg.muted" fontSize="sm" mb={1}>
           {filteredDonations.length} donations — Total: $
           {(totalDonationsInCents / 100).toLocaleString('en-US', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}
+        </Text>
+        <Text color="fg.muted" fontSize="xs" mb={6}>
+          Anime data last checked: {new Date(ANIME_DATA_FETCHED_AT).toLocaleString()}
         </Text>
 
         <Box mb={10}>

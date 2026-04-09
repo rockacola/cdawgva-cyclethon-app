@@ -2,12 +2,13 @@
 
 import { Box, Container, Heading, Span, Table, Text } from '@chakra-ui/react';
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 
 import { CountryWarTable } from '@/components/CountryWarTable';
 import { DonationTime } from '@/components/DonationTime';
 import { DonorName } from '@/components/DonorName';
 import { useDonations } from '@/contexts/DonationsContext';
+import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 import {
   countryCodeToName,
   detectCountryFromComment,
@@ -25,9 +26,17 @@ export default function DonationsCountryPage() {
 }
 
 function DonationsCountryContent() {
-  const { donations } = useDonations();
+  const { donations, refresh } = useDonations();
   const { timezoneMode } = useTimezoneContext();
   const searchParams = useSearchParams();
+
+  useEffect(
+    function pollDonations() {
+      const id = setInterval(refresh, DONATION_REFETCH_INTERVAL);
+      return () => clearInterval(id);
+    },
+    [refresh]
+  );
 
   const startTimestamp = Number(searchParams.get('start')) || 0;
   const endTimestamp = Number(searchParams.get('end')) || Infinity;
