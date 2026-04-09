@@ -1,4 +1,15 @@
 {
+  "header": {
+    "donations": "Donations",
+    "home": "Home",
+    "journey": "Journey",
+    "live": "Live",
+    "liveDonations": "Live Donations",
+    "search": "Search",
+    "searchDonations": "Search Donations",
+    "top": "Top",
+    "topDonors": "Top Donors"
+  },
   "settings": {
     "appearance": "Appearance",
     "appearanceDark": "Dark",

@@ -17,28 +17,30 @@ import { usePathname } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
 
 import { SettingsModal } from '@/components/SettingsModal';
+import { useTranslations } from '@/hooks/useTranslations';
 
-const standaloneNavLinks = [{ href: '/journey', label: 'Journey' }];
+const standaloneNavLinks = [{ href: '/journey', labelKey: 'journey' }] as const;
 
 const donationNavLinks = [
-  { href: '/donations/live', label: 'Live' },
-  { href: '/donations/search', label: 'Search' },
-  { href: '/donations/top', label: 'Top' },
-];
+  { href: '/donations/live', labelKey: 'live' },
+  { href: '/donations/search', labelKey: 'search' },
+  { href: '/donations/top', labelKey: 'top' },
+] as const;
 
 // Flat list for mobile drawer
 const allNavLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/donations/live', label: 'Live Donations' },
-  { href: '/donations/search', label: 'Search Donations' },
-  { href: '/donations/top', label: 'Top Donors' },
-  { href: '/journey', label: 'Journey' },
-];
+  { href: '/', labelKey: 'home' },
+  { href: '/donations/live', labelKey: 'liveDonations' },
+  { href: '/donations/search', labelKey: 'searchDonations' },
+  { href: '/donations/top', labelKey: 'topDonors' },
+  { href: '/journey', labelKey: 'journey' },
+] as const;
 
 export function Header() {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const t = useTranslations('header');
 
   useEffect(() => {
     setDrawerOpen(false);
@@ -74,10 +76,10 @@ export function Header() {
           {/* Donations group */}
           <HStack bg="bg.subtle" borderRadius="lg" borderWidth="1px" gap={0} px={1} py={1}>
             <Span color="fg.muted" fontSize="sm" opacity={0.4} px={2}>
-              Donations
+              {t('donations')}
             </Span>
             <Box alignSelf="stretch" borderLeftWidth="1px" />
-            {donationNavLinks.map(({ href, label }, i) => {
+            {donationNavLinks.map(({ href, labelKey }, i) => {
               const isActive = pathname.startsWith(href);
               return (
                 <Fragment key={href}>
@@ -96,7 +98,7 @@ export function Header() {
                   >
                     <NextLink href={href}>
                       <Span fontSize="sm" fontWeight={isActive ? 600 : 400}>
-                        {label}
+                        {t(labelKey)}
                       </Span>
                     </NextLink>
                   </Link>
@@ -106,7 +108,7 @@ export function Header() {
           </HStack>
 
           {/* Standalone links (e.g. Journey) */}
-          {standaloneNavLinks.map(({ href, label }) => {
+          {standaloneNavLinks.map(({ href, labelKey }) => {
             const isActive = pathname.startsWith(href);
             return (
               <Link
@@ -117,7 +119,7 @@ export function Header() {
                 key={href}
               >
                 <NextLink href={href}>
-                  <Span fontWeight={isActive ? 600 : 400}>{label}</Span>
+                  <Span fontWeight={isActive ? 600 : 400}>{t(labelKey)}</Span>
                 </NextLink>
               </Link>
             );
@@ -161,7 +163,7 @@ export function Header() {
                 </Drawer.CloseTrigger>
                 <Drawer.Body pt={12}>
                   <Stack gap={1}>
-                    {allNavLinks.map(({ href, label }) => {
+                    {allNavLinks.map(({ href, labelKey }) => {
                       const isActive = href === '/' ? pathname === href : pathname.startsWith(href);
                       return (
                         <Link
@@ -175,7 +177,7 @@ export function Header() {
                           px={3}
                           py={2}
                         >
-                          <NextLink href={href}>{label}</NextLink>
+                          <NextLink href={href}>{t(labelKey)}</NextLink>
                         </Link>
                       );
                     })}

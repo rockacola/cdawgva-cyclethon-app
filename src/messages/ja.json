@@ -1,4 +1,15 @@
 {
+  "header": {
+    "donations": "寄付",
+    "home": "ホーム",
+    "journey": "記録",
+    "live": "リアルタイム",
+    "liveDonations": "リアルタイム寄付",
+    "search": "検索",
+    "searchDonations": "寄付検索",
+    "top": "トップ",
+    "topDonors": "トップドナー"
+  },
   "settings": {
     "appearance": "外観",
     "appearanceDark": "ダーク",
