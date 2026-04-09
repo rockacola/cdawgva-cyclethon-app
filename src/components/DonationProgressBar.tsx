@@ -8,9 +8,10 @@ import type { CampaignFact } from '@/lib/types';
 
 interface Props {
   fact: CampaignFact | null;
+  mb?: number;
 }
 
-export function DonationProgressBar({ fact }: Props) {
+export function DonationProgressBar({ fact, mb = 6 }: Props) {
   const raisedCent = useAnimatedValue(fact?.total_amount_raised_cent ?? 0);
   const goalCent = useAnimatedValue(fact?.goal_cent ?? 0);
   const currency = fact?.currency ?? 'USD';
@@ -18,7 +19,7 @@ export function DonationProgressBar({ fact }: Props) {
   const pct = goalCent > 0 ? Math.min((raisedCent / goalCent) * 100, 100) : 0;
 
   return (
-    <Box mb={6} mt={2}>
+    <Box mb={mb} mt={2}>
       <HStack fontSize="sm" justify="space-between" mb={1}>
         {fact ? (
           <>

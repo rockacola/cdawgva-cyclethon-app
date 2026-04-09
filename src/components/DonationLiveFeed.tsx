@@ -130,7 +130,12 @@ export function DonationLiveFeed({ initialCampaignFact, initialDonations }: Prop
 
       <DonationActivityChart />
 
-      <DonationProgressBar fact={campaignFact} />
+      <DonationProgressBar fact={campaignFact} mb={2} />
+
+      <Text color="fg.muted" fontSize="xs" mb={4}>
+        Data sourced from Tiltify. The amount shown may be slightly less than what appears on
+        stream, which also includes other donation proceeds.
+      </Text>
 
       <DonationFeed donations={donations} />
     </>
