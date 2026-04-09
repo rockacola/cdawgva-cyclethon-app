@@ -55,9 +55,13 @@ function DonationWarCard({
       <Text color="fg.muted" fontSize="sm" fontWeight="semibold" mb={1}>
         {war.title}
       </Text>
-      <Text color="fg.muted" fontSize="xs" mb={3}>
+      <Text color="fg.muted" fontSize="xs">
         {formatDonationTime(war.startTimestamp, timezoneMode)} –{' '}
         {formatDonationTime(war.endTimestamp, timezoneMode)} {timezoneMode}
+      </Text>
+      <Text color="fg.muted" fontSize="xs" mb={3}>
+        The amount shown here is a running estimate and may not exactly match the figure shown on
+        the stream.
       </Text>
       {children}
     </Box>
