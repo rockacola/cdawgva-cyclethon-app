@@ -5,7 +5,7 @@ export const ANIME_DATA_FETCHED_AT = '2026-04-09T03:05:41.690Z';
 const ANIME_PATTERNS: [string, string, RegExp][] = [
   [
     'kaguya-sama-wa-kokurasetai',
-    'Kaguya-sama',
+    'Kaguya-sama: Love is War',
     /\b(Kaguya-sama\s+wa\s+Kokurasetai|love\s+is\s+war|kaguya-?sama|Kaguya-sama)\b/i,
   ],
   [
@@ -13,7 +13,11 @@ const ANIME_PATTERNS: [string, string, RegExp][] = [
     'Imaizumi Brings All the Gyarus to His House',
     /\b(Imaizumin\s+Chi\s+wa\s+Douyara\s+Gal\s+no\s+Tamariba\s+ni\s+Natteru\s+Rashii|Imaizumi\s+Brings\s+All\s+the\s+Gyarus\s+to\s+His\s+House)\b/i,
   ],
-  ['sousou-no-frieren', 'Frieren', /\b(Sousou\s+no\s+Frieren|Frieren)\b/i],
+  [
+    'sousou-no-frieren',
+    "Frieren: Beyond Journey's End",
+    /\b(beyond\s+journey.?s\s+end|Sousou\s+no\s+Frieren|Frieren)\b/i,
+  ],
   ['steel-ball-run', 'Steel Ball Run', /\b(Steel\s+Ball\s+Run|jojo|jjba)\b/i],
   ['fullmetal-alchemist', 'Fullmetal Alchemist', /\b(Fullmetal\s+Alchemist|fmab|fma)\b/i],
   ['chainsaw-man', 'Chainsaw Man', /\b(Chainsaw\s+Man|csm)\b/i],
@@ -57,7 +61,7 @@ const ANIME_PATTERNS: [string, string, RegExp][] = [
   ['owarimonogatari', 'Owarimonogatari Second', /\b(Owarimonogatari\s+Second|Owarimonogatari)\b/i],
   [
     're-zero-kara-hajimeru-isekai-seikatsu',
-    'Re:ZERO -Starting Life in Another World',
+    'Re:Zero',
     /\b(Re:ZERO\s+-Starting\s+Life\s+in\s+Another\s+World|Re:Zero\s+kara\s+Hajimeru\s+Isekai\s+Seikatsu|re\s*:\s*zero|re\s+zero|rezero)\b/i,
   ],
   ['violet-evergarden', 'Violet Evergarden', /\b(Violet\s+Evergarden)\b/i],
@@ -121,8 +125,8 @@ const ANIME_PATTERNS: [string, string, RegExp][] = [
   ['kimetsu-no-yaiba', 'Demon Slayer', /\b(Kimetsu\s+no\s+Yaiba|Demon\s+Slayer|kimetsu)\b/i],
   [
     'shouwa-genroku-rakugo-shinjuu',
-    'Descending Stories',
-    /\b(Shouwa\s+Genroku\s+Rakugo\s+Shinjuu|Descending\s+Stories)\b/i,
+    'Showa Genroku Rakugo Shinju',
+    /\b(Shouwa\s+Genroku\s+Rakugo\s+Shinjuu|showa\s+genroku\s+rakugo|Descending\s+Stories|rakugo\s+shinju|rakugo)\b/i,
   ],
   ['rurouni-kenshin', 'Samurai X', /\b(Rurouni\s+Kenshin|Samurai\s+X)\b/i],
   ['great-teacher-onizuka', 'Great Teacher Onizuka', /\b(Great\s+Teacher\s+Onizuka|gto)\b/i],
@@ -191,8 +195,8 @@ const ANIME_PATTERNS: [string, string, RegExp][] = [
   ['dungeon-meshi', 'Delicious in Dungeon', /\b(Delicious\s+in\s+Dungeon|Dungeon\s+Meshi)\b/i],
   [
     'seishun-buta-yarou-wa-yumemiru-shoujo-no-yume-wo-minai',
-    'Rascal Does Not Dream of a Dreaming Girl',
-    /\b(Seishun\s+Buta\s+Yarou\s+wa\s+Yumemiru\s+Shoujo\s+no\s+Yume\s+wo\s+Minai|Rascal\s+Does\s+Not\s+Dream\s+of\s+a\s+Dreaming\s+Girl)\b/i,
+    'Rascal Does Not Dream',
+    /\b(Seishun\s+Buta\s+Yarou\s+wa\s+Yumemiru\s+Shoujo\s+no\s+Yume\s+wo\s+Minai|Rascal\s+Does\s+Not\s+Dream\s+of\s+a\s+Dreaming\s+Girl|rascal\s+does\s+not\s+dream|seishun\s+buta\s+yarou|bunny\s+girl\s+senpai|aobuta)\b/i,
   ],
   [
     'suzumiya-haruhi-no-shoushitsu',
@@ -313,7 +317,7 @@ const ANIME_PATTERNS: [string, string, RegExp][] = [
   [
     'sora-yori-mo-tooi-basho',
     'A Place Further Than The Universe',
-    /\b(A\s+Place\s+Further\s+Than\s+The\s+Universe|Sora\s+yori\s+mo\s+Tooi\s+Basho)\b/i,
+    /\b(a\s+place\s+further\s+th[ae]n\s+the\s+universe|A\s+Place\s+Further\s+Than\s+The\s+Universe|Sora\s+yori\s+mo\s+Tooi\s+Basho|sora\s+yori|yorimoi)\b/i,
   ],
   [
     'tian-guan-cifu-short-films',
@@ -524,7 +528,7 @@ const ANIME_PATTERNS: [string, string, RegExp][] = [
   [
     'ano-hi-mita-hana-no-namae-wo-bokutachi-wa-mada-shiranai',
     'Anohana',
-    /\b(Ano\s+Hi\s+Mita\s+Hana\s+no\s+Namae\s+wo\s+Bokutachi\s+wa\s+Mada\s+Shiranai|Anohana)\b/i,
+    /\b(Ano\s+Hi\s+Mita\s+Hana\s+no\s+Namae\s+wo\s+Bokutachi\s+wa\s+Mada\s+Shiranai|ano\s+hana|Anohana)\b/i,
   ],
   ['beck', 'Beck', /\b(Beck)\b/i],
   ['katanagatari', 'Katanagatari', /\b(Katanagatari)\b/i],
@@ -665,7 +669,7 @@ const ANIME_PATTERNS: [string, string, RegExp][] = [
   ['dragon-ball-super', 'Dragon Ball Super', /\b(Dragon\s+Ball\s+Super|dbs)\b/i],
   ['dragon-ball-z', 'Dragon Ball Z', /\b(Dragon\s+Ball\s+Z|dbz)\b/i],
   ['major-s1', 'Major S1', /\b(Major\s+S1)\b/i],
-  ['relife', 'ReLIFE', /\b(ReLIFE)\b/i],
+  ['relife', 'ReLIFE', /\b(re\s*:?\s*life|ReLIFE)\b/i],
   ['tengoku-daimakyou', 'Heavenly Delusion', /\b(Tengoku\s+Daimakyou|Heavenly\s+Delusion)\b/i],
   ['tamayura', 'Tamayura', /\b(Tamayura)\b/i],
   ['inuyasha', 'InuYasha', /\b(InuYasha)\b/i],
@@ -1407,6 +1411,14 @@ const ANIME_PATTERNS: [string, string, RegExp][] = [
     /\b(detective\s+conan|case\s+closed|meitantei\s+conan)\b/i,
   ],
   ['yosuga-no-sora', 'Yosuga no Sora', /\b(yosuga\s+no\s+sora)\b/i],
+  ['boku-no-pico', 'Boku no Pico', /\b(boku\s+no\s+pico|bocu\s+no\s+pico)\b/i],
+  ['eighty-six', '86', /\b(86\s+eighty[-\s]?six|eighty[-\s]?six|86)\b/i],
+  ['bible-black', 'Bible Black', /\b(bible\s+black)\b/i],
+  ['tsuki-ga-kirei', 'Tsuki ga Kirei', /\b(tsuki\s+ga\s+kirei)\b/i],
+  ['sailor-moon', 'Sailor Moon', /\b(sailor\s+moon|bishoujo\s+senshi\s+sailor\s+moon)\b/i],
+  ['monster-musume', 'Monster Musume', /\b(monster\s+musume|mon\s+musu)\b/i],
+  ['juuni-kokuki', 'Twelve Kingdoms', /\b(twelve\s+kingdoms|juuni\s+kokuki)\b/i],
+  ['eromanga-sensei', 'Eromanga Sensei', /\b(eromanga\s+sensei)\b/i],
 ];
 
 export function detectAnimeFromComment(comment: string | null | undefined): string | null {

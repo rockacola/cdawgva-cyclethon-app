@@ -2,13 +2,15 @@
 
 import { Box, Container, Heading, Span, Table, Text } from '@chakra-ui/react';
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 
 import { AnimeWarTable } from '@/components/AnimeWarTable';
 import { DonationTime } from '@/components/DonationTime';
 import { DonorName } from '@/components/DonorName';
+import { LastChecked } from '@/components/LastChecked';
 import { useDonations } from '@/contexts/DonationsContext';
-import { ANIME_DATA_FETCHED_AT, animeIdToName, detectAnimeFromComment } from '@/lib/animePatterns';
+import { useDonationsPolling } from '@/hooks/useDonationsPolling';
+import { animeIdToName, detectAnimeFromComment } from '@/lib/animePatterns';
 import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 import { formatAmountParts } from '@/lib/donationUtils';
 import { formatDonationTime } from '@/lib/timeUtils';
@@ -23,17 +25,10 @@ export default function DonationsAnimePage() {
 }
 
 function DonationsAnimeContent() {
-  const { donations, refresh } = useDonations();
+  const { donations, isRefreshing, lastCheckedAt } = useDonations();
+  useDonationsPolling(DONATION_REFETCH_INTERVAL);
   const { timezoneMode } = useTimezoneContext();
   const searchParams = useSearchParams();
-
-  useEffect(
-    function pollDonations() {
-      const id = setInterval(refresh, DONATION_REFETCH_INTERVAL);
-      return () => clearInterval(id);
-    },
-    [refresh]
-  );
 
   const startTimestamp = Number(searchParams.get('start')) || 0;
   const endTimestamp = Number(searchParams.get('end')) || Infinity;
@@ -62,9 +57,9 @@ function DonationsAnimeContent() {
             maximumFractionDigits: 2,
           })}
         </Text>
-        <Text color="fg.muted" fontSize="xs" mb={6}>
-          Anime data last checked: {new Date(ANIME_DATA_FETCHED_AT).toLocaleString()}
-        </Text>
+        <Box mb={6}>
+          <LastChecked isRefreshing={isRefreshing} timestamp={lastCheckedAt} />
+        </Box>
 
         <Box mb={10}>
           <Heading as="h2" mb={3} size="md">

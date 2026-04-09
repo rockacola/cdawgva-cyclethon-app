@@ -262,7 +262,8 @@ const MANUAL_ALIASES: Record<string, string[]> = {
   'ousama-ranking': ['ranking\\s+of\\s+kings'],
   'dungeon-meshi': ['delicious\\s+in\\s+dungeon', 'dungeon\\s+meshi'],
   'kusuriya-no-hitorigoto': ['apothecary\\s+diaries'],
-  'sousou-no-frieren': ['frieren'],
+  'sousou-no-frieren': ['frieren', 'beyond\\s+journey.?s\\s+end'],
+  'ano-hi-mita-hana-no-namae-wo-bokutachi-wa-mada-shiranai': ['anohana', 'ano\\s+hana'],
   'shangri-la-frontier': ['shangri-?la\\s+frontier'],
   'tengoku-daimakyou': ['heavenly\\s+delusion'],
   'kill-la-kill': ['kill\\s+la\\s+kill'],
@@ -276,6 +277,19 @@ const MANUAL_ALIASES: Record<string, string[]> = {
   trigun: ['trigun'],
   'samurai-champloo': ['samurai\\s+champloo'],
   vivy: ['vivy'],
+  'sora-yori-mo-tooi-basho': [
+    'a\\s+place\\s+further\\s+th[ae]n\\s+the\\s+universe',
+    'sora\\s+yori',
+    'yorimoi',
+  ],
+  relife: ['re\\s*:?\\s*life'],
+  'seishun-buta-yarou-wa-yumemiru-shoujo-no-yume-wo-minai': [
+    'rascal\\s+does\\s+not\\s+dream',
+    'bunny\\s+girl\\s+senpai',
+    'seishun\\s+buta\\s+yarou',
+    'aobuta',
+  ],
+  'shouwa-genroku-rakugo-shinjuu': ['rakugo\\s+shinju', 'showa\\s+genroku\\s+rakugo', 'rakugo'],
 };
 
 /**
@@ -302,6 +316,46 @@ const MANUAL_ENTRIES: { id: string; canonical: string; alts: string[] }[] = [
     id: 'yosuga-no-sora',
     canonical: 'Yosuga no Sora',
     alts: ['yosuga\\s+no\\s+sora'],
+  },
+  {
+    id: 'boku-no-pico',
+    canonical: 'Boku no Pico',
+    alts: ['boku\\s+no\\s+pico', 'bocu\\s+no\\s+pico'],
+  },
+  {
+    id: 'eighty-six',
+    canonical: '86',
+    alts: ['86\\s+eighty[-\\s]?six', 'eighty[-\\s]?six', '86'],
+  },
+  {
+    id: 'bible-black',
+    canonical: 'Bible Black',
+    alts: ['bible\\s+black'],
+  },
+  {
+    id: 'tsuki-ga-kirei',
+    canonical: 'Tsuki ga Kirei',
+    alts: ['tsuki\\s+ga\\s+kirei'],
+  },
+  {
+    id: 'sailor-moon',
+    canonical: 'Sailor Moon',
+    alts: ['sailor\\s+moon', 'bishoujo\\s+senshi\\s+sailor\\s+moon'],
+  },
+  {
+    id: 'monster-musume',
+    canonical: 'Monster Musume',
+    alts: ['monster\\s+musume', 'mon\\s+musu'],
+  },
+  {
+    id: 'juuni-kokuki',
+    canonical: 'Twelve Kingdoms',
+    alts: ['twelve\\s+kingdoms', 'juuni\\s+kokuki'],
+  },
+  {
+    id: 'eromanga-sensei',
+    canonical: 'Eromanga Sensei',
+    alts: ['eromanga\\s+sensei'],
   },
 ];
 
@@ -354,6 +408,17 @@ for (const entry of raw.anime) {
     });
   }
 }
+
+/** Override canonical display names when franchiseBase strips too much */
+const CANONICAL_OVERRIDES: Record<string, string> = {
+  'sousou-no-frieren': "Frieren: Beyond Journey's End",
+  'ano-hi-mita-hana-no-namae-wo-bokutachi-wa-mada-shiranai': 'Anohana',
+  'kono-subarashii-sekai-ni-shukufuku-wo': 'KonoSuba',
+  'seishun-buta-yarou-wa-yumemiru-shoujo-no-yume-wo-minai': 'Rascal Does Not Dream',
+  'shouwa-genroku-rakugo-shinjuu': 'Showa Genroku Rakugo Shinju',
+  're-zero-kara-hajimeru-isekai-seikatsu': 'Re:Zero',
+  'kaguya-sama-wa-kokurasetai': 'Kaguya-sama: Love is War',
+};
 
 // 2. Build pattern entries
 interface PatternEntry {
@@ -411,7 +476,7 @@ for (const [id, franchise] of franchises) {
   }
 
   entries.push({
-    canonical: franchise.canonical,
+    canonical: CANONICAL_OVERRIDES[id] ?? franchise.canonical,
     id,
     rank: franchise.bestRank,
     regex: `\\b(${deduped.join('|')})\\b`,
