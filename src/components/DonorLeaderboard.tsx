@@ -7,6 +7,7 @@ import { DonorName } from '@/components/DonorName';
 import { PlaceCard } from '@/components/PlaceCard';
 import { TOP_DONORS_CARDS, TOP_DONORS_TABLE_END } from '@/lib/constants';
 import { aggregateByDonor, formatAmount } from '@/lib/donationUtils';
+import { pluralize } from '@/lib/formatUtils';
 import type { Donation } from '@/lib/types';
 
 interface Props {
@@ -39,7 +40,7 @@ export function DonorLeaderboard({ donations }: Props) {
             key={donor.donor_name}
             name={donor.donor_name}
             place={i + 1}
-            subLabel={`${donor.count.toLocaleString()} ${donor.count === 1 ? 'donation' : 'donations'}`}
+            subLabel={`${donor.count.toLocaleString()} ${pluralize(donor.count, 'donation')}`}
           />
         ))}
       </Box>
@@ -60,7 +61,7 @@ export function DonorLeaderboard({ donations }: Props) {
                 <Table.Cell>
                   <DonorName name={donor.donor_name} />
                   <Span color="fg.subtle" fontSize="xs" ml={1.5}>
-                    ({donor.count.toLocaleString()} {donor.count === 1 ? 'donation' : 'donations'})
+                    ({donor.count.toLocaleString()} {pluralize(donor.count, 'donation')})
                   </Span>
                 </Table.Cell>
                 <Table.Cell textAlign="right">
