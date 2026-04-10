@@ -26,21 +26,22 @@ export function getJourneyDay(slug: string): JourneyDay | undefined {
   return getJourneyDays().find((d) => d.slug === slug);
 }
 
+export type EventDayInfo = { type: 'pre' } | { type: 'post' } | { type: 'day'; day: number };
+
 /**
- * Returns the event day label for a given unix epoch (seconds).
- * "Pre" if before the event, "Day N" during, "Post" if after.
+ * Returns structured event day info for a given unix epoch (seconds).
  */
-export function getEventDayLabel(epochSeconds: number): string {
+export function getEventDayInfo(epochSeconds: number): EventDayInfo {
   const startMs = JOURNEY_START.getTime();
   const endMs = startMs + JOURNEY_TOTAL_DAYS * 86_400_000;
   const ts = epochSeconds * 1000;
 
   if (ts < startMs) {
-    return 'Pre';
+    return { type: 'pre' };
   }
   if (ts >= endMs) {
-    return 'Post';
+    return { type: 'post' };
   }
   const day = Math.floor((ts - startMs) / 86_400_000) + 1;
-  return `Day ${day}`;
+  return { type: 'day', day };
 }

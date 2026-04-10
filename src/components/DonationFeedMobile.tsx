@@ -3,10 +3,11 @@
 import { Box, Stack, Text } from '@chakra-ui/react';
 
 import { DonationTime } from '@/components/DonationTime';
+import { DonorName } from '@/components/DonorName';
 import { RelativeTime } from '@/components/RelativeTime';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useNow } from '@/hooks/useNow';
-import { formatAmount, getDonationBoxShadow, isAnonymous } from '@/lib/donationUtils';
+import { formatAmount, getDonationBoxShadow } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 
 interface Props {
@@ -20,7 +21,6 @@ export function DonationFeedMobile({ donations }: Props) {
   return (
     <Stack borderRadius="md" borderWidth="1px" gap={0} overflow="hidden">
       {donations.map((d) => {
-        const isAnon = isAnonymous(d.donor_name);
         return (
           <Box
             _hover={{ bg: 'bg.muted' }}
@@ -33,13 +33,8 @@ export function DonationFeedMobile({ donations }: Props) {
             transition="box-shadow 0.3s ease"
           >
             <Box alignItems="baseline" display="flex" justifyContent="space-between">
-              <Text
-                color={isAnon ? 'fg.subtle' : undefined}
-                fontSize="xs"
-                fontStyle={isAnon ? 'italic' : undefined}
-                fontWeight="semibold"
-              >
-                {d.donor_name}
+              <Text fontSize="xs" fontWeight="semibold">
+                <DonorName name={d.donor_name} />
               </Text>
               <Text fontSize="xs" fontWeight="semibold">
                 {formatAmount(d.amount_cent, currencyPrefix)}

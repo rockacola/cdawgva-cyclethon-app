@@ -3,10 +3,12 @@
 import { Span, Table, Text } from '@chakra-ui/react';
 
 import { DonationTime } from '@/components/DonationTime';
+import { DonorName } from '@/components/DonorName';
 import { RelativeTime } from '@/components/RelativeTime';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useNow } from '@/hooks/useNow';
-import { formatAmountParts, getDonationBoxShadow, isAnonymous } from '@/lib/donationUtils';
+import { useTranslations } from '@/hooks/useTranslations';
+import { formatAmountParts, getDonationBoxShadow } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 
 export type SortDir = 'asc' | 'desc';
@@ -29,6 +31,7 @@ function sortIndicator(col: SortKey, sortKey?: SortKey, sortDir?: SortDir): stri
 export function DonationFeedDesktop({ donations, onSort, sortDir, sortKey }: Props) {
   const currencyPrefix = useCurrencyPrefix();
   const now = useNow(1000);
+  const t = useTranslations('donationFeed');
   const headerProps = onSort ? { _hover: { color: 'fg' }, cursor: 'pointer' as const } : {};
 
   return (
@@ -36,7 +39,8 @@ export function DonationFeedDesktop({ donations, onSort, sortDir, sortKey }: Pro
       <Table.Header>
         <Table.Row>
           <Table.ColumnHeader {...headerProps} onClick={() => onSort?.('name')} w="160px">
-            Donor{sortIndicator('name', sortKey, sortDir)}
+            {t('donor')}
+            {sortIndicator('name', sortKey, sortDir)}
           </Table.ColumnHeader>
           <Table.ColumnHeader
             {...headerProps}
@@ -44,10 +48,12 @@ export function DonationFeedDesktop({ donations, onSort, sortDir, sortKey }: Pro
             textAlign="right"
             w="120px"
           >
-            Amount{sortIndicator('amount', sortKey, sortDir)}
+            {t('amount')}
+            {sortIndicator('amount', sortKey, sortDir)}
           </Table.ColumnHeader>
           <Table.ColumnHeader {...headerProps} minW="200px" onClick={() => onSort?.('comment')}>
-            Comment{sortIndicator('comment', sortKey, sortDir)}
+            {t('comment')}
+            {sortIndicator('comment', sortKey, sortDir)}
           </Table.ColumnHeader>
           <Table.ColumnHeader
             {...headerProps}
@@ -55,13 +61,13 @@ export function DonationFeedDesktop({ donations, onSort, sortDir, sortKey }: Pro
             onClick={() => onSort?.('time')}
             whiteSpace="nowrap"
           >
-            Time{sortIndicator('time', sortKey, sortDir)}
+            {t('time')}
+            {sortIndicator('time', sortKey, sortDir)}
           </Table.ColumnHeader>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         {donations.map((d) => {
-          const isAnon = isAnonymous(d.donor_name);
           const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
           return (
             <Table.Row
@@ -71,12 +77,8 @@ export function DonationFeedDesktop({ donations, onSort, sortDir, sortKey }: Pro
               transition="box-shadow 0.3s ease"
             >
               <Table.Cell maxW="160px">
-                <Text
-                  color={isAnon ? 'fg.subtle' : undefined}
-                  fontStyle={isAnon ? 'italic' : undefined}
-                  overflowWrap="break-word"
-                >
-                  {d.donor_name}
+                <Text overflowWrap="break-word">
+                  <DonorName name={d.donor_name} />
                 </Text>
               </Table.Cell>
               <Table.Cell textAlign="right" whiteSpace="nowrap">

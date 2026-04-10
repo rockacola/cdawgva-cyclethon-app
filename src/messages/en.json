@@ -22,6 +22,18 @@
     "sortTime": "Time",
     "title": "Donation Search"
   },
+  "donationChart": {
+    "daily": "Daily",
+    "total": "Total"
+  },
+  "donationFeed": {
+    "amount": "Amount",
+    "comment": "Comment",
+    "donor": "Donor",
+    "latestDonations": "Latest Donations",
+    "time": "Time",
+    "viewAll": "View all donations"
+  },
   "donationLive": {
     "disclaimer": "Data sourced from Tiltify. The amount shown may be slightly less than what appears on stream, which also includes other donation proceeds.",
     "subtitle": "Every donation counts. Support the ride on",
@@ -34,7 +46,9 @@
     "raised": "{amount} raised"
   },
   "dayNav": {
-    "dayLabel": "Day {day}"
+    "dayLabel": "Day {day}",
+    "post": "Post",
+    "pre": "Pre"
   },
   "dayPage": {
     "amount": "Amount",

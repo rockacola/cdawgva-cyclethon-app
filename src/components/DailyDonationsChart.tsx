@@ -8,6 +8,7 @@ import type { TooltipProps } from 'recharts/types/component/Tooltip';
 import { useColorModeValue } from '@/components/ui/color-mode';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDailyTotals } from '@/hooks/useDailyTotals';
+import { useTranslations } from '@/hooks/useTranslations';
 import type { DailyTotal } from '@/lib/types';
 
 const DAY_COUNT = 15;
@@ -83,6 +84,7 @@ function ChartTooltip({
 }: TooltipProps<ValueType, NameType> &
   ChartTooltipExtraProps & { payload?: readonly Payload<ValueType, NameType>[] }) {
   const currencyPrefix = useCurrencyPrefix();
+  const t = useTranslations('donationChart');
 
   if (!active || !payload?.length) {
     return null;
@@ -105,12 +107,12 @@ function ChartTooltip({
       }}
     >
       <div style={{ display: 'flex', gap: 16, justifyContent: 'space-between' }}>
-        <span>Daily</span>
+        <span>{t('daily')}</span>
         <span>{fmt(daily, currencyPrefix)}</span>
       </div>
       {total !== null && (
         <div style={{ display: 'flex', gap: 16, justifyContent: 'space-between', marginTop: 6 }}>
-          <span>Total</span>
+          <span>{t('total')}</span>
           <span>{fmt(total, currencyPrefix)}</span>
         </div>
       )}

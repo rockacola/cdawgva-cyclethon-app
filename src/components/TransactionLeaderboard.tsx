@@ -9,7 +9,8 @@ import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
 import { TOP_DONORS_CARDS, TOP_DONORS_TABLE_END } from '@/lib/constants';
 import { formatAmount, topByTransaction } from '@/lib/donationUtils';
-import { getEventDayLabel } from '@/lib/journey';
+import type { EventDayInfo } from '@/lib/journey';
+import { getEventDayInfo } from '@/lib/journey';
 import type { Donation } from '@/lib/types';
 
 interface Props {
@@ -19,7 +20,18 @@ interface Props {
 export function TransactionLeaderboard({ donations }: Props) {
   const t = useTranslations('topDonors');
   const tc = useTranslations('common');
+  const td = useTranslations('dayNav');
   const currencyPrefix = useCurrencyPrefix();
+
+  function formatDayLabel(info: EventDayInfo): string {
+    if (info.type === 'pre') {
+      return td('pre');
+    }
+    if (info.type === 'post') {
+      return td('post');
+    }
+    return td('dayLabel', { day: info.day });
+  }
   const ranked = useMemo(() => topByTransaction(donations), [donations]);
   const cards = ranked.slice(0, TOP_DONORS_CARDS);
   const tableRows = ranked.slice(TOP_DONORS_CARDS, TOP_DONORS_TABLE_END);
@@ -42,7 +54,7 @@ export function TransactionLeaderboard({ donations }: Props) {
             key={d.id}
             name={d.donor_name}
             place={i + 1}
-            subLabel={getEventDayLabel(d.completed_at)}
+            subLabel={formatDayLabel(getEventDayInfo(d.completed_at))}
           />
         ))}
       </Box>
@@ -63,7 +75,7 @@ export function TransactionLeaderboard({ donations }: Props) {
                 <Table.Cell>
                   <DonorName name={d.donor_name} />{' '}
                   <Text as="span" color="fg.subtle" fontSize="xs">
-                    ({getEventDayLabel(d.completed_at)})
+                    ({formatDayLabel(getEventDayInfo(d.completed_at))})
                   </Text>
                 </Table.Cell>
                 <Table.Cell textAlign="right">

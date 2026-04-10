@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { formatRelative } from '@/lib/dateUtils';
 import { formatAbsoluteTime } from '@/lib/timeUtils';
+import { useLocaleContext } from '@/providers/LocaleProvider';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
 interface Props {
@@ -14,19 +15,23 @@ interface Props {
 
 export function RelativeTime({ timestamp, showAbsoluteTime = false }: Props) {
   const { timezoneMode } = useTimezoneContext();
-  const [relative, setRelative] = useState<string>(formatRelative(new Date(timestamp * 1000)));
+  const { resolvedLocale } = useLocaleContext();
+  const intlLocale = resolvedLocale === 'JP' ? 'ja' : 'en';
+  const [relative, setRelative] = useState<string>(
+    formatRelative(new Date(timestamp * 1000), intlLocale)
+  );
 
   useEffect(
     function syncRelativeTime() {
       const d = new Date(timestamp * 1000);
-      setRelative(formatRelative(d));
+      setRelative(formatRelative(d, intlLocale));
       const interval = setInterval(
-        () => setRelative(formatRelative(new Date(timestamp * 1000))),
+        () => setRelative(formatRelative(new Date(timestamp * 1000), intlLocale)),
         60_000
       );
       return () => clearInterval(interval);
     },
-    [timestamp]
+    [timestamp, intlLocale]
   );
 
   if (showAbsoluteTime) {

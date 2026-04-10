@@ -8,13 +8,13 @@ export function todayInOffset(utcOffset: string): string {
   return new Date(Date.now() + offsetMs).toISOString().slice(0, 10);
 }
 
-export function formatRelative(date: Date): string {
+export function formatRelative(date: Date, locale: string = 'en'): string {
   const diffMs = date.getTime() - Date.now();
   const diffMin = Math.round(diffMs / 60_000);
   const diffHr = Math.round(diffMin / 60);
   const diffDay = Math.round(diffHr / 24);
 
-  const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
 
   if (Math.abs(diffDay) >= 1) {
     return rtf.format(diffDay, 'day');
@@ -25,7 +25,7 @@ export function formatRelative(date: Date): string {
   if (Math.abs(diffMin) >= 1) {
     return rtf.format(diffMin, 'minute');
   }
-  return 'just now';
+  return locale === 'ja' ? 'たった今' : 'just now';
 }
 
 export function formatUTC(date: Date): string {

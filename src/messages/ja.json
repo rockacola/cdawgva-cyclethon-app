@@ -22,6 +22,18 @@
     "sortTime": "時間",
     "title": "寄付検索"
   },
+  "donationChart": {
+    "daily": "日毎",
+    "total": "合計"
+  },
+  "donationFeed": {
+    "amount": "金額",
+    "comment": "コメント",
+    "donor": "ドナー",
+    "latestDonations": "最新の寄付",
+    "time": "時間",
+    "viewAll": "すべての寄付を見る"
+  },
   "donationLive": {
     "disclaimer": "データはTiltifyから取得しています。表示される金額は、配信上の金額よりやや少ない場合があります。配信上の金額にはその他の寄付収益も含まれています。",
     "subtitle": "すべての寄付が力になります。",
@@ -34,7 +46,9 @@
     "raised": "{amount} の寄付金"
   },
   "dayNav": {
-    "dayLabel": "{day}日目"
+    "dayLabel": "{day}日目",
+    "post": "イベント後",
+    "pre": "イベント前"
   },
   "dayPage": {
     "amount": "金額",

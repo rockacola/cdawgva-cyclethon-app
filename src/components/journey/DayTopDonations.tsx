@@ -4,10 +4,11 @@ import { Box, Span, Table, Text } from '@chakra-ui/react';
 import { Crown } from 'lucide-react';
 import { useMemo } from 'react';
 
+import { DonorName } from '@/components/DonorName';
 import { useDonations } from '@/contexts/DonationsContext';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
-import { formatAmountParts, getTopDonationsForDay, isAnonymous } from '@/lib/donationUtils';
+import { formatAmountParts, getTopDonationsForDay } from '@/lib/donationUtils';
 import { getJSTDayBounds } from '@/lib/timezoneUtils';
 
 interface Props {
@@ -42,7 +43,6 @@ export function DayTopDonations({ dateStr }: Props) {
       </Table.Header>
       <Table.Body>
         {topDonations.map((d, i) => {
-          const anon = isAnonymous(d.donor_name);
           return (
             <Table.Row key={d.id}>
               <Table.Cell>
@@ -55,11 +55,8 @@ export function DayTopDonations({ dateStr }: Props) {
                 </Box>
               </Table.Cell>
               <Table.Cell>
-                <Span
-                  color={anon ? 'fg.subtle' : undefined}
-                  fontStyle={anon ? 'italic' : undefined}
-                >
-                  {d.donor_name}
+                <Span>
+                  <DonorName name={d.donor_name} />
                 </Span>
                 {d.donor_comment ? (
                   <Text color="fg.subtle" fontSize="xs" mt={0.5}>

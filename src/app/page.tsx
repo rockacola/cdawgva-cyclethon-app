@@ -1,12 +1,10 @@
-import { Box, Container, HStack, Link, SimpleGrid, Text } from '@chakra-ui/react';
-import { ArrowRight } from 'lucide-react';
+import { Container, SimpleGrid } from '@chakra-ui/react';
 import type { Metadata } from 'next';
-import NextLink from 'next/link';
 
-import { DonationFeed } from '@/components/DonationFeed';
 import { HomeCause } from '@/components/HomeCause';
 import { HomeHero } from '@/components/HomeHero';
 import { JourneySection } from '@/components/JourneySection';
+import { LatestDonations } from '@/components/LatestDonations';
 import { WhoComing } from '@/components/WhoComing';
 import { getCampaignFact } from '@/lib/getCampaignFact';
 import { getDonations } from '@/lib/getDonations';
@@ -45,30 +43,7 @@ export default async function HomePage() {
           <WhoComing />
         </SimpleGrid>
 
-        {/* Latest Donations */}
-        <Box py={{ base: 10, md: 16 }}>
-          <Text
-            color="fg.muted"
-            fontSize="xs"
-            fontWeight="semibold"
-            letterSpacing="wide"
-            mb={6}
-            textTransform="uppercase"
-          >
-            Latest Donations
-          </Text>
-          <DonationFeed donations={donations.slice(0, 10)} />
-          <HStack justify="flex-end" mt={4}>
-            <Link _hover={{ textDecoration: 'none' }} asChild fontSize="sm">
-              <NextLink href="/donations">
-                <HStack gap={1}>
-                  <Text>View all donations</Text>
-                  <ArrowRight size={14} />
-                </HStack>
-              </NextLink>
-            </Link>
-          </HStack>
-        </Box>
+        <LatestDonations donations={donations.slice(0, 10)} />
       </Container>
     </>
   );
