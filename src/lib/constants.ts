@@ -16,10 +16,6 @@ export const FETCH_CACHE_REVALIDATE = 10;
 // Client-side polling interval in milliseconds
 export const DONATION_REFETCH_INTERVAL = 30_000;
 
-// Page size options and default for the donation feed
-export const DONATION_PAGE_SIZES = [30, 60, 100] as const;
-export const DONATION_PAGE_SIZE_DEFAULT = 30;
-
 // Appearance mode options
 export const APPEARANCE_MODES = ['Light', 'Dark', 'System'] as const;
 export type AppearanceMode = (typeof APPEARANCE_MODES)[number];
@@ -63,7 +59,6 @@ export const ACTIVITY_CHART_BARS_DESKTOP = 60;
 
 // localStorage keys
 export const STORAGE_KEYS = {
-  DONATION_PAGE_SIZE: 'donation_page_size',
   LOCALE: 'locale',
   TIMEZONE: 'timezone',
 } as const;

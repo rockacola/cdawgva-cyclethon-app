@@ -30,7 +30,7 @@ export function LatestDonations({ donations }: Props) {
       <DonationFeed donations={donations} />
       <HStack justify="flex-end" mt={4}>
         <Link _hover={{ textDecoration: 'none' }} asChild fontSize="sm">
-          <NextLink href="/donations">
+          <NextLink href="/donations/search">
             <HStack gap={1}>
               <Text>{t('viewAll')}</Text>
               <ArrowRight size={14} />
