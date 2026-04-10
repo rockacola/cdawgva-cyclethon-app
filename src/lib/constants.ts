@@ -10,8 +10,8 @@ export const DONATIONS_URL = `${R2_BASE_URL}/${DONATIONS_FILE}`;
 export const DONATIONS_FULL_URL = `${R2_BASE_URL}/${DONATIONS_FULL_FILE}`;
 export const DONATIONS_STATS_URL = `${R2_BASE_URL}/${DONATIONS_STATS_FILE}`;
 
-// Server-side revalidation window in seconds (minimal cache)
-export const FETCH_CACHE_REVALIDATE = 10;
+// Server-side revalidation window in seconds
+export const FETCH_CACHE_REVALIDATE = 60;
 
 // Client-side polling interval in milliseconds
 export const DONATION_REFETCH_INTERVAL = 30_000;
