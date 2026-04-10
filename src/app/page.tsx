@@ -23,28 +23,6 @@ export default async function HomePage() {
     getCampaignFact(),
   ]);
 
-  // MOCK: inject daily totals for chart visualisation — remove this block when real data flows
-  const USE_MOCK_DATA = false;
-  if (USE_MOCK_DATA) {
-    const mockDayAmounts = [
-      11900000, 9750000, 12200000, 8830000, 13570000, 10420000, 9180000, 12850000, 11300000,
-      8640000, 9970000, 11830000, 10760000, 13240000, 24700000,
-    ];
-    const dayOneMs = Date.UTC(2026, 3, 5);
-    const mockEntry = (date: string, amount_cent: number) => ({
-      date,
-      by_currency: { USD: { amount_cent, count: Math.ceil(amount_cent / 5000) } },
-    });
-    stats.stats.daily_totals = [
-      mockEntry('2026-04-04', 1785000), // pre-event (~15% of Day 1)
-      ...mockDayAmounts.map((amount_cent, i) =>
-        mockEntry(new Date(dayOneMs + i * 86_400_000).toISOString().slice(0, 10), amount_cent)
-      ),
-      mockEntry('2026-04-20', 1428000), // post-event (~12% of Day 1)
-    ];
-  }
-  // END MOCK
-
   return (
     <>
       {/* Hero */}
