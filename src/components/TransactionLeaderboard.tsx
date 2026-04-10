@@ -76,7 +76,7 @@ export function TransactionLeaderboard({ donations }: Props) {
             {tableRows.map((d, i) => {
               const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
               return (
-                <Table.Row key={d.id}>
+                <Table.Row _hover={{ bg: 'bg.muted' }} key={d.id}>
                   <Table.Cell color="fg.subtle">{TOP_DONORS_CARDS + i + 1}</Table.Cell>
                   <Table.Cell>
                     <DonorName name={d.donor_name} />{' '}

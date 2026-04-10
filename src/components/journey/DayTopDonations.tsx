@@ -44,7 +44,7 @@ export function DayTopDonations({ dateStr }: Props) {
       <Table.Body>
         {topDonations.map((d, i) => {
           return (
-            <Table.Row key={d.id}>
+            <Table.Row _hover={{ bg: 'bg.muted' }} key={d.id}>
               <Table.Cell>
                 <Box display="flex" justifyContent="center">
                   {i === 0 ? (
