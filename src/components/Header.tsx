@@ -18,6 +18,7 @@ import { Fragment, useEffect, useState } from 'react';
 
 import { SettingsModal } from '@/components/SettingsModal';
 import { useTranslations } from '@/hooks/useTranslations';
+import { useLocaleContext } from '@/providers/LocaleProvider';
 
 const standaloneNavLinks = [{ href: '/journey', labelKey: 'journey' }] as const;
 
@@ -41,6 +42,7 @@ export function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const t = useTranslations('header');
+  const { resolvedLocale, setLocaleMode } = useLocaleContext();
 
   useEffect(() => {
     setDrawerOpen(false);
@@ -127,6 +129,25 @@ export function Header() {
         </HStack>
 
         <Spacer />
+
+        <IconButton
+          _dark={{
+            bgColor: resolvedLocale === 'EN' ? 'blue.900/40' : 'red.900/40',
+            borderColor: resolvedLocale === 'EN' ? 'blue.400/30' : 'red.400/30',
+            color: resolvedLocale === 'EN' ? 'blue.300' : 'red.300',
+          }}
+          aria-label="Switch language"
+          bgColor={resolvedLocale === 'EN' ? 'blue.50' : 'red.50'}
+          borderColor={resolvedLocale === 'EN' ? 'blue.500/30' : 'red.500/30'}
+          color={resolvedLocale === 'EN' ? 'blue.600' : 'red.600'}
+          onClick={() => setLocaleMode(resolvedLocale === 'EN' ? 'JP' : 'EN')}
+          size="md"
+          variant="outline"
+        >
+          <Span fontSize="sm" fontWeight="semibold">
+            {resolvedLocale === 'EN' ? '日' : 'EN'}
+          </Span>
+        </IconButton>
 
         <IconButton
           aria-label="Open settings"
