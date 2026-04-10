@@ -1,7 +1,11 @@
+'use client';
+
 import { Box, HStack, Link, Stack, Text } from '@chakra-ui/react';
 import { CirclePlay, TvMinimalPlay } from 'lucide-react';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
+
+import { useTranslations } from '@/hooks/useTranslations';
 
 const ICON_SIZE = 18;
 const YOUTUBE = { icon: <CirclePlay size={ICON_SIZE} />, color: '#FF0000', label: 'YouTube' };
@@ -15,40 +19,42 @@ interface SocialLink {
 }
 
 interface Guest {
-  name: string;
-  role: string;
+  nameKey: string;
+  roleKey: string;
   socials?: SocialLink[];
 }
 
 const guests: Guest[] = [
   {
-    name: 'Connor (CDawgVA)',
-    role: 'The man on the bike',
+    nameKey: 'connorName',
+    roleKey: 'connorRole',
     socials: [
       { ...YOUTUBE, href: 'https://www.youtube.com/@CDawgVA' },
       { ...TWITCH, href: 'https://www.twitch.tv/cdawg' },
     ],
   },
   {
-    name: 'Chris (Abroad in Japan)',
-    role: 'Co-lead & fellow sufferer',
+    nameKey: 'chrisName',
+    roleKey: 'chrisRole',
     socials: [{ ...YOUTUBE, href: 'https://www.youtube.com/@AbroadinJapan' }],
   },
   {
-    name: 'Ironmouse',
-    role: 'Chief cheerleader',
+    nameKey: 'ironmouseName',
+    roleKey: 'ironmouseRole',
     socials: [
       { ...YOUTUBE, href: 'https://www.youtube.com/@IronMouseParty' },
       { ...TWITCH, href: 'https://www.twitch.tv/ironmouse' },
     ],
   },
   {
-    name: 'Support guests',
-    role: 'A rotating cast of friends and supporters joining to keep the energy up along the route.',
+    nameKey: 'supportGuests',
+    roleKey: 'supportGuestsRole',
   },
 ];
 
 export function WhoComing() {
+  const t = useTranslations('home');
+
   return (
     <Stack gap={4}>
       <Text
@@ -58,7 +64,7 @@ export function WhoComing() {
         letterSpacing="wide"
         textTransform="uppercase"
       >
-        Who's Coming
+        {t('whoComingLabel')}
       </Text>
       <Box
         aspectRatio={16 / 7}
@@ -79,11 +85,11 @@ export function WhoComing() {
         />
       </Box>
       <Stack gap={3} mt={1}>
-        {guests.map(({ name, role, socials }) => (
-          <Box _last={{ borderBottomWidth: 0, pb: 0 }} borderBottomWidth="1px" key={name} pb={3}>
+        {guests.map(({ nameKey, roleKey, socials }) => (
+          <Box _last={{ borderBottomWidth: 0, pb: 0 }} borderBottomWidth="1px" key={nameKey} pb={3}>
             <HStack align="center" justify="space-between">
               <Text fontSize="sm" fontWeight="semibold">
-                {name}
+                {t(nameKey)}
               </Text>
               {socials ? (
                 <HStack gap={2}>
@@ -105,7 +111,7 @@ export function WhoComing() {
               ) : null}
             </HStack>
             <Text color="fg.muted" fontSize="xs">
-              {role}
+              {t(roleKey)}
             </Text>
           </Box>
         ))}

@@ -1,7 +1,10 @@
+'use client';
+
 import { Box, HStack, Text } from '@chakra-ui/react';
 
 import { DailyDonationsChart } from '@/components/DailyDonationsChart';
 import { JourneyProgress } from '@/components/JourneyProgress';
+import { useTranslations } from '@/hooks/useTranslations';
 import type { CampaignFact } from '@/lib/types';
 
 import { HomeDonationProgress } from './HomeDonationProgress';
@@ -12,6 +15,8 @@ interface JourneySectionProps {
 }
 
 export function JourneySection({ initialCampaignFact, utcOffset }: JourneySectionProps) {
+  const t = useTranslations('home');
+
   return (
     <Box borderBottomWidth="1px" pb={{ base: 10, md: 16 }} pt={{ base: 10, md: 16 }}>
       <HStack align="baseline" justify="space-between" mb={2}>
@@ -22,12 +27,11 @@ export function JourneySection({ initialCampaignFact, utcOffset }: JourneySectio
           letterSpacing="wide"
           textTransform="uppercase"
         >
-          The Journey
+          {t('journeySectionLabel')}
         </Text>
       </HStack>
       <Text color="fg.muted" fontSize="sm" mb={6}>
-        The route is mapped. The rest is up to all of us. Fifteen days of ground to cover,
-        milestones to hit, and targets to shatter. One day at a time.
+        {t('journeyDescription')}
       </Text>
       <Box minH="60px" position="relative">
         <DailyDonationsChart />

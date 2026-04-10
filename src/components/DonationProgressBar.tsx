@@ -4,6 +4,7 @@ import { Box, HStack, Text } from '@chakra-ui/react';
 
 import { useAnimatedValue } from '@/hooks/useAnimatedValue';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
+import { useTranslations } from '@/hooks/useTranslations';
 import { formatAmountParts } from '@/lib/donationUtils';
 import type { CampaignFact } from '@/lib/types';
 
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function DonationProgressBar({ fact, mb = 6 }: Props) {
+  const t = useTranslations('donationProgress');
   const currencyPrefix = useCurrencyPrefix();
   const raisedCent = useAnimatedValue(fact?.total_amount_raised_cent ?? 0);
   const goalCent = useAnimatedValue(fact?.goal_cent ?? 0);
@@ -26,11 +28,11 @@ export function DonationProgressBar({ fact, mb = 6 }: Props) {
       <HStack fontSize="sm" justify="space-between" mb={1}>
         {fact ? (
           <>
-            <Text fontWeight="semibold">{raisedWhole} raised</Text>
-            <Text color="fg.muted">Current goal: {goalWhole}</Text>
+            <Text fontWeight="semibold">{t('raised', { amount: raisedWhole })}</Text>
+            <Text color="fg.muted">{t('currentGoal', { goal: goalWhole })}</Text>
           </>
         ) : (
-          <Text color="fg.subtle">Funds raised…</Text>
+          <Text color="fg.subtle">{t('fundsRaised')}</Text>
         )}
       </HStack>
       <Box

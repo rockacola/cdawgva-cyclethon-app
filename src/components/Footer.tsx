@@ -1,7 +1,13 @@
+'use client';
+
 import { Box, HStack, Link, Spacer, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
+import { useTranslations } from '@/hooks/useTranslations';
+
 export function Footer() {
+  const t = useTranslations('footer');
+
   return (
     <Box as="footer" bgColor="bg.subtle" borderTopWidth="1px" mt={12} px={4} py={6}>
       <HStack maxW="6xl" mx="auto">
@@ -18,7 +24,7 @@ export function Footer() {
             color="fg.muted"
             fontSize="sm"
           >
-            <NextLink href="/about">About</NextLink>
+            <NextLink href="/about">{t('about')}</NextLink>
           </Link>
         </HStack>
         <Spacer />

@@ -8,6 +8,7 @@ import { DonationActivityChart } from '@/components/DonationActivityChart';
 import { DonationFeed } from '@/components/DonationFeed';
 import { DonationProgressBar } from '@/components/DonationProgressBar';
 import { LiveDot } from '@/components/LiveDot';
+import { useTranslations } from '@/hooks/useTranslations';
 import { DONATIONS_URL, DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 import type { CampaignFact, Donation, DonationsData } from '@/lib/types';
 
@@ -112,20 +113,21 @@ export function DonationLiveFeed({ initialCampaignFact, initialDonations }: Prop
     [donationMap]
   );
 
+  const t = useTranslations('donationLive');
+
   return (
     <>
       <Flex align="center" gap={4} mb={2}>
         <Heading as="h1" size={{ base: 'xl', md: '2xl' }}>
-          Live Donations
+          {t('title')}
         </Heading>
         <LiveDot active={isConnected} />
       </Flex>
       <Text color="fg.muted" fontSize="sm" mb={6}>
-        Every donation counts. Support the ride on{' '}
+        {t('subtitle')}{' '}
         <Link href="https://tiltify.com/@cdawgva/cyclethon-5" target="_blank">
-          Tiltify <ExternalLink size={10} />
+          {t('tiltify')} <ExternalLink size={10} />
         </Link>
-        .
       </Text>
 
       <DonationActivityChart />
@@ -133,8 +135,7 @@ export function DonationLiveFeed({ initialCampaignFact, initialDonations }: Prop
       <DonationProgressBar fact={campaignFact} mb={2} />
 
       <Text color="fg.muted" fontSize="xs" mb={4}>
-        Data sourced from Tiltify. The amount shown may be slightly less than what appears on
-        stream, which also includes other donation proceeds.
+        {t('disclaimer')}
       </Text>
 
       <DonationFeed donations={donations} />

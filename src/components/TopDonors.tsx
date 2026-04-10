@@ -7,9 +7,11 @@ import { LastChecked } from '@/components/LastChecked';
 import { TransactionLeaderboard } from '@/components/TransactionLeaderboard';
 import { useDonations } from '@/contexts/DonationsContext';
 import { useDonationsPolling } from '@/hooks/useDonationsPolling';
+import { useTranslations } from '@/hooks/useTranslations';
 import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 
 export function TopDonors() {
+  const t = useTranslations('topDonors');
   const { donations, isRefreshing, lastCheckedAt } = useDonations();
   useDonationsPolling(DONATION_REFETCH_INTERVAL);
 
@@ -17,25 +19,24 @@ export function TopDonors() {
     <Stack gap={12}>
       <Stack gap={3}>
         <Heading as="h1" size={{ base: 'xl', md: '2xl' }}>
-          Top Donors
+          {t('title')}
         </Heading>
         <Text color="fg.muted" fontSize="sm">
-          Every donation, big or small, is part of what makes this possible. Together, this
-          community is what turns a cycling stream into something that genuinely changes lives.
+          {t('description')}
         </Text>
         <LastChecked isRefreshing={isRefreshing} timestamp={lastCheckedAt} />
       </Stack>
 
       <Stack gap={4}>
         <Heading as="h2" size="md">
-          By Donor
+          {t('byDonor')}
         </Heading>
         <DonorLeaderboard donations={donations} />
       </Stack>
 
       <Stack gap={4}>
         <Heading as="h2" size="md">
-          Biggest Single Donation
+          {t('biggestSingle')}
         </Heading>
         <TransactionLeaderboard donations={donations} />
       </Stack>

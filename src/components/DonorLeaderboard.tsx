@@ -6,9 +6,9 @@ import { useMemo } from 'react';
 import { DonorName } from '@/components/DonorName';
 import { PlaceCard } from '@/components/PlaceCard';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
+import { useTranslations } from '@/hooks/useTranslations';
 import { TOP_DONORS_CARDS, TOP_DONORS_TABLE_END } from '@/lib/constants';
 import { aggregateByDonor, formatAmount } from '@/lib/donationUtils';
-import { pluralize } from '@/lib/formatUtils';
 import type { Donation } from '@/lib/types';
 
 interface Props {
@@ -16,13 +16,15 @@ interface Props {
 }
 
 export function DonorLeaderboard({ donations }: Props) {
+  const t = useTranslations('topDonors');
+  const tc = useTranslations('common');
   const currencyPrefix = useCurrencyPrefix();
   const ranked = useMemo(() => aggregateByDonor(donations), [donations]);
   const cards = ranked.slice(0, TOP_DONORS_CARDS);
   const tableRows = ranked.slice(TOP_DONORS_CARDS, TOP_DONORS_TABLE_END);
 
   if (ranked.length === 0) {
-    return <Text color="fg.muted">No data yet.</Text>;
+    return <Text color="fg.muted">{tc('noDataYet')}</Text>;
   }
 
   return (
@@ -39,7 +41,11 @@ export function DonorLeaderboard({ donations }: Props) {
             key={donor.donor_name}
             name={donor.donor_name}
             place={i + 1}
-            subLabel={`${donor.count.toLocaleString()} ${pluralize(donor.count, 'donation')}`}
+            subLabel={
+              donor.count === 1
+                ? t('donation', { count: donor.count.toLocaleString() })
+                : t('donationPlural', { count: donor.count.toLocaleString() })
+            }
           />
         ))}
       </Box>
@@ -49,8 +55,8 @@ export function DonorLeaderboard({ donations }: Props) {
           <Table.Header>
             <Table.Row>
               <Table.ColumnHeader w={10}>#</Table.ColumnHeader>
-              <Table.ColumnHeader>Donor</Table.ColumnHeader>
-              <Table.ColumnHeader textAlign="right">Total</Table.ColumnHeader>
+              <Table.ColumnHeader>{t('donor')}</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="right">{t('total')}</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -60,7 +66,11 @@ export function DonorLeaderboard({ donations }: Props) {
                 <Table.Cell>
                   <DonorName name={donor.donor_name} />
                   <Span color="fg.subtle" fontSize="xs" ml={1.5}>
-                    ({donor.count.toLocaleString()} {pluralize(donor.count, 'donation')})
+                    (
+                    {donor.count === 1
+                      ? t('donation', { count: donor.count.toLocaleString() })
+                      : t('donationPlural', { count: donor.count.toLocaleString() })}
+                    )
                   </Span>
                 </Table.Cell>
                 <Table.Cell textAlign="right">

@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 import { DonorName } from '@/components/DonorName';
 import { PlaceCard } from '@/components/PlaceCard';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
+import { useTranslations } from '@/hooks/useTranslations';
 import { TOP_DONORS_CARDS, TOP_DONORS_TABLE_END } from '@/lib/constants';
 import { formatAmount, topByTransaction } from '@/lib/donationUtils';
 import { getEventDayLabel } from '@/lib/journey';
@@ -16,13 +17,15 @@ interface Props {
 }
 
 export function TransactionLeaderboard({ donations }: Props) {
+  const t = useTranslations('topDonors');
+  const tc = useTranslations('common');
   const currencyPrefix = useCurrencyPrefix();
   const ranked = useMemo(() => topByTransaction(donations), [donations]);
   const cards = ranked.slice(0, TOP_DONORS_CARDS);
   const tableRows = ranked.slice(TOP_DONORS_CARDS, TOP_DONORS_TABLE_END);
 
   if (ranked.length === 0) {
-    return <Text color="fg.muted">No data yet.</Text>;
+    return <Text color="fg.muted">{tc('noDataYet')}</Text>;
   }
 
   return (
@@ -49,8 +52,8 @@ export function TransactionLeaderboard({ donations }: Props) {
           <Table.Header>
             <Table.Row>
               <Table.ColumnHeader w={10}>#</Table.ColumnHeader>
-              <Table.ColumnHeader>Donor</Table.ColumnHeader>
-              <Table.ColumnHeader textAlign="right">Amount</Table.ColumnHeader>
+              <Table.ColumnHeader>{t('donor')}</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="right">{t('amount')}</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
           <Table.Body>

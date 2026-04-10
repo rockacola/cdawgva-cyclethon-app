@@ -1,4 +1,38 @@
 {
+  "common": {
+    "anonymous": "匿名",
+    "lastChecked": "最終確認：",
+    "noDataYet": "データなし"
+  },
+  "donationSearch": {
+    "description": "すべての寄付が力になります。寄付の全履歴を検索して、素晴らしい目的のために集まったコミュニティの力を実感してください！",
+    "filterLabel": "フィルター",
+    "found": "{count}件",
+    "maxAmount": "最大金額（$）",
+    "minAmount": "最小金額（$）",
+    "next": "次へ →",
+    "pageOf": "{page} / {total} ページ",
+    "prev": "← 前へ",
+    "results": "件表示",
+    "searchPlaceholder": "ドナー名またはコメントで検索...",
+    "sortAmount": "金額",
+    "sortComment": "コメント",
+    "sortDonor": "ドナー",
+    "sortLabel": "並べ替え：",
+    "sortTime": "時間",
+    "title": "寄付検索"
+  },
+  "donationLive": {
+    "disclaimer": "データはTiltifyから取得しています。表示される金額は、配信上の金額よりやや少ない場合があります。配信上の金額にはその他の寄付収益も含まれています。",
+    "subtitle": "すべての寄付が力になります。",
+    "tiltify": "Tiltify",
+    "title": "リアルタイム寄付"
+  },
+  "donationProgress": {
+    "currentGoal": "現在の目標：{goal}",
+    "fundsRaised": "寄付額を読み込み中…",
+    "raised": "{amount} の寄付金"
+  },
   "dayNav": {
     "dayLabel": "{day}日目"
   },
@@ -39,6 +73,9 @@
     "website": "公式サイト",
     "windSpeed": "風速"
   },
+  "footer": {
+    "about": "このサイトについて"
+  },
   "header": {
     "donations": "寄付",
     "home": "ホーム",
@@ -49,6 +86,66 @@
     "searchDonations": "寄付検索",
     "top": "トップ",
     "topDonors": "トップドナー"
+  },
+  "home": {
+    "15days": "15日間",
+    "again": "そして走り出す",
+    "causeSectionLabel": "支援の目的",
+    "causeTitle": "免疫不全財団",
+    "causeDescription": "免疫不全財団は、原発性免疫不全症を抱える人々を支援している。この疾患には450種類以上の希少で慢性的な病気が含まれ、推定50万人のアメリカ人に影響を与えている。診断までには平均して9〜15年かかり、患者の70〜90%は自分が免疫不全症であることに気づいていない。",
+    "causeGetInvolved": "集まったすべての寄付は、家族同士をつなぎ、支援し、より長く、より強く、より健康に生きるための力となる活動に使われる。",
+    "causeGetInvolvedLink": "参加方法についてはこちら。",
+    "heroDescription": "ライダー、バンチーム、ゲストサイクリスト、サポートクルー、そしてその裏で支えるコミュニティ。全員が免疫不全財団（Immune Deficiency Foundation）のために寄付を集めている。この企画は年々規模を拡大し続けている。私たちはその様子を見守り続けている。",
+    "japanYear": "日本・2026年",
+    "journeyDescription": "ルートはすでに設計されている。あとは私たち次第だ。15日間で走る距離、達成すべきマイルストーン、そして打ち破るべき目標。一日ずつ進んでいく。",
+    "journeySectionLabel": "ジャーニー",
+    "onTheRoad": "再び、旅へ",
+    "supportGuests": "応援ゲスト",
+    "supportGuestsRole": "ルートの途中で入れ替わりながら参加し、友人やサポーターたちがその都度合流して、旅のエネルギーを支えていく。",
+    "theyreBack": "彼らが帰ってきた",
+    "whoComingLabel": "参加メンバー",
+    "connorName": "コナー（CDawgVA）",
+    "connorRole": "チャリティーライド中のサイクリスト",
+    "chrisName": "クリス（Abroad in Japan）",
+    "chrisRole": "共同リーダー／共に想いを寄せる仲間",
+    "ironmouseName": "アイアンマウス",
+    "ironmouseRole": "応援団長"
+  },
+  "about": {
+    "title": "このサイトについて",
+    "intro1": "Cyclethon Trackerは、CDawgVA Cyclethon 5を追いかけるために作られたファンメイドの補助サイトです。コナー、クリス、または公式イベントとは一切関係ありません。情報を探し回らなくても済むようにまとめた、ファンによる非公式プロジェクトです。",
+    "intro2": "ライブ寄付データ、コミュニティの議論、イベントの最新情報を一つの場所に集約しています。このライドを追いかけるためのハブのような存在です。",
+    "dataSourcesLabel": "データの出どころ",
+    "sourceTiltifyName": "Tiltify API",
+    "sourceTiltifyDetail": "公式キャンペーンから取得したライブ寄付データ、合計金額、寄付者情報。",
+    "sourceRedditName": "Reddit",
+    "sourceRedditDetail": "CDawgVAサブレディットでのコミュニティ投稿や日々のまとめ。",
+    "sourceRedditLink": "r/CDawgVA",
+    "sourceDiscordName": "CDawgVA Discord",
+    "sourceDiscordDetail": "公式Discordサーバーからのアナウンス、ゲスト情報の発表、リアルタイムの盛り上がり。",
+    "sourceDiscordLink": "Discordに参加する",
+    "supportLabel": "支援方法",
+    "supportIntro": "コナーとクリスは、本気で良い目的のために体を張って走っています。5ドルの寄付でも、配信リンクを共有するだけでも、それは大きな力になります。参加方法はこちらです。",
+    "donateTitle": "寄付する",
+    "donateBody": "公式Tiltifyキャンペーンを通じて、免疫不全財団へ直接寄付できます。",
+    "donateLink": "寄付ページを開く",
+    "plasmaTitle": "血漿提供",
+    "plasmaBody": "原発性免疫不全症の患者にとって、血漿提供は命を救う支援になります。詳細はこちら。",
+    "plasmaLink": "血漿提供について",
+    "spreadTitle": "共有する",
+    "spreadBody": "配信や活動をシェアし、この活動を広めてください。小さな拡散も大きな力になります。",
+    "spreadLink": "Twitchで視聴する"
+  },
+  "topDonors": {
+    "amount": "金額",
+    "biggestSingle": "最高額の単一寄付",
+    "byDonor": "ドナー別",
+    "description": "大きくても小さくても、すべての寄付がこの活動を支えています。このコミュニティが、チャリティー配信を本当に人生を変える力に変えています。",
+    "donation": "{count}件の寄付",
+    "donationPlural": "{count}件の寄付",
+    "donor": "ドナー",
+    "title": "トップドナー",
+    "total": "合計"
   },
   "settings": {
     "appearance": "外観",

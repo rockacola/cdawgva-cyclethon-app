@@ -8,19 +8,21 @@ import type { SortDir, SortKey } from '@/components/DonationFeedDesktop';
 import { LastChecked } from '@/components/LastChecked';
 import { useDonations } from '@/contexts/DonationsContext';
 import { useDonationsPolling } from '@/hooks/useDonationsPolling';
+import { useTranslations } from '@/hooks/useTranslations';
 import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 
 const SEARCH_PAGE_SIZES = [10, 30, 60, 100] as const;
 const SEARCH_PAGE_SIZE_DEFAULT = 10;
 
-const SORT_LABELS: Record<SortKey, string> = {
-  amount: 'Amount',
-  comment: 'Comment',
-  name: 'Donor',
-  time: 'Time',
+const SORT_LABEL_KEYS: Record<SortKey, string> = {
+  amount: 'sortAmount',
+  comment: 'sortComment',
+  name: 'sortDonor',
+  time: 'sortTime',
 };
 
 export function DonationSearcher() {
+  const t = useTranslations('donationSearch');
   const { donations, isRefreshing, lastCheckedAt } = useDonations();
   useDonationsPolling(DONATION_REFETCH_INTERVAL);
   const [page, setPage] = useState(1);
@@ -105,8 +107,8 @@ export function DonationSearcher() {
 
   const sortControls = (
     <HStack color="fg.muted" fontSize="xs" gap={2}>
-      <Text fontWeight="medium">Sort:</Text>
-      {(Object.keys(SORT_LABELS) as SortKey[]).map((key) => (
+      <Text fontWeight="medium">{t('sortLabel')}</Text>
+      {(Object.keys(SORT_LABEL_KEYS) as SortKey[]).map((key) => (
         <Text
           _hover={{ color: 'fg' }}
           color={sortKey === key ? 'fg' : undefined}
@@ -115,7 +117,7 @@ export function DonationSearcher() {
           key={key}
           onClick={() => handleSort(key)}
         >
-          {SORT_LABELS[key]}
+          {t(SORT_LABEL_KEYS[key])}
           {sortKey === key ? (sortDir === 'asc' ? ' ↑' : ' ↓') : ''}
         </Text>
       ))}
@@ -136,7 +138,7 @@ export function DonationSearcher() {
           )}
         </HStack>
       ))}
-      <Text>results</Text>
+      <Text>{t('results')}</Text>
     </HStack>
   );
 
@@ -153,11 +155,9 @@ export function DonationSearcher() {
             }
           }}
         >
-          ← Prev
+          {t('prev')}
         </Text>
-        <Text>
-          Page {page} of {totalPages}
-        </Text>
+        <Text>{t('pageOf', { page, total: totalPages })}</Text>
         <Text
           _hover={page < totalPages ? { color: 'fg' } : undefined}
           color={page >= totalPages ? 'fg.subtle' : undefined}
@@ -168,7 +168,7 @@ export function DonationSearcher() {
             }
           }}
         >
-          Next →
+          {t('next')}
         </Text>
       </HStack>
     ) : null;
@@ -176,7 +176,7 @@ export function DonationSearcher() {
   const isFiltered = needle || minCent !== null || maxCent !== null;
   const resultCount = isFiltered ? (
     <Text color="fg.muted" fontSize="xs">
-      {sorted.length} found
+      {t('found', { count: sorted.length })}
     </Text>
   ) : null;
 
@@ -220,11 +220,10 @@ export function DonationSearcher() {
     <Stack gap={6}>
       <Stack gap={3}>
         <Heading as="h1" size={{ base: 'xl', md: '2xl' }}>
-          Donation Search
+          {t('title')}
         </Heading>
         <Text color="fg.muted" fontSize="sm">
-          Every dollar counts, dig through the full donation history and bask in the glory of an
-          incredible community coming together for a great cause!
+          {t('description')}
         </Text>
         <LastChecked isRefreshing={isRefreshing} timestamp={lastCheckedAt} />
       </Stack>
@@ -232,13 +231,13 @@ export function DonationSearcher() {
       <Box borderRadius="lg" borderWidth="1px" px={4} py={3}>
         <Stack gap={3}>
           <Text fontSize="xs" fontWeight="semibold" letterSpacing="wide" textTransform="uppercase">
-            Filter
+            {t('filterLabel')}
           </Text>
           <Input
             _dark={{ bg: 'gray.800' }}
             bg="bg.muted"
             onChange={(e) => handleFilterChange(e.target.value)}
-            placeholder="Search by donor name or comment..."
+            placeholder={t('searchPlaceholder')}
             size="sm"
             value={filterText}
             variant="subtle"
@@ -249,7 +248,7 @@ export function DonationSearcher() {
               bg="bg.muted"
               min={0}
               onChange={(e) => handleAmountMinChange(e.target.value)}
-              placeholder="Min amount ($)"
+              placeholder={t('minAmount')}
               size="sm"
               type="number"
               value={filterAmountMin}
@@ -260,7 +259,7 @@ export function DonationSearcher() {
               bg="bg.muted"
               min={0}
               onChange={(e) => handleAmountMaxChange(e.target.value)}
-              placeholder="Max amount ($)"
+              placeholder={t('maxAmount')}
               size="sm"
               type="number"
               value={filterAmountMax}

@@ -1,4 +1,38 @@
 {
+  "common": {
+    "anonymous": "Anonymous",
+    "lastChecked": "Last checked:",
+    "noDataYet": "No data yet."
+  },
+  "donationSearch": {
+    "description": "Every dollar counts, dig through the full donation history and bask in the glory of an incredible community coming together for a great cause!",
+    "filterLabel": "Filter",
+    "found": "{count} found",
+    "maxAmount": "Max amount ($)",
+    "minAmount": "Min amount ($)",
+    "next": "Next →",
+    "pageOf": "Page {page} of {total}",
+    "prev": "← Prev",
+    "results": "results",
+    "searchPlaceholder": "Search by donor name or comment...",
+    "sortAmount": "Amount",
+    "sortComment": "Comment",
+    "sortDonor": "Donor",
+    "sortLabel": "Sort:",
+    "sortTime": "Time",
+    "title": "Donation Search"
+  },
+  "donationLive": {
+    "disclaimer": "Data sourced from Tiltify. The amount shown may be slightly less than what appears on stream, which also includes other donation proceeds.",
+    "subtitle": "Every donation counts. Support the ride on",
+    "tiltify": "Tiltify",
+    "title": "Live Donations"
+  },
+  "donationProgress": {
+    "currentGoal": "Current goal: {goal}",
+    "fundsRaised": "Funds raised…",
+    "raised": "{amount} raised"
+  },
   "dayNav": {
     "dayLabel": "Day {day}"
   },
@@ -39,6 +73,9 @@
     "website": "Website",
     "windSpeed": "Wind Speed"
   },
+  "footer": {
+    "about": "About"
+  },
   "header": {
     "donations": "Donations",
     "home": "Home",
@@ -49,6 +86,66 @@
     "searchDonations": "Search Donations",
     "top": "Top",
     "topDonors": "Top Donors"
+  },
+  "home": {
+    "15days": "15 Days",
+    "again": "Again.",
+    "causeSectionLabel": "The Cause",
+    "causeTitle": "Immune Deficiency Foundation",
+    "causeDescription": "The Immune Deficiency Foundation supports people living with primary immunodeficiency, with over 450 types of rare, chronic conditions affecting an estimated 500,000 Americans. On average it takes 9 to 15 years to get a diagnosis. 70 to 90% of those with a PI don't even know they have one.",
+    "causeGetInvolved": "Every dollar raised goes toward connecting, engaging, and empowering families to live longer, stronger, and healthier lives. ",
+    "causeGetInvolvedLink": "Learn how to get involved.",
+    "heroDescription": "Riders, van gang, guest cyclists, support crew and a whole community behind them. Everyone is here raising money for the Immune Deficiency Foundation. It keeps getting bigger every year. We keep watching.",
+    "japanYear": "Japan · 2026",
+    "journeyDescription": "The route is mapped. The rest is up to all of us. Fifteen days of ground to cover, milestones to hit, and targets to shatter. One day at a time.",
+    "journeySectionLabel": "The Journey",
+    "onTheRoad": "On the road",
+    "supportGuests": "Support guests",
+    "supportGuestsRole": "A rotating cast of friends and supporters joining to keep the energy up along the route.",
+    "theyreBack": "They're back",
+    "whoComingLabel": "Who's Coming",
+    "connorName": "Connor (CDawgVA)",
+    "connorRole": "The man on the bike",
+    "chrisName": "Chris (Abroad in Japan)",
+    "chrisRole": "Co-lead & fellow sufferer",
+    "ironmouseName": "Ironmouse",
+    "ironmouseRole": "Chief cheerleader"
+  },
+  "about": {
+    "title": "About this site",
+    "intro1": "Cyclethon Tracker is a fan-made companion site for CDawgVA Cyclethon 5. No affiliation with Connor, Chris, or the official event. Just a fan project pulling together data so you do not have to dig around for it.",
+    "intro2": "We aggregate live donation data, community discussion, and event updates into one place. Think of it as your go-to spot for keeping up with the ride.",
+    "dataSourcesLabel": "Where the data comes from",
+    "sourceTiltifyName": "Tiltify API",
+    "sourceTiltifyDetail": "Live donation data, totals, and donor info pulled directly from the official campaign.",
+    "sourceRedditName": "Reddit",
+    "sourceRedditDetail": "Community discussion threads and daily recaps from the CDawgVA subreddit.",
+    "sourceRedditLink": "r/CDawgVA",
+    "sourceDiscordName": "CDawgVA Discord",
+    "sourceDiscordDetail": "Announcements, guest reveals, and live hype from the official Discord server.",
+    "sourceDiscordLink": "Join the Discord",
+    "supportLabel": "How to support",
+    "supportIntro": "Connor and Chris are putting their legs on the line for a genuinely good cause. Whether you chip in $5 or just share the stream link, it all adds up. Here is how you can get involved.",
+    "donateTitle": "Donate",
+    "donateBody": "Give directly to the Immune Deficiency Foundation via the official Tiltify campaign.",
+    "donateLink": "Open donation page",
+    "plasmaTitle": "Donate Plasma",
+    "plasmaBody": "Plasma donations are life saving for people with primary immunodeficiency. Find out how.",
+    "plasmaLink": "Plasma awareness",
+    "spreadTitle": "Spread the Word",
+    "spreadBody": "Share the stream, share the cause. Tell a friend. Post about it. Every bit of noise helps.",
+    "spreadLink": "Watch on Twitch"
+  },
+  "topDonors": {
+    "amount": "Amount",
+    "biggestSingle": "Biggest Single Donation",
+    "byDonor": "By Donor",
+    "description": "Every donation, big or small, is part of what makes this possible. Together, this community is what turns a cycling stream into something that genuinely changes lives.",
+    "donation": "{count} donation",
+    "donationPlural": "{count} donations",
+    "donor": "Donor",
+    "title": "Top Donors",
+    "total": "Total"
   },
   "settings": {
     "appearance": "Appearance",
