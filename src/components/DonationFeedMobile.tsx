@@ -4,6 +4,7 @@ import { Box, Stack, Text } from '@chakra-ui/react';
 
 import { DonationTime } from '@/components/DonationTime';
 import { RelativeTime } from '@/components/RelativeTime';
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useNow } from '@/hooks/useNow';
 import { formatAmount, getDonationBoxShadow, isAnonymous } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function DonationFeedMobile({ donations }: Props) {
+  const currencyPrefix = useCurrencyPrefix();
   const now = useNow(1000);
 
   return (
@@ -40,7 +42,7 @@ export function DonationFeedMobile({ donations }: Props) {
                 {d.donor_name}
               </Text>
               <Text fontSize="xs" fontWeight="semibold">
-                {formatAmount(d)}
+                {formatAmount(d.amount_cent, currencyPrefix)}
               </Text>
             </Box>
             {d.donor_comment ? (

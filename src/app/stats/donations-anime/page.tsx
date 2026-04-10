@@ -9,6 +9,7 @@ import { DonationTime } from '@/components/DonationTime';
 import { DonorName } from '@/components/DonorName';
 import { LastChecked } from '@/components/LastChecked';
 import { useDonations } from '@/contexts/DonationsContext';
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDonationsPolling } from '@/hooks/useDonationsPolling';
 import { animeIdToName, detectAnimeFromComment } from '@/lib/animePatterns';
 import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
@@ -29,6 +30,7 @@ function DonationsAnimeContent() {
   useDonationsPolling(DONATION_REFETCH_INTERVAL);
   const { timezoneMode } = useTimezoneContext();
   const searchParams = useSearchParams();
+  const currencyPrefix = useCurrencyPrefix();
 
   const startTimestamp = Number(searchParams.get('start')) || 0;
   const endTimestamp = Number(searchParams.get('end')) || Infinity;
@@ -51,7 +53,7 @@ function DonationsAnimeContent() {
           {formatDonationTime(endTimestamp, timezoneMode)} {timezoneMode}
         </Heading>
         <Text color="fg.muted" fontSize="sm" mb={1}>
-          {filteredDonations.length} donations — Total: $
+          {filteredDonations.length} donations — Total: {currencyPrefix}
           {(totalDonationsInCents / 100).toLocaleString('en-US', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
@@ -96,7 +98,7 @@ function DonationsAnimeContent() {
                     </Table.Cell>
                     <Table.Cell textAlign="right" whiteSpace="nowrap">
                       {(() => {
-                        const { whole, cents } = formatAmountParts(d);
+                        const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
                         return (
                           <>
                             {whole}
@@ -146,7 +148,7 @@ function DonationsAnimeContent() {
                     </Table.Cell>
                     <Table.Cell textAlign="right" whiteSpace="nowrap">
                       {(() => {
-                        const { whole, cents } = formatAmountParts(d);
+                        const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
                         return (
                           <>
                             {whole}

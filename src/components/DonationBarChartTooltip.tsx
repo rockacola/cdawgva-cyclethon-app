@@ -2,8 +2,9 @@ import type { NameType, Payload, ValueType } from 'recharts/types/component/Defa
 import type { TooltipProps } from 'recharts/types/component/Tooltip';
 
 import type { ActivityBucket } from '@/hooks/useActivityBuckets';
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
-import { formatCurrency } from '@/lib/donationUtils';
+import { formatAmountParts } from '@/lib/donationUtils';
 
 type Props = TooltipProps<ValueType, NameType> & {
   bg: string;
@@ -22,6 +23,7 @@ export function DonationBarChartTooltip({
   textColor,
 }: Props) {
   const t = useTranslations('dayPage');
+  const currencyPrefix = useCurrencyPrefix();
 
   if (!active || !payload?.length) {
     return null;
@@ -31,6 +33,8 @@ export function DonationBarChartTooltip({
   if (!entry) {
     return null;
   }
+
+  const { whole } = formatAmountParts(entry.amountCent, currencyPrefix);
 
   return (
     <div
@@ -50,7 +54,7 @@ export function DonationBarChartTooltip({
         <span>
           {t(entry.count === 1 ? 'donationCount' : 'donationCountPlural', { count: entry.count })}
         </span>
-        <span>{formatCurrency(entry.amountCent, 'USD')}</span>
+        <span>{whole}</span>
       </div>
     </div>
   );

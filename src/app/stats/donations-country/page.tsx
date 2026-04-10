@@ -8,6 +8,7 @@ import { CountryWarTable } from '@/components/CountryWarTable';
 import { DonationTime } from '@/components/DonationTime';
 import { DonorName } from '@/components/DonorName';
 import { useDonations } from '@/contexts/DonationsContext';
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDonationsPolling } from '@/hooks/useDonationsPolling';
 import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 import {
@@ -29,6 +30,7 @@ export default function DonationsCountryPage() {
 function DonationsCountryContent() {
   const { donations } = useDonations();
   useDonationsPolling(DONATION_REFETCH_INTERVAL);
+  const currencyPrefix = useCurrencyPrefix();
   const { timezoneMode } = useTimezoneContext();
   const searchParams = useSearchParams();
 
@@ -53,7 +55,7 @@ function DonationsCountryContent() {
           {formatDonationTime(endTimestamp, timezoneMode)} {timezoneMode}
         </Heading>
         <Text color="fg.muted" fontSize="sm" mb={6}>
-          {filteredDonations.length} donations — Total: $
+          {filteredDonations.length} donations — Total: {currencyPrefix}
           {(totalDonationsInCents / 100).toLocaleString('en-US', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
@@ -95,7 +97,7 @@ function DonationsCountryContent() {
                     </Table.Cell>
                     <Table.Cell textAlign="right" whiteSpace="nowrap">
                       {(() => {
-                        const { whole, cents } = formatAmountParts(d);
+                        const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
                         return (
                           <>
                             {whole}
@@ -145,7 +147,7 @@ function DonationsCountryContent() {
                     </Table.Cell>
                     <Table.Cell textAlign="right" whiteSpace="nowrap">
                       {(() => {
-                        const { whole, cents } = formatAmountParts(d);
+                        const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
                         return (
                           <>
                             {whole}

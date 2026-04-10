@@ -5,6 +5,7 @@ import { useMemo } from 'react';
 
 import { DonorName } from '@/components/DonorName';
 import { PlaceCard } from '@/components/PlaceCard';
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { TOP_DONORS_CARDS, TOP_DONORS_TABLE_END } from '@/lib/constants';
 import { formatAmount, topByTransaction } from '@/lib/donationUtils';
 import { getEventDayLabel } from '@/lib/journey';
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export function TransactionLeaderboard({ donations }: Props) {
+  const currencyPrefix = useCurrencyPrefix();
   const ranked = useMemo(() => topByTransaction(donations), [donations]);
   const cards = ranked.slice(0, TOP_DONORS_CARDS);
   const tableRows = ranked.slice(TOP_DONORS_CARDS, TOP_DONORS_TABLE_END);
@@ -33,7 +35,7 @@ export function TransactionLeaderboard({ donations }: Props) {
       >
         {cards.map((d, i) => (
           <PlaceCard
-            amount={formatAmount(d)}
+            amount={formatAmount(d.amount_cent, currencyPrefix)}
             key={d.id}
             name={d.donor_name}
             place={i + 1}
@@ -61,7 +63,9 @@ export function TransactionLeaderboard({ donations }: Props) {
                     ({getEventDayLabel(d.completed_at)})
                   </Text>
                 </Table.Cell>
-                <Table.Cell textAlign="right">{formatAmount(d)}</Table.Cell>
+                <Table.Cell textAlign="right">
+                  {formatAmount(d.amount_cent, currencyPrefix)}
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>

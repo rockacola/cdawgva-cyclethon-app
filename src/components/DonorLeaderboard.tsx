@@ -5,6 +5,7 @@ import { useMemo } from 'react';
 
 import { DonorName } from '@/components/DonorName';
 import { PlaceCard } from '@/components/PlaceCard';
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { TOP_DONORS_CARDS, TOP_DONORS_TABLE_END } from '@/lib/constants';
 import { aggregateByDonor, formatAmount } from '@/lib/donationUtils';
 import { pluralize } from '@/lib/formatUtils';
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export function DonorLeaderboard({ donations }: Props) {
+  const currencyPrefix = useCurrencyPrefix();
   const ranked = useMemo(() => aggregateByDonor(donations), [donations]);
   const cards = ranked.slice(0, TOP_DONORS_CARDS);
   const tableRows = ranked.slice(TOP_DONORS_CARDS, TOP_DONORS_TABLE_END);
@@ -33,10 +35,7 @@ export function DonorLeaderboard({ donations }: Props) {
       >
         {cards.map((donor, i) => (
           <PlaceCard
-            amount={formatAmount({
-              amount_cent: donor.amount_cent,
-              amount_currency: donor.amount_currency,
-            })}
+            amount={formatAmount(donor.amount_cent, currencyPrefix)}
             key={donor.donor_name}
             name={donor.donor_name}
             place={i + 1}
@@ -65,10 +64,7 @@ export function DonorLeaderboard({ donations }: Props) {
                   </Span>
                 </Table.Cell>
                 <Table.Cell textAlign="right">
-                  {formatAmount({
-                    amount_cent: donor.amount_cent,
-                    amount_currency: donor.amount_currency,
-                  })}
+                  {formatAmount(donor.amount_cent, currencyPrefix)}
                 </Table.Cell>
               </Table.Row>
             ))}

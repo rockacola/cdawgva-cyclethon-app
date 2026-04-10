@@ -6,6 +6,7 @@ import type { NameType, Payload, ValueType } from 'recharts/types/component/Defa
 import type { TooltipProps } from 'recharts/types/component/Tooltip';
 
 import { useColorModeValue } from '@/components/ui/color-mode';
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDailyTotals } from '@/hooks/useDailyTotals';
 import type { DailyTotal } from '@/lib/types';
 
@@ -64,7 +65,8 @@ function buildChartData(
   }));
 }
 
-const fmt = (v: number) => `$${Number(v).toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+const fmt = (v: number, currencyPrefix: string) =>
+  `${currencyPrefix}${Number(v).toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
 
 interface ChartTooltipExtraProps {
   bg: string;
@@ -80,6 +82,8 @@ function ChartTooltip({
   textColor,
 }: TooltipProps<ValueType, NameType> &
   ChartTooltipExtraProps & { payload?: readonly Payload<ValueType, NameType>[] }) {
+  const currencyPrefix = useCurrencyPrefix();
+
   if (!active || !payload?.length) {
     return null;
   }
@@ -102,12 +106,12 @@ function ChartTooltip({
     >
       <div style={{ display: 'flex', gap: 16, justifyContent: 'space-between' }}>
         <span>Daily</span>
-        <span>{fmt(daily)}</span>
+        <span>{fmt(daily, currencyPrefix)}</span>
       </div>
       {total !== null && (
         <div style={{ display: 'flex', gap: 16, justifyContent: 'space-between', marginTop: 6 }}>
           <span>Total</span>
-          <span>{fmt(total)}</span>
+          <span>{fmt(total, currencyPrefix)}</span>
         </div>
       )}
     </div>

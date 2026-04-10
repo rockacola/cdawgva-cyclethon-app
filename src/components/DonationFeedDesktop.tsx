@@ -4,6 +4,7 @@ import { Span, Table, Text } from '@chakra-ui/react';
 
 import { DonationTime } from '@/components/DonationTime';
 import { RelativeTime } from '@/components/RelativeTime';
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useNow } from '@/hooks/useNow';
 import { formatAmountParts, getDonationBoxShadow, isAnonymous } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
@@ -26,6 +27,7 @@ function sortIndicator(col: SortKey, sortKey?: SortKey, sortDir?: SortDir): stri
 }
 
 export function DonationFeedDesktop({ donations, onSort, sortDir, sortKey }: Props) {
+  const currencyPrefix = useCurrencyPrefix();
   const now = useNow(1000);
   const headerProps = onSort ? { _hover: { color: 'fg' }, cursor: 'pointer' as const } : {};
 
@@ -60,7 +62,7 @@ export function DonationFeedDesktop({ donations, onSort, sortDir, sortKey }: Pro
       <Table.Body>
         {donations.map((d) => {
           const isAnon = isAnonymous(d.donor_name);
-          const { whole, cents } = formatAmountParts(d);
+          const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
           return (
             <Table.Row
               _hover={{ bg: 'bg.muted' }}

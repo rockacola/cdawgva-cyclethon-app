@@ -1,5 +1,7 @@
 import { Box, Text } from '@chakra-ui/react';
 
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
+
 interface Props {
   amount: number;
   currency: string | undefined;
@@ -7,6 +9,8 @@ interface Props {
 }
 
 export function FundraiseCard({ amount, currency, label }: Props) {
+  const currencyPrefix = useCurrencyPrefix();
+
   return (
     <Box
       bgColor="yellow.50/50"
@@ -26,7 +30,8 @@ export function FundraiseCard({ amount, currency, label }: Props) {
         {label}
       </Text>
       <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold" lineHeight="1.2">
-        ${amount.toLocaleString()}
+        {currencyPrefix}
+        {amount.toLocaleString()}
       </Text>
       {!!currency && (
         <Text color="fg.subtle" fontSize="xs" mt={0.5}>

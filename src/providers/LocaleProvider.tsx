@@ -7,7 +7,7 @@ import useLocalStorageState from 'use-local-storage-state';
 import { LOCALE_MODE_DEFAULT, STORAGE_KEYS } from '@/lib/constants';
 import type { LocaleMode } from '@/lib/constants';
 
-type ResolvedLocale = 'EN' | 'JP';
+export type ResolvedLocale = 'EN' | 'JP';
 
 interface LocaleContextValue {
   localeMode: LocaleMode;

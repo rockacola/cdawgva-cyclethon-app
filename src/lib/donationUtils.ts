@@ -522,23 +522,23 @@ function formatCents(amountCent: number): string {
   return numberFormat.format(amountCent / 100);
 }
 
-export function formatAmount(d: Pick<Donation, 'amount_cent' | 'amount_currency'>): string {
-  const value = formatCents(d.amount_cent);
-  if (d.amount_currency === 'USD') {
-    return `$${value}`;
-  }
-  return `${d.amount_currency} ${value}`;
+export function formatAmount(amountCent: number, prefix: string): string {
+  const { whole, cents } = formatAmountParts(amountCent, prefix);
+  return `${whole}${cents}`;
 }
 
-export function formatAmountParts(d: Pick<Donation, 'amount_cent' | 'amount_currency'>): {
+export function formatAmountParts(
+  amountCent: number,
+  prefix: string
+): {
   whole: string;
   cents: string;
 } {
-  const value = formatCents(d.amount_cent);
+  const value = formatCents(amountCent);
   const dotIndex = value.lastIndexOf('.');
   const intPart = value.slice(0, dotIndex);
   const centsPart = value.slice(dotIndex + 1);
-  const whole = d.amount_currency === 'USD' ? `$${intPart}` : `${d.amount_currency} ${intPart}`;
+  const whole = `${prefix}${intPart}`;
   return { whole, cents: `.${centsPart}` };
 }
 
@@ -562,12 +562,4 @@ export function getDonationBoxShadow(
     return `inset ${insetWidth}px 0 0 0 var(--chakra-colors-orange-200)`;
   }
   return undefined;
-}
-
-export function formatCurrency(cents: number, currency: string): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-    maximumFractionDigits: 0,
-  }).format(cents / 100);
 }

@@ -4,6 +4,7 @@ import { Box, Span, Table, Text } from '@chakra-ui/react';
 import { Crown } from 'lucide-react';
 import { useMemo } from 'react';
 
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
 import {
   countryCodeToName,
@@ -21,6 +22,7 @@ interface Props {
 export function CountryWarTable({ donations, maxCount }: Props) {
   const t = useTranslations('dayPage');
   const { resolvedLocale } = useLocaleContext();
+  const currencyPrefix = useCurrencyPrefix();
   const countryStats = useMemo(
     function aggregateByCountry() {
       const map = new Map<string, { count: number; sumCent: number }>();
@@ -75,10 +77,7 @@ export function CountryWarTable({ donations, maxCount }: Props) {
             <Table.Cell textAlign="right">{row.count}</Table.Cell>
             <Table.Cell textAlign="right" whiteSpace="nowrap">
               {(() => {
-                const { whole, cents } = formatAmountParts({
-                  amount_cent: row.sumCent,
-                  amount_currency: 'USD',
-                });
+                const { whole, cents } = formatAmountParts(row.sumCent, currencyPrefix);
                 return (
                   <>
                     {whole}
