@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { useLocaleContext } from '@/providers/LocaleProvider';
 import type { LocaleMode } from '@/lib/constants';
+import { useLocaleContext } from '@/providers/LocaleProvider';
 
 interface Props {
   locale: LocaleMode;
