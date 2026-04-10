@@ -13,6 +13,7 @@ export function FundraiseCard({ amount, currency, label }: Props) {
 
   return (
     <Box
+      _dark={{ bgColor: 'yellow.900/30', borderColor: 'yellow.400/30' }}
       bgColor="yellow.50/50"
       borderColor="yellow.500/30"
       borderRadius="xl"
