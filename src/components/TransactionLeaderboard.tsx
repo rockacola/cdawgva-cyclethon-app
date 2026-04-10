@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Table, Text } from '@chakra-ui/react';
+import { Box, Span, Table, Text } from '@chakra-ui/react';
 import { useMemo } from 'react';
 
 import { DonorName } from '@/components/DonorName';
@@ -8,7 +8,7 @@ import { PlaceCard } from '@/components/PlaceCard';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
 import { TOP_DONORS_CARDS, TOP_DONORS_TABLE_END } from '@/lib/constants';
-import { formatAmount, topByTransaction } from '@/lib/donationUtils';
+import { formatAmountParts, topByTransaction } from '@/lib/donationUtils';
 import type { EventDayInfo } from '@/lib/journey';
 import { getEventDayInfo } from '@/lib/journey';
 import type { Donation } from '@/lib/types';
@@ -48,15 +48,19 @@ export function TransactionLeaderboard({ donations }: Props) {
         gridTemplateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }}
         mb={6}
       >
-        {cards.map((d, i) => (
-          <PlaceCard
-            amount={formatAmount(d.amount_cent, currencyPrefix)}
-            key={d.id}
-            name={d.donor_name}
-            place={i + 1}
-            subLabel={formatDayLabel(getEventDayInfo(d.completed_at))}
-          />
-        ))}
+        {cards.map((d, i) => {
+          const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
+          return (
+            <PlaceCard
+              cents={cents}
+              key={d.id}
+              name={d.donor_name}
+              place={i + 1}
+              subLabel={formatDayLabel(getEventDayInfo(d.completed_at))}
+              whole={whole}
+            />
+          );
+        })}
       </Box>
 
       {tableRows.length > 0 && (
@@ -69,20 +73,24 @@ export function TransactionLeaderboard({ donations }: Props) {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {tableRows.map((d, i) => (
-              <Table.Row key={d.id}>
-                <Table.Cell color="fg.subtle">{TOP_DONORS_CARDS + i + 1}</Table.Cell>
-                <Table.Cell>
-                  <DonorName name={d.donor_name} />{' '}
-                  <Text as="span" color="fg.subtle" fontSize="xs">
-                    ({formatDayLabel(getEventDayInfo(d.completed_at))})
-                  </Text>
-                </Table.Cell>
-                <Table.Cell textAlign="right">
-                  {formatAmount(d.amount_cent, currencyPrefix)}
-                </Table.Cell>
-              </Table.Row>
-            ))}
+            {tableRows.map((d, i) => {
+              const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
+              return (
+                <Table.Row key={d.id}>
+                  <Table.Cell color="fg.subtle">{TOP_DONORS_CARDS + i + 1}</Table.Cell>
+                  <Table.Cell>
+                    <DonorName name={d.donor_name} />{' '}
+                    <Text as="span" color="fg.subtle" fontSize="xs">
+                      ({formatDayLabel(getEventDayInfo(d.completed_at))})
+                    </Text>
+                  </Table.Cell>
+                  <Table.Cell textAlign="right">
+                    {whole}
+                    <Span color="fg.subtle">{cents}</Span>
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
           </Table.Body>
         </Table.Root>
       )}

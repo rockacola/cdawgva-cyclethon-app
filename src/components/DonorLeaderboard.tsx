@@ -8,7 +8,7 @@ import { PlaceCard } from '@/components/PlaceCard';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
 import { TOP_DONORS_CARDS, TOP_DONORS_TABLE_END } from '@/lib/constants';
-import { aggregateByDonor, formatAmount } from '@/lib/donationUtils';
+import { aggregateByDonor, formatAmountParts } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 
 interface Props {
@@ -35,19 +35,23 @@ export function DonorLeaderboard({ donations }: Props) {
         gridTemplateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }}
         mb={6}
       >
-        {cards.map((donor, i) => (
-          <PlaceCard
-            amount={formatAmount(donor.amount_cent, currencyPrefix)}
-            key={donor.donor_name}
-            name={donor.donor_name}
-            place={i + 1}
-            subLabel={
-              donor.count === 1
-                ? t('donation', { count: donor.count.toLocaleString() })
-                : t('donationPlural', { count: donor.count.toLocaleString() })
-            }
-          />
-        ))}
+        {cards.map((donor, i) => {
+          const { whole, cents } = formatAmountParts(donor.amount_cent, currencyPrefix);
+          return (
+            <PlaceCard
+              cents={cents}
+              key={donor.donor_name}
+              name={donor.donor_name}
+              place={i + 1}
+              subLabel={
+                donor.count === 1
+                  ? t('donation', { count: donor.count.toLocaleString() })
+                  : t('donationPlural', { count: donor.count.toLocaleString() })
+              }
+              whole={whole}
+            />
+          );
+        })}
       </Box>
 
       {tableRows.length > 0 && (
@@ -60,24 +64,28 @@ export function DonorLeaderboard({ donations }: Props) {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {tableRows.map((donor, i) => (
-              <Table.Row key={donor.donor_name}>
-                <Table.Cell color="fg.subtle">{TOP_DONORS_CARDS + i + 1}</Table.Cell>
-                <Table.Cell>
-                  <DonorName name={donor.donor_name} />
-                  <Span color="fg.subtle" fontSize="xs" ml={1.5}>
-                    (
-                    {donor.count === 1
-                      ? t('donation', { count: donor.count.toLocaleString() })
-                      : t('donationPlural', { count: donor.count.toLocaleString() })}
-                    )
-                  </Span>
-                </Table.Cell>
-                <Table.Cell textAlign="right">
-                  {formatAmount(donor.amount_cent, currencyPrefix)}
-                </Table.Cell>
-              </Table.Row>
-            ))}
+            {tableRows.map((donor, i) => {
+              const { whole, cents } = formatAmountParts(donor.amount_cent, currencyPrefix);
+              return (
+                <Table.Row key={donor.donor_name}>
+                  <Table.Cell color="fg.subtle">{TOP_DONORS_CARDS + i + 1}</Table.Cell>
+                  <Table.Cell>
+                    <DonorName name={donor.donor_name} />
+                    <Span color="fg.subtle" fontSize="xs" ml={1.5}>
+                      (
+                      {donor.count === 1
+                        ? t('donation', { count: donor.count.toLocaleString() })
+                        : t('donationPlural', { count: donor.count.toLocaleString() })}
+                      )
+                    </Span>
+                  </Table.Cell>
+                  <Table.Cell textAlign="right">
+                    {whole}
+                    <Span color="fg.subtle">{cents}</Span>
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
           </Table.Body>
         </Table.Root>
       )}

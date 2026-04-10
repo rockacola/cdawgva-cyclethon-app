@@ -1,16 +1,17 @@
-import { Card, HStack, Text } from '@chakra-ui/react';
+import { Card, HStack, Span, Text } from '@chakra-ui/react';
 import { Crown } from 'lucide-react';
 
 import { DonorName } from '@/components/DonorName';
 
 interface Props {
-  amount: string;
+  cents: string;
   name: string;
   place: number;
   subLabel?: string;
+  whole: string;
 }
 
-export function PlaceCard({ amount, name, place, subLabel }: Props) {
+export function PlaceCard({ cents, name, place, subLabel, whole }: Props) {
   return (
     <Card.Root
       _dark={{
@@ -36,7 +37,8 @@ export function PlaceCard({ amount, name, place, subLabel }: Props) {
             </Text>
           </HStack>
           <Text color="fg.muted" fontSize="sm" fontWeight="medium" whiteSpace="nowrap">
-            {amount}
+            {whole}
+            <Span color="fg.subtle">{cents}</Span>
           </Text>
         </HStack>
         {subLabel ? (
