@@ -775,9 +775,6 @@ export function detectAnimeFromComment(comment: string | null | undefined): stri
 }
 
 export function animeIdToName(id: string, locale: string = 'EN'): string {
-  // const matchedAnime = ANIME_PATTERNS.find((anime) => anime.id === id);
-  // return matchedAnime?.name ?? id;
-
   const entry = ANIME_PATTERNS.find((a) => a.id === id);
   if (!entry) {
     return id;
