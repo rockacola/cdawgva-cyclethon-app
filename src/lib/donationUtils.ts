@@ -487,7 +487,7 @@ export function aggregateByDonor(donations: Donation[]): DonorTotal[] {
 
 export function topByTransaction(donations: Donation[]): Donation[] {
   return [...donations].sort(
-    (a, b) => b.amount_cent - a.amount_cent || a.completed_at - b.completed_at,
+    (a, b) => b.amount_cent - a.amount_cent || a.completed_at - b.completed_at
   );
 }
 

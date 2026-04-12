@@ -159,8 +159,8 @@ function DonationsAnimeContent() {
                     </Table.Cell>
                     <Table.Cell fontSize="sm">
                       {(() => {
-                        const a = detectAnimeFromComment(d.donor_comment);
-                        return a ? animeIdToName(a) : '—';
+                        const anime = detectAnimeFromComment(d.donor_comment);
+                        return anime ? animeIdToName(anime) : '—';
                       })()}
                     </Table.Cell>
                     <Table.Cell fontSize="sm" overflowWrap="break-word" wordBreak="break-word">
