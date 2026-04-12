@@ -11,11 +11,8 @@ import { useDonations } from '@/contexts/DonationsContext';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDonationsPolling } from '@/hooks/useDonationsPolling';
 import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
-import {
-  countryCodeToName,
-  detectCountryFromComment,
-  formatAmountParts,
-} from '@/lib/donationUtils';
+import { countryCodeToName, detectCountryFromComment } from '@/lib/countryPatterns';
+import { formatAmountParts } from '@/lib/donationUtils';
 import { formatDonationTime } from '@/lib/timeUtils';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
 

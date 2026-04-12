@@ -6,11 +6,8 @@ import { useMemo } from 'react';
 
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
-import {
-  countryCodeToName,
-  detectCountryFromComment,
-  formatAmountParts,
-} from '@/lib/donationUtils';
+import { countryCodeToName, detectCountryFromComment } from '@/lib/countryPatterns';
+import { formatAmountParts } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 
