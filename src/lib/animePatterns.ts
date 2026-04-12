@@ -1,7 +1,7 @@
 interface AnimePattern {
   id: string;
   name: string;
-  nameJa?: string;
+  nameJa: string;
   pattern: RegExp;
 }
 
@@ -782,5 +782,5 @@ export function animeIdToName(id: string, locale: string = 'EN'): string {
   if (!entry) {
     return id;
   }
-  return locale === 'JP' && !!entry.nameJa ? entry.nameJa : entry.name;
+  return locale === 'JP' ? entry.nameJa : entry.name;
 }
