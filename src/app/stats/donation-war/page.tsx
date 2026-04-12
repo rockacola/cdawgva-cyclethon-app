@@ -11,27 +11,32 @@ import { LastChecked } from '@/components/LastChecked';
 import { useDonations } from '@/contexts/DonationsContext';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDonationsPolling } from '@/hooks/useDonationsPolling';
-import { animeIdToName, detectAnimeFromComment } from '@/lib/animePatterns';
 import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 import { formatAmountParts } from '@/lib/donationUtils';
+import { detectItemIdFromComment, itemIdToName } from '@/lib/donationWarUtils';
 import { formatDonationTime } from '@/lib/timeUtils';
+import type { DonationWarType } from '@/lib/types';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
-export default function DonationsAnimePage() {
+export default function DonationWarPage() {
   return (
     <Suspense>
-      <DonationsAnimeContent />
+      <DonationWarContent />
     </Suspense>
   );
 }
 
-function DonationsAnimeContent() {
+function DonationWarContent() {
   const { donations, isRefreshing, lastCheckedAt } = useDonations();
   useDonationsPolling(DONATION_REFETCH_INTERVAL);
   const { timezoneMode } = useTimezoneContext();
   const searchParams = useSearchParams();
   const currencyPrefix = useCurrencyPrefix();
 
+  const type = searchParams.get('type') as DonationWarType | null;
+  if (!type) {
+    throw new Error('Expect a donation type from URL params.');
+  }
   const startTimestamp = Number(searchParams.get('start')) || 0;
   const endTimestamp = Number(searchParams.get('end')) || Infinity;
 
@@ -39,8 +44,8 @@ function DonationsAnimeContent() {
     (d) => d.completed_at >= startTimestamp && d.completed_at <= endTimestamp
   );
 
-  const noAnimeDonations = filteredDonations
-    .filter((d) => d.donor_comment && !detectAnimeFromComment(d.donor_comment))
+  const noMatchDonations = filteredDonations
+    .filter((d) => d.donor_comment && !detectItemIdFromComment(type, d.donor_comment))
     .sort((a, b) => b.amount_cent - a.amount_cent);
 
   const totalDonationsInCents = filteredDonations.reduce((sum, d) => sum + d.amount_cent, 0);
@@ -53,7 +58,7 @@ function DonationsAnimeContent() {
           {formatDonationTime(endTimestamp, timezoneMode)} {timezoneMode}
         </Heading>
         <Text color="fg.muted" fontSize="sm" mb={1}>
-          {filteredDonations.length} donations — Total: {currencyPrefix}
+          {filteredDonations.length} donations - Total: {currencyPrefix}
           {(totalDonationsInCents / 100).toLocaleString('en-US', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
@@ -65,18 +70,18 @@ function DonationsAnimeContent() {
 
         <Box mb={10}>
           <Heading as="h2" mb={3} size="md">
-            By Anime
+            By {type}
           </Heading>
-          <DonationWarTable donations={filteredDonations} type="anime" />
+          <DonationWarTable donations={filteredDonations} type={type} />
         </Box>
 
-        {noAnimeDonations.length > 0 && (
+        {noMatchDonations.length > 0 && (
           <Box mb={10}>
             <Heading as="h2" mb={1} size="md">
-              No Anime Match
+              No Match
             </Heading>
             <Text color="fg.muted" fontSize="sm" mb={3}>
-              {noAnimeDonations.length} donations
+              {noMatchDonations.length} donations
             </Text>
             <Table.Root size="sm" variant="outline">
               <Table.Header>
@@ -88,7 +93,7 @@ function DonationsAnimeContent() {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {noAnimeDonations.map((d) => (
+                {noMatchDonations.map((d) => (
                   <Table.Row _hover={{ bg: { base: 'bg.muted', _dark: 'gray.800' } }} key={d.id}>
                     <Table.Cell color="fg.muted" fontSize="sm">
                       <DonationTime timestamp={d.completed_at} />
@@ -125,7 +130,7 @@ function DonationsAnimeContent() {
               All Matched Donations
             </Heading>
             <Text color="fg.muted" fontSize="sm" mb={3}>
-              {filteredDonations.length} donations with detected anime from comment
+              {filteredDonations.length} donations found
             </Text>
             <Table.Root size="sm" variant="outline">
               <Table.Header>
@@ -133,7 +138,7 @@ function DonationsAnimeContent() {
                   <Table.ColumnHeader minW="100px">Time</Table.ColumnHeader>
                   <Table.ColumnHeader minW="120px">Donor</Table.ColumnHeader>
                   <Table.ColumnHeader textAlign="right">Amount</Table.ColumnHeader>
-                  <Table.ColumnHeader>Anime</Table.ColumnHeader>
+                  <Table.ColumnHeader>Item</Table.ColumnHeader>
                   <Table.ColumnHeader>Comment</Table.ColumnHeader>
                 </Table.Row>
               </Table.Header>
@@ -159,8 +164,8 @@ function DonationsAnimeContent() {
                     </Table.Cell>
                     <Table.Cell fontSize="sm">
                       {(() => {
-                        const anime = detectAnimeFromComment(d.donor_comment);
-                        return anime ? animeIdToName(anime) : '—';
+                        const itemId = detectItemIdFromComment(type, d.donor_comment);
+                        return itemId ? itemIdToName(type, itemId) : '—';
                       })()}
                     </Table.Cell>
                     <Table.Cell fontSize="sm" overflowWrap="break-word" wordBreak="break-word">
