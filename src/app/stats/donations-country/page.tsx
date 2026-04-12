@@ -11,7 +11,7 @@ import { useDonations } from '@/contexts/DonationsContext';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDonationsPolling } from '@/hooks/useDonationsPolling';
 import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
-import { countryCodeToName, detectCountryFromComment } from '@/lib/countryPatterns';
+import { countryIdToName, detectCountryFromComment } from '@/lib/countryPatterns';
 import { formatAmountParts } from '@/lib/donationUtils';
 import { formatDonationTime } from '@/lib/timeUtils';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
@@ -155,8 +155,8 @@ function DonationsCountryContent() {
                     </Table.Cell>
                     <Table.Cell fontSize="sm">
                       {(() => {
-                        const c = detectCountryFromComment(d.donor_comment);
-                        return c ? countryCodeToName(c) : '—';
+                        const countryId = detectCountryFromComment(d.donor_comment);
+                        return countryId ? countryIdToName(countryId) : '—';
                       })()}
                     </Table.Cell>
                     <Table.Cell fontSize="sm" overflowWrap="break-word" wordBreak="break-word">

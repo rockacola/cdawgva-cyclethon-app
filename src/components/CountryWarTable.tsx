@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
-import { countryCodeToName, detectCountryFromComment } from '@/lib/countryPatterns';
+import { countryIdToName, detectCountryFromComment } from '@/lib/countryPatterns';
 import { formatAmountParts } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 import { useLocaleContext } from '@/providers/LocaleProvider';
@@ -70,7 +70,7 @@ export function CountryWarTable({ donations, maxCount }: Props) {
                 {i === 0 ? <Crown color="var(--chakra-colors-yellow-400)" size={16} /> : i + 1}
               </Box>
             </Table.Cell>
-            <Table.Cell>{countryCodeToName(row.country, resolvedLocale)}</Table.Cell>
+            <Table.Cell>{countryIdToName(row.country, resolvedLocale)}</Table.Cell>
             <Table.Cell textAlign="right">{row.count}</Table.Cell>
             <Table.Cell textAlign="right" whiteSpace="nowrap">
               {(() => {
