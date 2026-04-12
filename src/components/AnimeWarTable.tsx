@@ -9,6 +9,7 @@ import { useTranslations } from '@/hooks/useTranslations';
 import { animeIdToName, detectAnimeFromComment } from '@/lib/animePatterns';
 import { formatAmountParts } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
+import { useLocaleContext } from '@/providers/LocaleProvider';
 
 interface Props {
   donations: Donation[];
@@ -17,6 +18,7 @@ interface Props {
 
 export function AnimeWarTable({ donations, maxCount }: Props) {
   const t = useTranslations('dayPage');
+  const { resolvedLocale } = useLocaleContext();
   const currencyPrefix = useCurrencyPrefix();
   const animeStats = useMemo(
     function aggregateByAnime() {
@@ -68,7 +70,7 @@ export function AnimeWarTable({ donations, maxCount }: Props) {
                 {i === 0 ? <Crown color="var(--chakra-colors-yellow-400)" size={16} /> : i + 1}
               </Box>
             </Table.Cell>
-            <Table.Cell>{animeIdToName(row.anime)}</Table.Cell>
+            <Table.Cell>{animeIdToName(row.anime, resolvedLocale)}</Table.Cell>
             <Table.Cell textAlign="right">{row.count}</Table.Cell>
             <Table.Cell textAlign="right" whiteSpace="nowrap">
               {(() => {
