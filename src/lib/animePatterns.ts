@@ -719,7 +719,7 @@ export const ANIME_PATTERNS: DataPattern[] = [
     id: 'nhk-ni-youkoso',
     name: 'Welcome to the N.H.K',
     nameJa: 'NHKにようこそ！',
-    pattern: /\b(NHK\s+ni\s+Youkoso)\b/i,
+    pattern: /\b(Welcome\s+to\s+the\s+N\.H\.K|NHK\s+ni\s+Youkoso)\b/i,
   },
   {
     id: 'yosuga-no-sora',
