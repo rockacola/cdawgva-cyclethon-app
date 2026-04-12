@@ -1,11 +1,7 @@
-interface AnimePattern {
-  id: string;
-  name: string;
-  nameJa: string;
-  pattern: RegExp;
-}
+import { detectItemIdFromComment, itemIdToName } from './donationWarUtils';
+import type { DataPattern } from './types';
 
-const ANIME_PATTERNS: AnimePattern[] = [
+export const ANIME_PATTERNS: DataPattern[] = [
   {
     id: 'oshi-no-ko',
     name: '[Oshi No Ko]',
@@ -758,26 +754,9 @@ const ANIME_PATTERNS: AnimePattern[] = [
 ];
 
 export function detectAnimeFromComment(comment: string | null | undefined): string | null {
-  if (!comment) {
-    return null;
-  }
-
-  let firstId: string | null = null;
-  let firstIndex = Infinity;
-  for (const { id, pattern } of ANIME_PATTERNS) {
-    const match = pattern.exec(comment);
-    if (match && match.index < firstIndex) {
-      firstIndex = match.index;
-      firstId = id;
-    }
-  }
-  return firstId;
+  return detectItemIdFromComment('anime', comment);
 }
 
 export function animeIdToName(id: string, locale: string = 'EN'): string {
-  const entry = ANIME_PATTERNS.find((a) => a.id === id);
-  if (!entry) {
-    return id;
-  }
-  return locale === 'JP' ? entry.nameJa : entry.name;
+  return itemIdToName('anime', id, locale);
 }

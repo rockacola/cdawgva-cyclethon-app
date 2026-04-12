@@ -1,11 +1,7 @@
-interface SanrioPattern {
-  id: string;
-  name: string;
-  nameJa: string;
-  pattern: RegExp;
-}
+import { detectItemIdFromComment, itemIdToName } from './donationWarUtils';
+import type { DataPattern } from './types';
 
-const SANRIO_PATTERNS: SanrioPattern[] = [
+export const SANRIO_PATTERNS: DataPattern[] = [
   {
     id: 'adorozatorumary',
     name: 'Adorozatorumary',
@@ -155,26 +151,9 @@ const SANRIO_PATTERNS: SanrioPattern[] = [
 export function detectSanrioCharacterFromComment(
   comment: string | null | undefined
 ): string | null {
-  if (!comment) {
-    return null;
-  }
-
-  let firstId: string | null = null;
-  let firstIndex = Infinity;
-  for (const { id, pattern } of SANRIO_PATTERNS) {
-    const match = pattern.exec(comment);
-    if (match && match.index < firstIndex) {
-      firstIndex = match.index;
-      firstId = id;
-    }
-  }
-  return firstId;
+  return detectItemIdFromComment('sanrio', comment);
 }
 
 export function sanrioCharacterIdToName(id: string, locale: string = 'EN'): string {
-  const entry = SANRIO_PATTERNS.find((a) => a.id === id);
-  if (!entry) {
-    return id;
-  }
-  return locale === 'JP' && !!entry.nameJa ? entry.nameJa : entry.name;
+  return itemIdToName('sanrio', id, locale);
 }

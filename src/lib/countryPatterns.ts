@@ -1,12 +1,8 @@
-interface CountryPattern {
-  id: string;
-  name: string;
-  nameJa: string;
-  pattern: RegExp;
-}
+import { detectItemIdFromComment, itemIdToName } from './donationWarUtils';
+import type { DataPattern } from './types';
 
 // Sorted by name ASC. Detection uses earliest match position, so array order does not affect results.
-const COUNTRY_PATTERNS: CountryPattern[] = [
+export const COUNTRY_PATTERNS: DataPattern[] = [
   {
     id: 'AFG',
     name: 'Afghanistan',
@@ -503,26 +499,9 @@ const COUNTRY_PATTERNS: CountryPattern[] = [
  * country code, or null if no country (or more than one distinct country) is found.
  */
 export function detectCountryFromComment(comment: string | null | undefined): string | null {
-  if (!comment) {
-    return null;
-  }
-
-  let firstId: string | null = null;
-  let firstIndex = Infinity;
-  for (const { id, pattern } of COUNTRY_PATTERNS) {
-    const match = pattern.exec(comment);
-    if (match && match.index < firstIndex) {
-      firstIndex = match.index;
-      firstId = id;
-    }
-  }
-  return firstId;
+  return detectItemIdFromComment('country', comment);
 }
 
 export function countryIdToName(id: string, locale: string = 'EN'): string {
-  const entry = COUNTRY_PATTERNS.find((c) => c.id === id);
-  if (!entry) {
-    return id;
-  }
-  return locale === 'JP' ? entry.nameJa : entry.name;
+  return itemIdToName('country', id, locale);
 }

@@ -52,3 +52,12 @@ export interface DonationsStats {
     daily_totals: DailyTotal[];
   };
 }
+
+export interface DataPattern {
+  id: string;
+  name: string;
+  nameJa: string;
+  pattern: RegExp;
+}
+
+export type DonationWarType = 'country' | 'anime' | 'sanrio';
