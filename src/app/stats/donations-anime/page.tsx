@@ -4,8 +4,8 @@ import { Box, Container, Heading, Span, Table, Text } from '@chakra-ui/react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
-import { AnimeWarTable } from '@/components/AnimeWarTable';
 import { DonationTime } from '@/components/DonationTime';
+import { DonationWarTable } from '@/components/DonationWarTable';
 import { DonorName } from '@/components/DonorName';
 import { LastChecked } from '@/components/LastChecked';
 import { useDonations } from '@/contexts/DonationsContext';
@@ -67,7 +67,7 @@ function DonationsAnimeContent() {
           <Heading as="h2" mb={3} size="md">
             By Anime
           </Heading>
-          <AnimeWarTable donations={filteredDonations} />
+          <DonationWarTable donations={filteredDonations} type="anime" />
         </Box>
 
         {noAnimeDonations.length > 0 && (

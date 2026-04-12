@@ -7,24 +7,27 @@ import { useMemo } from 'react';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
 import { formatAmountParts } from '@/lib/donationUtils';
-import { detectSanrioCharacterFromComment, sanrioCharacterIdToName } from '@/lib/sanrioPattern';
-import type { Donation } from '@/lib/types';
+import { detectItemIdFromComment, itemIdToName } from '@/lib/donationWarUtils';
+import type { Donation, DonationWarType } from '@/lib/types';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 
 interface Props {
+  type: DonationWarType;
   donations: Donation[];
   maxCount?: number;
 }
 
-export function SanrioWarTable({ donations, maxCount }: Props) {
+export function DonationWarTable({ type, donations, maxCount }: Props) {
   const t = useTranslations('dayPage');
   const { resolvedLocale } = useLocaleContext();
   const currencyPrefix = useCurrencyPrefix();
+  const typeLabel = useMemo(() => t(type), [t, type]);
+
   const stats = useMemo(
     function aggregate() {
       const map = new Map<string, { count: number; sumCent: number }>();
       for (const d of donations) {
-        const item = detectSanrioCharacterFromComment(d.donor_comment);
+        const item = detectItemIdFromComment(type, d.donor_comment);
         if (!item) {
           continue;
         }
@@ -41,13 +44,13 @@ export function SanrioWarTable({ donations, maxCount }: Props) {
         .sort((a, b) => b.sumCent - a.sumCent);
       return maxCount ? sorted.slice(0, maxCount) : sorted;
     },
-    [donations, maxCount]
+    [donations, maxCount, type]
   );
 
   if (stats.length === 0) {
     return (
       <Text color="fg.muted" fontSize="sm">
-        No sanrio character donations found.
+        No donations found.
       </Text>
     );
   }
@@ -57,7 +60,7 @@ export function SanrioWarTable({ donations, maxCount }: Props) {
       <Table.Header>
         <Table.Row>
           <Table.ColumnHeader textAlign="center" w={10} />
-          <Table.ColumnHeader>Sanrio Character</Table.ColumnHeader>
+          <Table.ColumnHeader>{typeLabel}</Table.ColumnHeader>
           <Table.ColumnHeader textAlign="right">{t('count')}</Table.ColumnHeader>
           <Table.ColumnHeader textAlign="right">{t('total')}</Table.ColumnHeader>
         </Table.Row>
@@ -70,7 +73,7 @@ export function SanrioWarTable({ donations, maxCount }: Props) {
                 {i === 0 ? <Crown color="var(--chakra-colors-yellow-400)" size={16} /> : i + 1}
               </Box>
             </Table.Cell>
-            <Table.Cell>{sanrioCharacterIdToName(row.item, resolvedLocale)}</Table.Cell>
+            <Table.Cell>{itemIdToName(type, row.item, resolvedLocale)}</Table.Cell>
             <Table.Cell textAlign="right">{row.count}</Table.Cell>
             <Table.Cell textAlign="right" whiteSpace="nowrap">
               {(() => {

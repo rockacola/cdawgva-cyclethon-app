@@ -4,8 +4,8 @@ import { Box, Container, Heading, Span, Table, Text } from '@chakra-ui/react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
-import { CountryWarTable } from '@/components/CountryWarTable';
 import { DonationTime } from '@/components/DonationTime';
+import { DonationWarTable } from '@/components/DonationWarTable';
 import { DonorName } from '@/components/DonorName';
 import { useDonations } from '@/contexts/DonationsContext';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
@@ -63,7 +63,7 @@ function DonationsCountryContent() {
           <Heading as="h2" mb={3} size="md">
             By Country
           </Heading>
-          <CountryWarTable donations={filteredDonations} />
+          <DonationWarTable donations={filteredDonations} type="country" />
         </Box>
 
         {noCountryDonations.length > 0 && (

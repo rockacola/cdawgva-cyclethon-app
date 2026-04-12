@@ -1,3 +1,5 @@
+import type { DonationWarType } from './types';
+
 export interface MapLocationSocial {
   platform: string;
   url: string;
@@ -33,7 +35,7 @@ export interface DonationWarEntry {
   startTimestamp: number;
   title: string;
   titleJp?: string;
-  type: 'anime' | 'country';
+  type: DonationWarType;
 }
 
 export interface DayEntry {

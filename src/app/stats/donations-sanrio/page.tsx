@@ -5,8 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
 import { DonationTime } from '@/components/DonationTime';
+import { DonationWarTable } from '@/components/DonationWarTable';
 import { DonorName } from '@/components/DonorName';
-import { SanrioWarTable } from '@/components/SanrioWarTable';
 import { useDonations } from '@/contexts/DonationsContext';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDonationsPolling } from '@/hooks/useDonationsPolling';
@@ -63,7 +63,7 @@ function DonationsSanrioContent() {
           <Heading as="h2" mb={3} size="md">
             By Sanrio Characters
           </Heading>
-          <SanrioWarTable donations={filteredDonations} />
+          <DonationWarTable donations={filteredDonations} type="sanrio" />
         </Box>
 
         {noMatchDonations.length > 0 && (

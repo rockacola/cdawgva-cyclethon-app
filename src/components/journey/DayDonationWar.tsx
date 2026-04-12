@@ -2,8 +2,6 @@
 
 import { Box, Text } from '@chakra-ui/react';
 
-import { AnimeWarTable } from '@/components/AnimeWarTable';
-import { CountryWarTable } from '@/components/CountryWarTable';
 import { useDonations } from '@/contexts/DonationsContext';
 import { useTranslations } from '@/hooks/useTranslations';
 import type { TimezoneMode } from '@/lib/constants';
@@ -11,6 +9,8 @@ import type { DonationWarEntry } from '@/lib/journey-data';
 import { formatDonationTime } from '@/lib/timeUtils';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
+
+import { DonationWarTable } from '../DonationWarTable';
 
 const TOP_N = 10;
 
@@ -30,21 +30,13 @@ export function DayDonationWar({ wars }: Props) {
           timezoneMode={timezoneMode}
           war={war}
         >
-          {war.type === 'country' ? (
-            <CountryWarTable
-              donations={donations.filter(
-                (d) => d.completed_at >= war.startTimestamp && d.completed_at <= war.endTimestamp
-              )}
-              maxCount={TOP_N}
-            />
-          ) : war.type === 'anime' ? (
-            <AnimeWarTable
-              donations={donations.filter(
-                (d) => d.completed_at >= war.startTimestamp && d.completed_at <= war.endTimestamp
-              )}
-              maxCount={TOP_N}
-            />
-          ) : null}
+          <DonationWarTable
+            donations={donations.filter(
+              (d) => d.completed_at >= war.startTimestamp && d.completed_at <= war.endTimestamp
+            )}
+            maxCount={TOP_N}
+            type={war.type}
+          />
         </DonationWarCard>
       ))}
     </>
