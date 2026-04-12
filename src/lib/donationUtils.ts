@@ -468,12 +468,13 @@ const TRACKED_CURRENCY = 'USD';
 export function aggregateByDonor(donations: Donation[]): DonorTotal[] {
   const map = new Map<string, DonorTotal>();
   for (const d of donations) {
-    const existing = map.get(d.donor_name);
+    const key = d.donor_name.toLowerCase();
+    const existing = map.get(key);
     if (existing) {
       existing.amount_cent += d.amount_cent;
       existing.count += 1;
     } else {
-      map.set(d.donor_name, {
+      map.set(key, {
         amount_cent: d.amount_cent,
         amount_currency: d.amount_currency,
         count: 1,
