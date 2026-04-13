@@ -60,4 +60,11 @@ export interface DataPattern {
   pattern: RegExp;
 }
 
-export type DonationWarType = 'country' | 'anime' | 'sanrio';
+export type DonationWarType =
+  | 'anime'
+  | 'country'
+  | 'gacha'
+  | 'game'
+  | 'pizza'
+  | 'pokemon'
+  | 'sanrio';
