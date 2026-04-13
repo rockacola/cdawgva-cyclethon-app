@@ -89,7 +89,7 @@
     "sanrio": "Sanrio Character"
   },
   "footer": {
-    "about": "About"
+    "about": "About Site"
   },
   "header": {
     "donations": "Donations",
@@ -100,7 +100,8 @@
     "search": "Search",
     "searchDonations": "Search Donations",
     "top": "Top",
-    "topDonors": "Top Donors"
+    "topDonors": "Top Donors",
+    "aboutCyclethon": "About Cyclethon"
   },
   "home": {
     "15days": "15 Days",
@@ -125,6 +126,39 @@
     "chrisRole": "Co-lead & fellow sufferer",
     "ironmouseName": "Ironmouse",
     "ironmouseRole": "Chief cheerleader"
+  },
+  "aboutCyclethon": {
+    "title": "About Cyclethon",
+    "intro": "CYCLETHON is an annual charity livestream event created by CDawgVA, where he cycles long distances across Japan while streaming the entire journey live on Twitch.",
+    "cause": "The project began in 2022 to support his friend, VTuber Ironmouse, who lives with Common Variable Immune Deficiency (CVID). Inspired by her experience, all funds raised during Cyclethon are donated to the Immune Deficiency Foundation, which supports people living with primary immunodeficiency diseases.",
+    "recognition": "Since its launch, Cyclethon has grown into one of the most recognised charity streaming events, even winning \"Best Philanthropic Stream Event\" at The Streamer Awards.",
+    "whatHappensLabel": "What happens during Cyclethon?",
+    "whatCycling": "CDawgVA cycles across Japan over 15 days",
+    "whatLivestream": "The journey is livestreamed daily on Twitch",
+    "whatDonations": "Donations are collected live from viewers worldwide",
+    "whatGuests": "Fellow creators, including Chris Broad, often join along the route",
+    "whatIronmouse": "Ironmouse appears remotely and participates throughout the event",
+    "trackLabel": "What this site tracks",
+    "trackRoute": "Daily route progress",
+    "trackDistance": "Distance covered each day",
+    "trackDonations": "Donations raised per day",
+    "growthLabel": "Growth of the Event",
+    "year2022": "2022 (Cyclethon 1)",
+    "year2022Detail": "~\u00a545.6M raised (750 km, 8 days)",
+    "year2023": "2023 (Cyclethon 2)",
+    "year2023Detail": "~\u00a579M raised (900 km, 9 days)",
+    "year2024": "2024 (Cyclethon 3)",
+    "year2024Detail": "~\u00a5130M raised (1,200 km, 14 days)",
+    "year2025": "2025 (Cyclethon 4)",
+    "year2025Detail": "~\u00a5150M raised (1,300 km, 15 days, record high)",
+    "currentLabel": "Cyclethon 5 (2026)",
+    "currentDates": "April 5 \u2013 April 19, 2026",
+    "currentRoute": "\u014cma (Aomori) \u2192 Osaka",
+    "currentDistance": "~1,300 km",
+    "currentDatesLabel": "Dates",
+    "currentRouteLabel": "Route",
+    "currentDistanceLabel": "Distance",
+    "closing": "Cyclethon brings together endurance, community, and charity, connecting viewers around the world to support a meaningful cause."
   },
   "about": {
     "title": "About this site",

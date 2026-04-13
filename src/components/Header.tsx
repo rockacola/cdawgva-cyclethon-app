@@ -20,7 +20,10 @@ import { SettingsModal } from '@/components/SettingsModal';
 import { useTranslations } from '@/hooks/useTranslations';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 
-const standaloneNavLinks = [{ href: '/journey', labelKey: 'journey' }] as const;
+const standaloneNavLinks = [
+  { href: '/journey', labelKey: 'journey' },
+  { href: '/about-cyclethon', labelKey: 'aboutCyclethon' },
+] as const;
 
 const donationNavLinks = [
   { href: '/donations/live', labelKey: 'live' },
@@ -35,6 +38,7 @@ const allNavLinks = [
   { href: '/donations/search', labelKey: 'searchDonations' },
   { href: '/donations/top', labelKey: 'topDonors' },
   { href: '/journey', labelKey: 'journey' },
+  { href: '/about-cyclethon', labelKey: 'aboutCyclethon' },
 ] as const;
 
 export function Header() {
