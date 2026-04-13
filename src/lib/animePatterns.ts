@@ -1,4 +1,3 @@
-import { detectItemIdFromComment, itemIdToName } from './donationWarUtils';
 import type { DataPattern } from './types';
 
 export const ANIME_PATTERNS: DataPattern[] = [
@@ -752,11 +751,3 @@ export const ANIME_PATTERNS: DataPattern[] = [
     pattern: /\b(Yuri!!!\s+on\s+Ice)\b/i,
   },
 ];
-
-export function detectAnimeFromComment(comment: string | null | undefined): string | null {
-  return detectItemIdFromComment('anime', comment);
-}
-
-export function animeIdToName(id: string, locale: string = 'EN'): string {
-  return itemIdToName('anime', id, locale);
-}

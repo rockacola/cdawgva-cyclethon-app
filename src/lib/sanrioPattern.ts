@@ -1,4 +1,3 @@
-import { detectItemIdFromComment, itemIdToName } from './donationWarUtils';
 import type { DataPattern } from './types';
 
 export const SANRIO_PATTERNS: DataPattern[] = [
@@ -147,13 +146,3 @@ export const SANRIO_PATTERNS: DataPattern[] = [
     pattern: /(wish\s?me\s?mell)/i,
   },
 ];
-
-export function detectSanrioCharacterFromComment(
-  comment: string | null | undefined
-): string | null {
-  return detectItemIdFromComment('sanrio', comment);
-}
-
-export function sanrioCharacterIdToName(id: string, locale: string = 'EN'): string {
-  return itemIdToName('sanrio', id, locale);
-}

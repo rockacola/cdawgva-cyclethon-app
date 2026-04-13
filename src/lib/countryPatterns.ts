@@ -1,4 +1,3 @@
-import { detectItemIdFromComment, itemIdToName } from './donationWarUtils';
 import type { DataPattern } from './types';
 
 // Sorted by name ASC. Detection uses earliest match position, so array order does not affect results.
@@ -493,15 +492,3 @@ export const COUNTRY_PATTERNS: DataPattern[] = [
   { id: 'ZMB', name: 'Zambia', nameJa: 'ザンビア', pattern: /\b(zambi[a]?(?:an)?)\b/i },
   { id: 'ZWE', name: 'Zimbabwe', nameJa: 'ジンバブエ', pattern: /\b(zimbabw[e]?(?:an)?)\b/i },
 ];
-
-/**
- * Scans a donor comment for a country mention and returns the ISO 3166-1 alpha-3
- * country code, or null if no country (or more than one distinct country) is found.
- */
-export function detectCountryFromComment(comment: string | null | undefined): string | null {
-  return detectItemIdFromComment('country', comment);
-}
-
-export function countryIdToName(id: string, locale: string = 'EN'): string {
-  return itemIdToName('country', id, locale);
-}
