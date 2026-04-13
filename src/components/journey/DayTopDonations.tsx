@@ -5,18 +5,18 @@ import { Crown } from 'lucide-react';
 import { useMemo } from 'react';
 
 import { DonorName } from '@/components/DonorName';
-import { useDonations } from '@/contexts/DonationsContext';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
 import { formatAmountParts, getTopDonationsForDay } from '@/lib/donationUtils';
 import { getJSTDayBounds } from '@/lib/timezoneUtils';
+import type { Donation } from '@/lib/types';
 
 interface Props {
   dateStr: string;
+  donations: Donation[];
 }
 
-export function DayTopDonations({ dateStr }: Props) {
-  const { donations } = useDonations();
+export function DayTopDonations({ dateStr, donations }: Props) {
   const currencyPrefix = useCurrencyPrefix();
   const t = useTranslations('dayPage');
 

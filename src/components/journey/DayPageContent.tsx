@@ -3,6 +3,7 @@
 import { Box, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react';
 import { ArrowRight } from 'lucide-react';
 
+import { useDayDonations } from '@/hooks/useDayDonations';
 import { useTranslations } from '@/hooks/useTranslations';
 import { flags } from '@/lib/flags';
 import type { JourneyDay } from '@/lib/journey';
@@ -30,6 +31,9 @@ export function DayPageContent({ content, day }: Props) {
   const tNav = useTranslations('dayNav');
   const { resolvedLocale } = useLocaleContext();
   const dateLocale = resolvedLocale === 'JP' ? 'ja-JP' : 'en-US';
+
+  const dateStr = day.date.toISOString().slice(0, 10);
+  const dayDonations = useDayDonations(dateStr);
 
   const dateLabel = day.date.toLocaleDateString(dateLocale, {
     day: 'numeric',
@@ -163,14 +167,14 @@ export function DayPageContent({ content, day }: Props) {
             {t('donationActivity')}
           </Text>
           <Box bg="bg.subtle" borderRadius="md" p={3}>
-            <DayDonationChart dateStr={day.date.toISOString().slice(0, 10)} />
+            <DayDonationChart dateStr={dateStr} donations={dayDonations} />
           </Box>
           <Box mt={4}>
-            <DayTopDonations dateStr={day.date.toISOString().slice(0, 10)} />
+            <DayTopDonations dateStr={dateStr} donations={dayDonations} />
           </Box>
           {content?.donationWars?.length ? (
             <Box mt={4}>
-              <DayDonationWar wars={content.donationWars} />
+              <DayDonationWar donations={dayDonations} wars={content.donationWars} />
             </Box>
           ) : null}
         </Box>

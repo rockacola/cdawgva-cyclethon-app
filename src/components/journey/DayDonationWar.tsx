@@ -2,11 +2,11 @@
 
 import { Box, Text } from '@chakra-ui/react';
 
-import { useDonations } from '@/contexts/DonationsContext';
 import { useTranslations } from '@/hooks/useTranslations';
 import type { TimezoneMode } from '@/lib/constants';
 import type { DonationWarEntry } from '@/lib/journey-data';
 import { formatDonationTime } from '@/lib/timeUtils';
+import type { Donation } from '@/lib/types';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
@@ -15,11 +15,11 @@ import { DonationWarTable } from '../DonationWarTable';
 const TOP_N = 10;
 
 interface Props {
+  donations: Donation[];
   wars: DonationWarEntry[];
 }
 
-export function DayDonationWar({ wars }: Props) {
-  const { donations } = useDonations();
+export function DayDonationWar({ donations, wars }: Props) {
   const { timezoneMode } = useTimezoneContext();
 
   return (
