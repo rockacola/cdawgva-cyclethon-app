@@ -1,8 +1,8 @@
 'use client';
 
 import { Box, Button, Link, Stack } from '@chakra-ui/react';
-import { PlayCircle, Tv2 } from 'lucide-react';
 import Image from 'next/image';
+import { SiTwitch, SiYoutube } from 'react-icons/si';
 
 import { useTranslations } from '@/hooks/useTranslations';
 import { getYouTubeVideoId } from '@/lib/youtube';
@@ -49,7 +49,7 @@ export function DayYouTubeEmbed({ twitchUrl, youtubeUrl }: Props) {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <PlayCircle size={15} />
+          <SiYoutube size={15} />
           {t('watchOnYouTube')}
         </Link>
       </Button>
@@ -68,7 +68,7 @@ export function DayYouTubeEmbed({ twitchUrl, youtubeUrl }: Props) {
             rel="noopener noreferrer"
             target="_blank"
           >
-            <Tv2 size={15} />
+            <SiTwitch size={15} />
             {t('watchOnTwitch')}
           </Link>
         </Button>

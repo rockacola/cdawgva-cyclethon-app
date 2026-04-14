@@ -1,15 +1,15 @@
 'use client';
 
 import { Box, HStack, Link, Stack, Text } from '@chakra-ui/react';
-import { CirclePlay, TvMinimalPlay } from 'lucide-react';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
+import { SiTwitch, SiYoutube } from 'react-icons/si';
 
 import { useTranslations } from '@/hooks/useTranslations';
 
 const ICON_SIZE = 18;
-const YOUTUBE = { icon: <CirclePlay size={ICON_SIZE} />, color: '#FF0000', label: 'YouTube' };
-const TWITCH = { icon: <TvMinimalPlay size={ICON_SIZE} />, color: '#9146FF', label: 'Twitch' };
+const YOUTUBE = { icon: <SiYoutube size={ICON_SIZE} />, color: '#FF0000', label: 'YouTube' };
+const TWITCH = { icon: <SiTwitch size={ICON_SIZE} />, color: '#9146FF', label: 'Twitch' };
 
 interface SocialLink {
   icon: ReactNode;
@@ -29,8 +29,8 @@ const guests: Guest[] = [
     nameKey: 'connorName',
     roleKey: 'connorRole',
     socials: [
-      { ...YOUTUBE, href: 'https://www.youtube.com/@CDawgVA' },
       { ...TWITCH, href: 'https://www.twitch.tv/cdawg' },
+      { ...YOUTUBE, href: 'https://www.youtube.com/@CDawgVA' },
     ],
   },
   {
@@ -42,8 +42,8 @@ const guests: Guest[] = [
     nameKey: 'ironmouseName',
     roleKey: 'ironmouseRole',
     socials: [
-      { ...YOUTUBE, href: 'https://www.youtube.com/@IronMouseParty' },
       { ...TWITCH, href: 'https://www.twitch.tv/ironmouse' },
+      { ...YOUTUBE, href: 'https://www.youtube.com/@IronMouseParty' },
     ],
   },
   {
