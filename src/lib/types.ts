@@ -69,4 +69,5 @@ export type DonationWarType =
   | 'ironmouse'
   | 'pizza'
   | 'pokemon'
-  | 'sanrio';
+  | 'sanrio'
+  | 'umamusume';

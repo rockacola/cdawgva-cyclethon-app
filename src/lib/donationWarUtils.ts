@@ -7,6 +7,7 @@ import { PIZZA_PATTERNS } from './pizzaPatterns';
 import { POKEMON_PATTERNS } from './pokemonPatterns';
 import { SANRIO_PATTERNS } from './sanrioPattern';
 import type { DataPattern, DonationWarType } from './types';
+import { UMAMUSUME_PATTERNS } from './umamusumePatterns';
 
 const DATA_SOURCE_MAP: Record<DonationWarType, DataPattern[]> = {
   anime: ANIME_PATTERNS,
@@ -17,6 +18,7 @@ const DATA_SOURCE_MAP: Record<DonationWarType, DataPattern[]> = {
   pizza: PIZZA_PATTERNS,
   pokemon: POKEMON_PATTERNS,
   sanrio: SANRIO_PATTERNS,
+  umamusume: UMAMUSUME_PATTERNS,
 };
 
 function getDataSource(type: DonationWarType) {
