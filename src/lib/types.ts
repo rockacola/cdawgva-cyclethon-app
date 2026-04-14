@@ -58,6 +58,7 @@ export interface DataPattern {
   name: string;
   nameJa: string;
   pattern: RegExp;
+  url?: string;
 }
 
 export type DonationWarType =
@@ -65,6 +66,7 @@ export type DonationWarType =
   | 'country'
   | 'gacha'
   | 'game'
+  | 'ironmouse'
   | 'pizza'
   | 'pokemon'
   | 'sanrio';

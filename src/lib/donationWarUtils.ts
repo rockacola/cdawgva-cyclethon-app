@@ -2,6 +2,7 @@ import { ANIME_PATTERNS } from './animePatterns';
 import { COUNTRY_PATTERNS } from './countryPatterns';
 import { GACHA_PATTERNS } from './gachaPatterns';
 import { GAME_PATTERNS } from './gamePatterns';
+import { IRONMOUSE_PATTERNS } from './ironmousePatterns';
 import { PIZZA_PATTERNS } from './pizzaPatterns';
 import { POKEMON_PATTERNS } from './pokemonPatterns';
 import { SANRIO_PATTERNS } from './sanrioPattern';
@@ -12,6 +13,7 @@ const DATA_SOURCE_MAP: Record<DonationWarType, DataPattern[]> = {
   country: COUNTRY_PATTERNS,
   gacha: GACHA_PATTERNS,
   game: GAME_PATTERNS,
+  ironmouse: IRONMOUSE_PATTERNS,
   pizza: PIZZA_PATTERNS,
   pokemon: POKEMON_PATTERNS,
   sanrio: SANRIO_PATTERNS,
