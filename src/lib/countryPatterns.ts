@@ -202,6 +202,12 @@ export const COUNTRY_PATTERNS: DataPattern[] = [
     pattern: /\b(kyrgyzsta[n]?(?:i)?|kirghiz)\b/i,
   },
   { id: 'LAO', name: 'Laos', nameJa: 'ラオス', pattern: /\b(laos?(?:tian)?)\b/i },
+  {
+    name: 'Liechtenstein',
+    nameJa: 'リヒテンシュタイン',
+    id: 'LIE',
+    pattern: /\b(liechtenstein|lichtenstein)\b/i,
+  },
   { id: 'LVA', name: 'Latvia', nameJa: 'ラトビア', pattern: /\b(latvia[n]?)\b/i },
   { id: 'LBN', name: 'Lebanon', nameJa: 'レバノン', pattern: /\b(leban(?:on|ese))\b/i },
   { id: 'LSO', name: 'Lesotho', nameJa: 'レソト', pattern: /\b(lesotho)\b/i },
