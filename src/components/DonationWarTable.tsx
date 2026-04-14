@@ -61,8 +61,12 @@ export function DonationWarTable({ type, donations, maxCount }: Props) {
         <Table.Row>
           <Table.ColumnHeader textAlign="center" w={10} />
           <Table.ColumnHeader>{typeLabel}</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right">{t('count')}</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right">{t('total')}</Table.ColumnHeader>
+          <Table.ColumnHeader textAlign="right" width="80px">
+            {t('count')}
+          </Table.ColumnHeader>
+          <Table.ColumnHeader textAlign="right" width="120px">
+            {t('total')}
+          </Table.ColumnHeader>
         </Table.Row>
       </Table.Header>
       <Table.Body>

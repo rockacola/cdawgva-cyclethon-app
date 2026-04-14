@@ -57,7 +57,7 @@ function DonationWarCard({
   const displayTitle = resolvedLocale === 'JP' ? (war.titleJp ?? war.title) : war.title;
 
   return (
-    <Box>
+    <Box my={4}>
       <Text color="fg.muted" fontSize="sm" fontWeight="semibold" mb={1}>
         {displayTitle}
       </Text>

@@ -621,6 +621,22 @@ export const journeyData: DayEntry[] = [
     destination: 'Niigata Station',
     destinationJp: '新潟駅',
     distanceKm: 100,
+    donationWars: [
+      {
+        endTimestamp: 1775874840,
+        startTimestamp: 1775873040,
+        title: 'Donation War - by Sanrio Characters',
+        titleJp: '寄付対決（サンリオキャラクターズ）',
+        type: 'sanrio',
+      },
+      {
+        endTimestamp: 1775892600,
+        startTimestamp: 1775890000,
+        title: 'Donation War - by Pokemon (Gen 1)',
+        titleJp: '寄付対決（ポケモン 初代）',
+        type: 'pokemon',
+      },
+    ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Ji6KbdKTivj14EPpP2MB0-NNfRj-9s8',
     mapLocations: [
       {
@@ -680,6 +696,22 @@ export const journeyData: DayEntry[] = [
     destination: 'Kashiwazaki Station',
     destinationJp: '柏崎駅',
     distanceKm: 88,
+    donationWars: [
+      {
+        endTimestamp: 1775964120,
+        startTimestamp: 1775962020,
+        title: 'Donation War - by Gacha Game',
+        titleJp: '寄付対決（ガチャゲーム）',
+        type: 'gacha',
+      },
+      {
+        endTimestamp: 1775979000,
+        startTimestamp: 1775977200,
+        title: 'Donation War - by Pizza Topping',
+        titleJp: '寄付対決（ピザのトッピング）',
+        type: 'pizza',
+      },
+    ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Ji6KbdKTivj14EPpP2MB0-NNfRj-9s8',
     mapLocations: [
       {
@@ -755,6 +787,22 @@ export const journeyData: DayEntry[] = [
     destination: 'Itoigawa Station',
     destinationJp: '糸魚川駅',
     distanceKm: 88,
+    donationWars: [
+      {
+        endTimestamp: 1776062400,
+        startTimestamp: 1776060600,
+        title: 'Donation War - by Country',
+        titleJp: '寄付対決（国別）',
+        type: 'country',
+      },
+      {
+        endTimestamp: 1776069600,
+        startTimestamp: 1776067800,
+        title: 'Donation War - by Computer Game',
+        titleJp: '寄付対決（ゲーム）',
+        type: 'game',
+      },
+    ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1JGjsCq08o__adfFb7ur9a3lqna18al8',
     mapLocations: [
       {
