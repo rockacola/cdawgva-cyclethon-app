@@ -30,6 +30,15 @@ export interface TwitchClip {
   title?: string;
 }
 
+export interface GuestCyclist {
+  handler: string;
+  imageUrl?: string;
+  name: string;
+  nameJa: string;
+  twitchUrl?: string;
+  youtubeUrl?: string;
+}
+
 export interface DonationWarEntry {
   endTimestamp: number;
   startTimestamp: number;
@@ -73,6 +82,7 @@ export interface DayEntry {
 
   // complex lists
   donationWars?: DonationWarEntry[];
+  guests?: GuestCyclist[];
   landmarks?: string[];
   mapLocations?: MapLocation[];
   twitchClips?: TwitchClip[];
@@ -163,6 +173,16 @@ export const journeyData: DayEntry[] = [
     avgTempCelsius: 7.8,
     caloriesBurnt: 3709,
     distanceKm: 74.1,
+    guests: [
+      {
+        handler: 'JSchlatt',
+        imageUrl: '/images/avatar-jschlatt.jpg',
+        name: 'Schlatt',
+        nameJa: 'ジャシュラット',
+        twitchUrl: 'https://www.twitch.tv/schlatt',
+        youtubeUrl: 'https://www.youtube.com/@jshlatt',
+      },
+    ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
     mapLocations: [
       {
@@ -262,6 +282,16 @@ export const journeyData: DayEntry[] = [
     avgTempCelsius: 7.2,
     caloriesBurnt: 4758,
     distanceKm: 90.95,
+    guests: [
+      {
+        handler: 'JSchlatt',
+        imageUrl: '/images/avatar-jschlatt.jpg',
+        name: 'Schlatt',
+        nameJa: 'ジャシュラット',
+        twitchUrl: 'https://www.twitch.tv/schlatt',
+        youtubeUrl: 'https://www.youtube.com/@jshlatt',
+      },
+    ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Dc53gX_3CWG6RlWrb1NcYAN1rA1ns3o',
     mapLocations: [
       {
@@ -358,6 +388,16 @@ export const journeyData: DayEntry[] = [
     avgTempCelsius: 8.49,
     caloriesBurnt: 5685,
     distanceKm: 105.5,
+    guests: [
+      {
+        handler: 'Gigguk',
+        imageUrl: '/images/avatar-gigguk.jpg',
+        name: 'Garnt',
+        nameJa: 'ギグック',
+        twitchUrl: 'https://www.twitch.tv/gigguk',
+        youtubeUrl: 'https://www.youtube.com/@gigguk',
+      },
+    ],
     donationWars: [
       {
         endTimestamp: 1775628180,
@@ -455,6 +495,16 @@ export const journeyData: DayEntry[] = [
         type: 'anime',
       },
     ],
+    guests: [
+      {
+        handler: 'Gigguk',
+        imageUrl: '/images/avatar-gigguk.jpg',
+        name: 'Garnt',
+        nameJa: 'ギグック',
+        twitchUrl: 'https://www.twitch.tv/gigguk',
+        youtubeUrl: 'https://www.youtube.com/@gigguk',
+      },
+    ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Ji6KbdKTivj14EPpP2MB0-NNfRj-9s8',
     mapLocations: [
       {
@@ -530,6 +580,16 @@ export const journeyData: DayEntry[] = [
     destination: 'Nezugaseki Station',
     destinationJp: '鼠ケ関駅',
     distanceKm: 96.6,
+    guests: [
+      {
+        handler: 'RobCDee',
+        imageUrl: '/images/avatar-robcdee.jpg',
+        name: 'Rob',
+        nameJa: 'ロブ',
+        twitchUrl: 'https://www.twitch.tv/robcdee',
+        youtubeUrl: 'https://www.youtube.com/@Robcdee',
+      },
+    ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Ji6KbdKTivj14EPpP2MB0-NNfRj-9s8',
     mapLocations: [
       {
@@ -637,6 +697,16 @@ export const journeyData: DayEntry[] = [
         type: 'pokemon',
       },
     ],
+    guests: [
+      {
+        handler: 'RobCDee',
+        imageUrl: '/images/avatar-robcdee.jpg',
+        name: 'Rob',
+        nameJa: 'ロブ',
+        twitchUrl: 'https://www.twitch.tv/robcdee',
+        youtubeUrl: 'https://www.youtube.com/@Robcdee',
+      },
+    ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Ji6KbdKTivj14EPpP2MB0-NNfRj-9s8',
     mapLocations: [
       {
@@ -710,6 +780,16 @@ export const journeyData: DayEntry[] = [
         title: 'Donation War - by Pizza Topping',
         titleJp: '寄付対決（ピザのトッピング）',
         type: 'pizza',
+      },
+    ],
+    guests: [
+      {
+        handler: 'RobCDee',
+        imageUrl: '/images/avatar-robcdee.jpg',
+        name: 'Rob',
+        nameJa: 'ロブ',
+        twitchUrl: 'https://www.twitch.tv/robcdee',
+        youtubeUrl: 'https://www.youtube.com/@Robcdee',
       },
     ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1Ji6KbdKTivj14EPpP2MB0-NNfRj-9s8',
@@ -803,6 +883,16 @@ export const journeyData: DayEntry[] = [
         type: 'game',
       },
     ],
+    guests: [
+      {
+        handler: 'PewDiePie',
+        imageUrl: '/images/avatar-pewdiepie.jpg',
+        name: 'Felix',
+        nameJa: 'ピューディパイ',
+        twitchUrl: 'https://www.twitch.tv/pewdiepie',
+        youtubeUrl: 'https://www.youtube.com/@PewDiePie',
+      },
+    ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1JGjsCq08o__adfFb7ur9a3lqna18al8',
     mapLocations: [
       {
@@ -894,6 +984,16 @@ export const journeyData: DayEntry[] = [
         title: 'Donation War - by Uma Musume Character',
         titleJp: '寄付対決（ウマ娘キャラクター）',
         type: 'umamusume',
+      },
+    ],
+    guests: [
+      {
+        handler: 'PremierTwo',
+        imageUrl: '/images/avatar-premiertwo.jpg',
+        name: 'Peter',
+        nameJa: 'ピーター',
+        twitchUrl: 'https://www.twitch.tv/peter',
+        youtubeUrl: 'https://www.youtube.com/@PremierTwo',
       },
     ],
     mapEmbedUrl: 'https://www.google.com/maps/d/embed?mid=1JGjsCq08o__adfFb7ur9a3lqna18al8',

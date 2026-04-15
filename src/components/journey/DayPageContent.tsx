@@ -13,6 +13,7 @@ import { useLocaleContext } from '@/providers/LocaleProvider';
 import { DayClips } from './DayClips';
 import { DayDonationChart } from './DayDonationChart';
 import { DayDonationWar } from './DayDonationWar';
+import { DayGuests } from './DayGuests';
 import { DayMapEmbed } from './DayMapEmbed';
 import { DayMapLocations } from './DayMapLocations';
 import { DaySource } from './DaySource';
@@ -97,6 +98,23 @@ export function DayPageContent({ content, day }: Props) {
                 />
               ) : null}
             </SimpleGrid>
+          ) : null}
+
+          {/* Guest cyclists */}
+          {content?.guests?.length ? (
+            <Box>
+              <Text
+                color="fg.muted"
+                fontSize="xs"
+                fontWeight="semibold"
+                letterSpacing="wide"
+                mb={3}
+                textTransform="uppercase"
+              >
+                {t('guestCyclists')}
+              </Text>
+              <DayGuests guests={content.guests} />
+            </Box>
           ) : null}
         </Stack>
 
