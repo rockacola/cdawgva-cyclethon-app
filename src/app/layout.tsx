@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.png',
   },
+  themeColor: [
+    { color: '#ffffff', media: '(prefers-color-scheme: light)' },
+    { color: '#18181b', media: '(prefers-color-scheme: dark)' },
+  ],
   title: 'Cyclethon Tracker',
 };
 
