@@ -10,8 +10,11 @@ import { LocaleProvider } from '@/providers/LocaleProvider';
 import { TimezoneProvider } from '@/providers/TimezoneProvider';
 
 export const metadata: Metadata = {
-  title: 'Cyclethon Tracker',
   description: 'Fan-made donation tracker for CDawgVA Cyclethon 5',
+  icons: {
+    icon: '/favicon.png',
+  },
+  title: 'Cyclethon Tracker',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
