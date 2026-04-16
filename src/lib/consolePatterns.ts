@@ -2,12 +2,6 @@ import type { DataPattern } from './types';
 
 export const CONSOLE_PATTERNS: DataPattern[] = [
   {
-    name: 'Game Boy',
-    nameJa: 'ゲームボーイ',
-    id: 'game-boy',
-    pattern: /\b(game\s*boy|gb(?![a-z]))\b/i,
-  },
-  {
     name: 'Game Boy Advance',
     nameJa: 'ゲームボーイアドバンス',
     id: 'game-boy-advance',
@@ -23,7 +17,7 @@ export const CONSOLE_PATTERNS: DataPattern[] = [
     name: 'Nintendo 3DS',
     nameJa: 'ニンテンドー3DS',
     id: 'nintendo-3ds',
-    pattern: /\b(nintendo\s*3\s*d\s*s)\b/i,
+    pattern: /(?<!\w)(nintendo\s*)?(3\s*d\s*s|3ds)(?!\w)/i,
   },
   {
     name: 'Nintendo 64',
@@ -42,6 +36,12 @@ export const CONSOLE_PATTERNS: DataPattern[] = [
     nameJa: 'ファミリーコンピュータ',
     id: 'nes',
     pattern: /\b(nintendo\s*entertainment\s*system|nes)\b/i,
+  },
+  {
+    name: 'Nintendo Switch Lite',
+    nameJa: 'ニンテンドースイッチライト',
+    id: 'nintendo-switch-lite',
+    pattern: /\bnintendo\s*switch\s*lite\b|\bswitch\s*lite\b/i,
   },
   {
     name: 'Nintendo Switch',
@@ -158,6 +158,12 @@ export const CONSOLE_PATTERNS: DataPattern[] = [
     pattern: /\b(game\s*boy\s*color|gbc)\b/i,
   },
   {
+    name: 'Game Boy',
+    nameJa: 'ゲームボーイ',
+    id: 'game-boy',
+    pattern: /\b(game\s*boy|gb(?![a-z]))\b/i,
+  },
+  {
     name: 'Nintendo 2DS',
     nameJa: 'ニンテンドー2DS',
     id: 'nintendo-2ds',
@@ -168,5 +174,23 @@ export const CONSOLE_PATTERNS: DataPattern[] = [
     nameJa: 'ベクトレックス',
     id: 'vectrex',
     pattern: /\b(vectrex)\b/i,
+  },
+  {
+    name: 'Neo Geo Pocket Color',
+    nameJa: 'ネオジオポケットカラー',
+    id: 'neo-geo-pocket-color',
+    pattern: /\b(neo\s*geo\s*pocket\s*color|neogeo\s*pocket\s*color)\b/i,
+  },
+  {
+    name: 'Neo Geo',
+    nameJa: 'ネオジオ',
+    id: 'neo-geo',
+    pattern: /\b(neo\s*geo|neogeo)\b/i,
+  },
+  {
+    name: 'TI-84',
+    nameJa: 'TI-84 グラフ電卓',
+    id: 'ti-84',
+    pattern: /\b(ti\s*-?\s*84(\s*plus)?)\b/i,
   },
 ];
