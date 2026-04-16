@@ -1,0 +1,142 @@
+import type { DataPattern } from './types';
+
+export const CONSOLE_PATTERNS: DataPattern[] = [
+  {
+    name: 'Game Boy',
+    nameJa: 'ゲームボーイ',
+    id: 'game-boy',
+    pattern: /\b(game\s*boy|gb(?![a-z]))\b/i,
+  },
+  {
+    name: 'Game Boy Advance',
+    nameJa: 'ゲームボーイアドバンス',
+    id: 'game-boy-advance',
+    pattern: /\b(game\s*boy\s*advance|gba)\b/i,
+  },
+  {
+    name: 'GameCube',
+    nameJa: 'ゲームキューブ',
+    id: 'gamecube',
+    pattern: /\b(gamecube|game\s*cube|gc(?![a-z]))\b/i,
+  },
+  {
+    name: 'Nintendo 3DS',
+    nameJa: 'ニンテンドー3DS',
+    id: 'nintendo-3ds',
+    pattern: /\b(3ds|nintendo\s*3ds)\b/i,
+  },
+  {
+    name: 'Nintendo 64',
+    nameJa: 'ニンテンドー64',
+    id: 'nintendo-64',
+    pattern: /\b(nintendo\s*64|n64)\b/i,
+  },
+  {
+    name: 'Nintendo DS',
+    nameJa: 'ニンテンドーDS',
+    id: 'nintendo-ds',
+    pattern: /\b(nintendo\s*ds|nds)\b/i,
+  },
+  {
+    name: 'Nintendo Entertainment System',
+    nameJa: 'ファミリーコンピュータ',
+    id: 'nes',
+    pattern: /\b(nintendo\s*entertainment\s*system|nes)\b/i,
+  },
+  {
+    name: 'Nintendo Switch',
+    nameJa: 'ニンテンドースイッチ',
+    id: 'nintendo-switch',
+    pattern: /\b(nintendo\s*switch)\b/i,
+  },
+  {
+    name: 'PlayStation',
+    nameJa: 'プレイステーション',
+    id: 'playstation',
+    pattern: /\b(playstation|ps1|psx)\b/i,
+  },
+  {
+    name: 'PlayStation 2',
+    nameJa: 'プレイステーション2',
+    id: 'playstation-2',
+    pattern: /\b(playstation\s*2|ps2)\b/i,
+  },
+  {
+    name: 'PlayStation 3',
+    nameJa: 'プレイステーション3',
+    id: 'playstation-3',
+    pattern: /\b(playstation\s*3|ps3)\b/i,
+  },
+  {
+    name: 'PlayStation 4',
+    nameJa: 'プレイステーション4',
+    id: 'playstation-4',
+    pattern: /\b(playstation\s*4|ps4)\b/i,
+  },
+  {
+    name: 'PlayStation 5',
+    nameJa: 'プレイステーション5',
+    id: 'playstation-5',
+    pattern: /\b(playstation\s*5|ps5)\b/i,
+  },
+  {
+    name: 'Sega Dreamcast',
+    nameJa: 'ドリームキャスト',
+    id: 'dreamcast',
+    pattern: /\b(dreamcast)\b/i,
+  },
+  {
+    name: 'Sega Genesis',
+    nameJa: 'メガドライブ',
+    id: 'sega-genesis',
+    pattern: /\b(sega\s*genesis|genesis)\b/i,
+  },
+  {
+    name: 'Sega Saturn',
+    nameJa: 'セガサターン',
+    id: 'sega-saturn',
+    pattern: /\b(sega\s*saturn|saturn)\b/i,
+  },
+  {
+    name: 'Super Nintendo Entertainment System',
+    nameJa: 'スーパーファミコン',
+    id: 'snes',
+    pattern: /\b(super\s*nintendo|snes)\b/i,
+  },
+  {
+    name: 'Wii',
+    nameJa: 'ウィー',
+    id: 'wii',
+    pattern: /\b(wii)\b/i,
+  },
+  {
+    name: 'Wii U',
+    nameJa: 'ウィーユー',
+    id: 'wii-u',
+    pattern: /\b(wii\s*u)\b/i,
+  },
+  {
+    name: 'Xbox',
+    nameJa: 'エックスボックス',
+    id: 'xbox',
+    pattern: /\b(xbox(?!\s*(360|one|series)))\b/i,
+  },
+  {
+    name: 'Xbox 360',
+    nameJa: 'エックスボックス360',
+    id: 'xbox-360',
+    pattern: /\b(xbox\s*360)\b/i,
+  },
+  {
+    name: 'Xbox One',
+    nameJa: 'エックスボックスワン',
+    id: 'xbox-one',
+    pattern: /\b(xbox\s*one)\b/i,
+  },
+  {
+    name: 'Xbox Series X/S',
+    nameJa: 'エックスボックス シリーズX/S',
+    id: 'xbox-series',
+    pattern: /\b(xbox\s*series\s*(x|s)|xsx|xss)\b/i,
+  },
+];

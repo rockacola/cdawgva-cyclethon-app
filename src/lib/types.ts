@@ -63,6 +63,7 @@ export interface DataPattern {
 
 export type DonationWarType =
   | 'anime'
+  | 'console'
   | 'country'
   | 'gacha'
   | 'game'

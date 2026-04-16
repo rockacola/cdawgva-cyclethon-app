@@ -1,4 +1,5 @@
 import { ANIME_PATTERNS } from './animePatterns';
+import { CONSOLE_PATTERNS } from './consolePatterns';
 import { COUNTRY_PATTERNS } from './countryPatterns';
 import { GACHA_PATTERNS } from './gachaPatterns';
 import { GAME_PATTERNS } from './gamePatterns';
@@ -11,6 +12,7 @@ import { UMAMUSUME_PATTERNS } from './umamusumePatterns';
 
 const DATA_SOURCE_MAP: Record<DonationWarType, DataPattern[]> = {
   anime: ANIME_PATTERNS,
+  console: CONSOLE_PATTERNS,
   country: COUNTRY_PATTERNS,
   gacha: GACHA_PATTERNS,
   game: GAME_PATTERNS,
