@@ -1,6 +1,6 @@
 # CDawgVA Cyclethon Tracker
 
-A real-time donation tracker built for the [CDawgVA Cyclethon 5](https://tiltify.com/@cdawgva/cyclethon-5) charity event — a 15-day cross-Japan cycling challenge. The app ingests live donation data via Tiltify webhooks and a Cloudflare R2 data feed, then presents it through multiple interactive views: live feed, donor leaderboards, searchable history, journey progress, and themed "donation wars."
+A real-time donation tracker built for the [CDawgVA Cyclethon 5](https://tiltify.com/@cdawgva/cyclethon-5) charity event, a 15-day cross-Japan cycling challenge. The app ingests live donation data via Tiltify webhooks and a Cloudflare R2 data feed, then presents it through multiple interactive views: live feed, donor leaderboards, searchable history, journey progress, and themed "donation wars."
 
 Built with **Next.js 15**, **React 19**, **Chakra UI v3**, and **TypeScript**. Supports English and Japanese with timezone-aware formatting.
 
@@ -8,13 +8,15 @@ Built with **Next.js 15**, **React 19**, **Chakra UI v3**, and **TypeScript**. S
 
 **Live site:** [cdawgva-cyclethon.vercel.app](https://cdawgva-cyclethon.vercel.app/)
 
+![CDawgVA Cyclethon Tracker screenshot](docs/screenshot.png)
+
 Key screens include:
 
-- **Live Feed** — streaming donation table with relative timestamps
-- **Top Donors** — ranked leaderboard by total donated and largest single donation
-- **Search** — full history with text search, amount filtering, sorting, and pagination
-- **Journey** — day-by-day route tracker with maps, daily stats, and embedded clips
-- **Donation Wars** — real-time category tallies where donations are classified by theme (anime, games, countries, Pokemon, etc.) using regex pattern matching on donor comments
+- **Live Feed**: streaming donation table with relative timestamps
+- **Top Donors**: ranked leaderboard by total donated and largest single donation
+- **Search**: full history with text search, amount filtering, sorting, and pagination
+- **Journey**: day-by-day route tracker with maps, daily stats, and embedded clips
+- **Donation Wars**: real-time category tallies where donations are classified by theme (anime, games, countries, Pokemon, etc.) using regex pattern matching on donor comments
 
 ## Tech Stack
 
@@ -32,10 +34,10 @@ Key screens include:
 ## Architecture
 
 ```text
-Browser  <──  SSE stream  ──  Next.js API route  <──  Tiltify webhook (HMAC verified)
+Browser  <--  SSE stream  ──  Next.js API route  <--  Tiltify webhook (HMAC verified)
    │                              │
    │                              ▼
-   └──  polling (30s)  ──>  Cloudflare R2 (JSON)  <──  external data pipeline
+   └──  polling (30s)  -->  Cloudflare R2 (JSON)  <--  external data pipeline
 ```
 
 **Data flow:**
@@ -49,17 +51,17 @@ Browser  <──  SSE stream  ──  Next.js API route  <──  Tiltify webhoo
 
 - Server Components handle initial data fetch (SSR with cache revalidation)
 - A **DonationsContext** provider shares donation state across client components
-- Three context providers manage user preferences: appearance (dark/light/system), locale (EN/JP), and timezone (JST/UTC/local) — all persisted in localStorage
+- Three context providers manage user preferences: appearance (dark/light/system), locale (EN/JP), and timezone (JST/UTC/local), all persisted in localStorage
 
 ## Key Features
 
 - **Real-time updates** via webhook-driven SSE with polling fallback
-- **Donation war classifier** — regex pattern engine that categorizes donations into themed wars (anime, games, countries, pizza, Pokemon, Gacha, etc.) by parsing donor comments
-- **Custom i18n** — lightweight hook-based translation system with namespace scoping, no external dependency
-- **Multi-timezone support** — timestamps render in JST, UTC, or local time; currency symbols adapt accordingly
-- **Animated counters** — donation totals animate smoothly using `requestAnimationFrame` with cubic ease-out
-- **Responsive design** — mobile drawer navigation, adaptive chart sizing (30 bars mobile / 60 desktop)
-- **Dark/light mode** — system-aware theming via next-themes + Chakra UI color mode
+- **Donation war classifier**: regex pattern engine that categorizes donations into themed wars (anime, games, countries, pizza, Pokemon, Gacha, etc.) by parsing donor comments
+- **Custom i18n**: lightweight hook-based translation system with namespace scoping, no external dependency
+- **Multi-timezone support**: timestamps render in JST, UTC, or local time; currency symbols adapt accordingly
+- **Animated counters**: donation totals animate smoothly using `requestAnimationFrame` with cubic ease-out
+- **Responsive design**: mobile drawer navigation, adaptive chart sizing (30 bars mobile / 60 desktop)
+- **Dark/light mode**: system-aware theming via next-themes + Chakra UI color mode
 
 ## What This Demonstrates
 
@@ -70,7 +72,7 @@ Browser  <──  SSE stream  ──  Next.js API route  <──  Tiltify webhoo
 | **TypeScript**            | Strict mode, typed interfaces for all data, type-safe context/hooks                    |
 | **API design**            | REST webhook endpoint, SSE streaming endpoint, structured error handling               |
 | **State management**      | React Context for global state, localStorage persistence, animated transitions         |
-| **i18n engineering**      | Custom translation system with namespace lookup, locale detection, RTL-ready structure |
+| **i18n engineering**      | Custom translation system with namespace lookup, locale detection                      |
 | **Data processing**       | Regex-based text classification, donation aggregation, multi-currency handling         |
 | **UI/UX**                 | Responsive layouts, dark mode, timezone handling, loading states, search with filters  |
 | **DevOps**                | Vercel CI/CD, Cloudflare R2 integration, environment-based configuration               |
