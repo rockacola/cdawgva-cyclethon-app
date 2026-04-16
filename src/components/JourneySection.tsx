@@ -10,15 +10,28 @@ import type { CampaignFact } from '@/lib/types';
 import { HomeDonationProgress } from './HomeDonationProgress';
 
 interface JourneySectionProps {
+  borderBottom?: boolean;
+  description?: string | null;
   initialCampaignFact: CampaignFact | null;
+  label?: string;
   utcOffset: string;
 }
 
-export function JourneySection({ initialCampaignFact, utcOffset }: JourneySectionProps) {
+export function JourneySection({
+  borderBottom = true,
+  description,
+  initialCampaignFact,
+  label,
+  utcOffset,
+}: JourneySectionProps) {
   const t = useTranslations('home');
 
   return (
-    <Box borderBottomWidth="1px" pb={{ base: 10, md: 16 }} pt={{ base: 10, md: 16 }}>
+    <Box
+      borderBottomWidth={borderBottom ? '1px' : 0}
+      pb={{ base: 10, md: 16 }}
+      pt={{ base: 10, md: 16 }}
+    >
       <HStack align="baseline" justify="space-between" mb={2}>
         <Text
           color="fg.muted"
@@ -27,12 +40,14 @@ export function JourneySection({ initialCampaignFact, utcOffset }: JourneySectio
           letterSpacing="wide"
           textTransform="uppercase"
         >
-          {t('journeySectionLabel')}
+          {label ?? t('journeySectionLabel')}
         </Text>
       </HStack>
-      <Text color="fg.muted" fontSize="sm" mb={6}>
-        {t('journeyDescription')}
-      </Text>
+      {description !== null && (
+        <Text color="fg.muted" fontSize="sm" mb={6}>
+          {description ?? t('journeyDescription')}
+        </Text>
+      )}
       <Box minH="60px" position="relative">
         <DailyDonationsChart />
         <Box left={0} position="absolute" top={0} w="100%">

@@ -205,6 +205,21 @@
     "title": "Top Donors",
     "total": "Total"
   },
+  "journey": {
+    "description": "Every pedal stroke, every kilometre, every calorie burnt. The full cyclethon tallied up.",
+    "donationsSectionLabel": "Donations",
+    "donationWarsSectionLabel": "Donation Wars",
+    "donationWarsDay": "Day",
+    "donationWarsName": "Battle",
+    "donationWarsRaised": "Raised",
+    "guestCyclists": "Guest Cyclists",
+    "overviewMap": "Overview Map",
+    "overviewMapTitle": "Cyclethon Overview Map",
+    "title": "The Long Haul",
+    "totalCaloriesBurnt": "Total Calories Burnt",
+    "totalCyclingTime": "Total Cycling Time",
+    "totalDistance": "Total Distance"
+  },
   "settings": {
     "appearance": "Appearance",
     "appearanceDark": "Dark",

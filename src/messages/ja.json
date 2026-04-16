@@ -205,6 +205,21 @@
     "title": "トップドナー",
     "total": "合計"
   },
+  "journey": {
+    "description": "ペダルを踏み続けた15日間。走った距離、消費したカロリー、そして積み上げた記録をすべてここに。",
+    "donationsSectionLabel": "寄付",
+    "donationWarsSectionLabel": "寄付対決",
+    "donationWarsDay": "日",
+    "donationWarsName": "バトル",
+    "donationWarsRaised": "寄付額",
+    "guestCyclists": "ゲストサイクリスト",
+    "overviewMap": "全体マップ",
+    "overviewMapTitle": "Cyclethon 全体マップ",
+    "title": "15日間の軌跡",
+    "totalCaloriesBurnt": "総消費カロリー",
+    "totalCyclingTime": "総走行時間",
+    "totalDistance": "総走行距離"
+  },
   "settings": {
     "appearance": "外観",
     "appearanceDark": "ダーク",
