@@ -23,7 +23,7 @@ export const CONSOLE_PATTERNS: DataPattern[] = [
     name: 'Nintendo 3DS',
     nameJa: 'ニンテンドー3DS',
     id: 'nintendo-3ds',
-    pattern: /\b(3ds|nintendo\s*3ds)\b/i,
+    pattern: /\b(nintendo\s*3\s*d\s*s)\b/i,
   },
   {
     name: 'Nintendo 64',
@@ -50,12 +50,6 @@ export const CONSOLE_PATTERNS: DataPattern[] = [
     pattern: /\b(nintendo\s*switch)\b/i,
   },
   {
-    name: 'PlayStation',
-    nameJa: 'プレイステーション',
-    id: 'playstation',
-    pattern: /\b(playstation|ps1|psx)\b/i,
-  },
-  {
     name: 'PlayStation 2',
     nameJa: 'プレイステーション2',
     id: 'playstation-2',
@@ -78,6 +72,12 @@ export const CONSOLE_PATTERNS: DataPattern[] = [
     nameJa: 'プレイステーション5',
     id: 'playstation-5',
     pattern: /\b(playstation\s*5|ps5)\b/i,
+  },
+  {
+    name: 'PlayStation',
+    nameJa: 'プレイステーション',
+    id: 'playstation',
+    pattern: /\b(playstation|ps1|psx)\b/i,
   },
   {
     name: 'Sega Dreamcast',
@@ -138,5 +138,35 @@ export const CONSOLE_PATTERNS: DataPattern[] = [
     nameJa: 'エックスボックス シリーズX/S',
     id: 'xbox-series',
     pattern: /\b(xbox\s*series\s*(x|s)|xsx|xss)\b/i,
+  },
+  {
+    name: 'Sega Mega Drive',
+    nameJa: 'メガドライブ',
+    id: 'sega-mega-drive',
+    pattern: /\b(sega\s*mega\s*drive|mega\s*drive|genesis)\b/i,
+  },
+  {
+    name: 'PlayStation Portable (PSP)',
+    nameJa: 'プレイステーション・ポータブル',
+    id: 'psp',
+    pattern: /\b(psp|playstation\s*portable)\b/i,
+  },
+  {
+    name: 'Game Boy Color',
+    nameJa: 'ゲームボーイカラー',
+    id: 'game-boy-color',
+    pattern: /\b(game\s*boy\s*color|gbc)\b/i,
+  },
+  {
+    name: 'Nintendo 2DS',
+    nameJa: 'ニンテンドー2DS',
+    id: 'nintendo-2ds',
+    pattern: /\b(nintendo\s*2ds|2ds)\b/i,
+  },
+  {
+    name: 'Vectrex',
+    nameJa: 'ベクトレックス',
+    id: 'vectrex',
+    pattern: /\b(vectrex)\b/i,
   },
 ];
