@@ -11,7 +11,7 @@ import {
   Span,
   Stack,
 } from '@chakra-ui/react';
-import { Home, Menu, Settings, X } from 'lucide-react';
+import { Flag, Home, Menu, Settings, X } from 'lucide-react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
@@ -39,6 +39,7 @@ const allNavLinks = [
   { href: '/donations/top', labelKey: 'topDonors' },
   { href: '/journey', labelKey: 'journey' },
   { href: '/about-cyclethon', labelKey: 'aboutCyclethon' },
+  { href: '/finish-line', labelKey: 'finishLine' },
 ] as const;
 
 export function Header() {
@@ -133,6 +134,35 @@ export function Header() {
         </HStack>
 
         <Spacer />
+
+        <Link
+          _dark={{
+            bgColor: 'orange.500',
+            color: 'white',
+          }}
+          _hover={{
+            _dark: { bgColor: 'orange.400' },
+            bgColor: 'orange.600',
+            textDecoration: 'none',
+          }}
+          alignItems="center"
+          asChild
+          bgColor="orange.500"
+          borderRadius="md"
+          color="white"
+          display={{ base: 'none', md: 'inline-flex' }}
+          fontSize="sm"
+          fontWeight="semibold"
+          gap={1.5}
+          px={3}
+          py={2}
+          transition="background-color 0.15s"
+        >
+          <NextLink href="/finish-line">
+            <Flag size={14} />
+            {t('finishLine')}
+          </NextLink>
+        </Link>
 
         <IconButton
           _dark={{

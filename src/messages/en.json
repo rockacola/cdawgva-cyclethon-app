@@ -109,7 +109,8 @@
     "searchDonations": "Search Donations",
     "top": "Top",
     "topDonors": "Top Donors",
-    "aboutCyclethon": "About Cyclethon"
+    "aboutCyclethon": "About Cyclethon",
+    "finishLine": "Finish Line"
   },
   "home": {
     "15days": "15 Days",
@@ -216,5 +217,33 @@
     "timezoneLocal": "Local",
     "timezoneUTC": "UTC",
     "title": "Settings"
+  },
+  "finishLine": {
+    "title": "Finish Line",
+    "eventLabel": "Cyclethon 5 Goal Event",
+    "blurb1": "Fifteen days of road, all leading here. The ride wraps at Hughes Pizza in Osaka, with a couple of exclusive slices Connor, Chris and the van gang put together for the occasion.",
+    "blurb2": "Cyclethon participants will be dropping by when they can. Nothing's fixed, so no promises on timing or who shows. And to keep things tidy for the venue, hang out inside rather than waiting around on the street.",
+    "eventSectionLabel": "Event",
+    "dateLabel": "Date",
+    "date": "April 19, 2026",
+    "timeLabel": "Time",
+    "time": "11:00 AM to 8:00 PM",
+    "venueLabel": "Venue",
+    "venue": "Hughes Pizza, Parkside, Osaka City",
+    "locationSectionLabel": "Location",
+    "viewOnGoogleMaps": "View on Google Maps",
+    "reservationsSectionLabel": "Reservations",
+    "walkinsLabel": "Walk-ins",
+    "walkinsTime": "11:00 AM to 4:00 PM",
+    "reservationsLabel": "Reservations",
+    "reservationsTime": "4:00 PM to 8:00 PM",
+    "reservationNote1": "Reservations for the evening can be made in person from 11:00 AM on the day at the store.",
+    "reservationNote2": "Reservation slots are first come, first served and will close once fully booked.",
+    "reservationNote3": "Seating time will be limited to accommodate all guests.",
+    "pizzasSectionLabel": "Special Pizzas (¥715 per slice)",
+    "pizzaMonkeName": "Monke Supreme",
+    "pizzaMonkeToppings": "pepperoni, sausage, jalapeño",
+    "pizzaVanGangName": "Van Gang Combo",
+    "pizzaVanGangToppings": "ham, pineapple, sesame sauce, hot honey"
   }
 }

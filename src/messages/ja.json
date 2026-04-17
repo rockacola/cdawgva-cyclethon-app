@@ -109,7 +109,8 @@
     "searchDonations": "寄付検索",
     "top": "トップ",
     "topDonors": "トップドナー",
-    "aboutCyclethon": "Cyclethonについて"
+    "aboutCyclethon": "Cyclethonについて",
+    "finishLine": "フィニッシュライン"
   },
   "home": {
     "15days": "15日間",
@@ -216,5 +217,33 @@
     "timezoneLocal": "ローカル",
     "timezoneUTC": "UTC",
     "title": "設定"
+  },
+  "finishLine": {
+    "title": "フィニッシュライン",
+    "eventLabel": "Cyclethon 5 ゴールイベント",
+    "blurb1": "15日間の道のりが、ここでゴール。大阪のHughes Pizzaで、コナー、クリス、そしてバンチームが今回のために用意した限定スライスをどうぞ。",
+    "blurb2": "Cyclethon参加者もタイミングが合えば立ち寄る予定ですが、登場時間は未定で、誰がいつ現れるかはお約束できません。店舗への配慮として、店外での待機はご遠慮いただき、店内でゆっくりお過ごしください。",
+    "eventSectionLabel": "イベント",
+    "dateLabel": "日付",
+    "date": "2026年4月19日",
+    "timeLabel": "時間",
+    "time": "11:00〜20:00",
+    "venueLabel": "会場",
+    "venue": "Hughes Pizza（大阪市パークサイド）",
+    "locationSectionLabel": "場所",
+    "viewOnGoogleMaps": "Googleマップで見る",
+    "reservationsSectionLabel": "予約について",
+    "walkinsLabel": "フリー入店",
+    "walkinsTime": "11:00〜16:00",
+    "reservationsLabel": "予約制",
+    "reservationsTime": "16:00〜20:00",
+    "reservationNote1": "当日11:00より店頭にて、夜の予約受付を行います。",
+    "reservationNote2": "予約枠は先着順で、満席になり次第終了となります。",
+    "reservationNote3": "できるだけ多くのお客様にご利用いただくため、滞在時間を制限させていただきます。",
+    "pizzasSectionLabel": "スペシャルピザ（1スライス ¥715）",
+    "pizzaMonkeName": "モンキースプリーム",
+    "pizzaMonkeToppings": "ペパロニ、ソーセージ、ハラペーニョ",
+    "pizzaVanGangName": "バンギャングコンボ",
+    "pizzaVanGangToppings": "ハム、パイナップル、ごまソース、ホットハニー"
   }
 }
