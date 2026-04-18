@@ -1227,7 +1227,8 @@ export const journeyData: DayEntry[] = [
   },
   {
     dayKey: 'day-14',
-    destination: 'Kyoto Station',
+    destination: '',
+    // destination: 'Kyoto Station',
     destinationJa: '京都駅',
     distanceKm: 69,
     donationWars: [
@@ -1239,7 +1240,8 @@ export const journeyData: DayEntry[] = [
         type: 'game',
       },
     ],
-    startPoint: 'Makino Sunny Beach - Lake Terrace',
+    startPoint: '',
+    // startPoint: 'Makino Sunny Beach - Lake Terrace',
     startPointJa: 'マキノサニービーチ 湖のテラス',
     totalAmountRaised: 1053888,
     twitchUrl: 'https://www.twitch.tv/videos/2750667695',
