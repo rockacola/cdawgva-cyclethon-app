@@ -28,7 +28,6 @@ import type { ReactNode } from 'react';
 
 import { CyclethonGrowthChart } from '@/components/CyclethonGrowthChart';
 import { useTranslations } from '@/hooks/useTranslations';
-import { flags } from '@/lib/flags';
 
 interface WhatItem {
   icon: ReactNode;
@@ -62,10 +61,10 @@ interface GrowthYear {
 }
 
 const growthYears: GrowthYear[] = [
-  { detailKey: 'year2022Detail', raised: 45.6, yearKey: 'year2022' },
-  { detailKey: 'year2023Detail', raised: 79, yearKey: 'year2023' },
-  { detailKey: 'year2024Detail', raised: 130, yearKey: 'year2024' },
-  { detailKey: 'year2025Detail', raised: 150, yearKey: 'year2025' },
+  { detailKey: 'year2022Detail', raised: 316000, yearKey: 'year2022' },
+  { detailKey: 'year2023Detail', raised: 551000, yearKey: 'year2023' },
+  { detailKey: 'year2024Detail', raised: 1058000, yearKey: 'year2024' },
+  { detailKey: 'year2025Detail', raised: 1072000, yearKey: 'year2025' },
 ];
 
 function SectionLabel({ children }: { children: string }) {
@@ -101,7 +100,7 @@ function GrowthBarChart({ t }: { t: (key: string) => string }) {
           </Stack>
           <Box bg="bg.subtle" borderRadius="sm" h={3} overflow="hidden" w="100%">
             <Box
-              bgColor={{ base: 'orange.500', _dark: 'orange.400' }}
+              bgColor={{ base: 'orange.300', _dark: 'orange.700' }}
               borderRadius="sm"
               h="100%"
               transition="width 0.6s ease-out"
@@ -110,6 +109,9 @@ function GrowthBarChart({ t }: { t: (key: string) => string }) {
           </Box>
         </Box>
       ))}
+      <Text color="fg.subtle" fontSize="xs" mt={1} textAlign="center">
+        Figures include Tiltify donations and merchandise sales.
+      </Text>
     </Stack>
   );
 }
@@ -242,11 +244,8 @@ export function AboutCyclethonContent() {
           {/* Growth */}
           <Stack gap={4}>
             <SectionLabel>{t('growthLabel')}</SectionLabel>
-            {flags.showAboutCyclethonGrowthChart ? (
-              <CyclethonGrowthChart />
-            ) : (
-              <GrowthBarChart t={t} />
-            )}
+            <CyclethonGrowthChart />
+            <GrowthBarChart t={t} />
           </Stack>
 
           {/* Closing */}

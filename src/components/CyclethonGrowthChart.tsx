@@ -233,9 +233,6 @@ export function CyclethonGrowthChart() {
         </LineChart>
       </ResponsiveContainer>
       <CustomLegend hidden={hidden} onToggle={toggleSeries} />
-      <Text color="fg.subtle" fontSize="xs" mt={3} textAlign="center">
-        Figures include Tiltify donations and merchandise sales.
-      </Text>
     </>
   );
 }
