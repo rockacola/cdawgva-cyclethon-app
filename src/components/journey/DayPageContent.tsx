@@ -46,10 +46,10 @@ export function DayPageContent({ content, day }: Props) {
 
   const dayLabel = tNav('dayLabel', { day: day.day });
   const startPoint =
-    resolvedLocale === 'JP' ? (content?.startPointJp ?? content?.startPoint) : content?.startPoint;
+    resolvedLocale === 'JP' ? (content?.startPointJa ?? content?.startPoint) : content?.startPoint;
   const destination =
     resolvedLocale === 'JP'
-      ? (content?.destinationJp ?? content?.destination)
+      ? (content?.destinationJa ?? content?.destination)
       : content?.destination;
   const hasRoute = startPoint || destination;
 

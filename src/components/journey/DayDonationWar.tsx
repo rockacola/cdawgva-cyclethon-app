@@ -54,7 +54,7 @@ function DonationWarCard({
 }) {
   const t = useTranslations('dayPage');
   const { resolvedLocale } = useLocaleContext();
-  const displayTitle = resolvedLocale === 'JP' ? (war.titleJp ?? war.title) : war.title;
+  const displayTitle = resolvedLocale === 'JP' ? (war.titleJa ?? war.title) : war.title;
 
   return (
     <Box my={4}>

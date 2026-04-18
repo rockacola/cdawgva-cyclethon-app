@@ -179,7 +179,7 @@ export function DayMapLocations({ locations }: Props) {
       {locations.map((loc, i) => (
         <TimelineItem
           categoryLabel={t(CATEGORY_TRANSLATION_KEYS[loc.category])}
-          displayTitle={resolvedLocale === 'JP' ? (loc.titleJp ?? loc.title) : loc.title}
+          displayTitle={resolvedLocale === 'JP' ? (loc.titleJa ?? loc.title) : loc.title}
           googleMapsLabel={t('googleMaps')}
           index={i}
           isLast={i === locations.length - 1}
