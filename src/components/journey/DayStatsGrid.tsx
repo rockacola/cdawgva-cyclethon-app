@@ -38,33 +38,49 @@ export function DayStatsGrid({
       label: t('distance'),
       value: `${distanceKm} km`,
     },
-    {
-      color: '#8b5cf6',
-      icon: <Timer size={16} />,
-      label: t('cyclingTime'),
-      value: formatMinutesToCyclingTime(timeCycling!),
-    },
-    {
-      color: '#f97316',
-      conversion: `≈ ${(avgSpeedKmh * KM_TO_MI).toFixed(2)} mph`,
-      icon: <Gauge size={16} />,
-      label: t('averageSpeed'),
-      value: `${avgSpeedKmh.toFixed(2)} km/h`,
-    },
-    {
-      color: '#06b6d4',
-      conversion: `≈ ${celsiusToFahrenheit(avgTempCelsius!).toFixed(1)}°F`,
-      icon: <Thermometer size={16} />,
-      label: t('averageTemp'),
-      value: `${avgTempCelsius}°C`,
-    },
-    {
-      color: '#ef4444',
-      conversion: `≈ ${Math.round(caloriesBurnt! * KCAL_TO_KJ).toLocaleString()} kJ`,
-      icon: <Flame size={16} />,
-      label: t('caloriesBurnt'),
-      value: `${caloriesBurnt!.toLocaleString()} kcal`,
-    },
+    ...(timeCycling !== undefined
+      ? [
+          {
+            color: '#8b5cf6',
+            icon: <Timer size={16} />,
+            label: t('cyclingTime'),
+            value: formatMinutesToCyclingTime(timeCycling!),
+          },
+        ]
+      : []),
+    ...(avgSpeedKmh
+      ? [
+          {
+            color: '#f97316',
+            conversion: `≈ ${(avgSpeedKmh * KM_TO_MI).toFixed(2)} mph`,
+            icon: <Gauge size={16} />,
+            label: t('averageSpeed'),
+            value: `${avgSpeedKmh.toFixed(2)} km/h`,
+          },
+        ]
+      : []),
+    ...(avgTempCelsius !== undefined
+      ? [
+          {
+            color: '#06b6d4',
+            conversion: `≈ ${celsiusToFahrenheit(avgTempCelsius!).toFixed(1)}°F`,
+            icon: <Thermometer size={16} />,
+            label: t('averageTemp'),
+            value: `${avgTempCelsius}°C`,
+          },
+        ]
+      : []),
+    ...(caloriesBurnt !== undefined
+      ? [
+          {
+            color: '#ef4444',
+            conversion: `≈ ${Math.round(caloriesBurnt! * KCAL_TO_KJ).toLocaleString()} kJ`,
+            icon: <Flame size={16} />,
+            label: t('caloriesBurnt'),
+            value: `${caloriesBurnt!.toLocaleString()} kcal`,
+          },
+        ]
+      : []),
     ...(windSpeedMs !== undefined
       ? [
           {
