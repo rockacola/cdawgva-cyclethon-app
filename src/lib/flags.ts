@@ -1,5 +1,5 @@
 export const flags = {
-  showAboutCyclethonGrowthChart: false,
+  showAboutCyclethonGrowthChart: true,
   showJourneyDotLinks: true,
   showJourneyHighlightVods: false,
   showLanguageSettings: true,

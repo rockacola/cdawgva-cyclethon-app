@@ -26,6 +26,7 @@ import {
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 
+import { CyclethonGrowthChart } from '@/components/CyclethonGrowthChart';
 import { useTranslations } from '@/hooks/useTranslations';
 import { flags } from '@/lib/flags';
 
@@ -110,24 +111,6 @@ function GrowthBarChart({ t }: { t: (key: string) => string }) {
         </Box>
       ))}
     </Stack>
-  );
-}
-
-function GrowthChartPlaceholder() {
-  return (
-    <Box
-      alignItems="center"
-      bg="bg.subtle"
-      borderRadius="md"
-      display="flex"
-      h={48}
-      justifyContent="center"
-      w="100%"
-    >
-      <Text color="fg.subtle" fontSize="sm">
-        Chart coming soon
-      </Text>
-    </Box>
   );
 }
 
@@ -260,7 +243,7 @@ export function AboutCyclethonContent() {
           <Stack gap={4}>
             <SectionLabel>{t('growthLabel')}</SectionLabel>
             {flags.showAboutCyclethonGrowthChart ? (
-              <GrowthChartPlaceholder />
+              <CyclethonGrowthChart />
             ) : (
               <GrowthBarChart t={t} />
             )}
