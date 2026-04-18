@@ -12,47 +12,52 @@ const YOUTUBE_COLOR = '#FF0000';
 
 interface Props {
   twitchUrl?: string;
-  youtubeUrl: string;
+  youtubeUrl?: string;
 }
 
 export function DayYouTubeEmbed({ twitchUrl, youtubeUrl }: Props) {
   const t = useTranslations('dayPage');
-  const id = getYouTubeVideoId(youtubeUrl);
-  if (!id) {
-    return null;
-  }
-
-  const thumbnailUrl = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+  const id = youtubeUrl ? getYouTubeVideoId(youtubeUrl) : null;
+  const thumbnailUrl = id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null;
 
   return (
     <Stack gap={2}>
-      <Box borderRadius="xl" overflow="hidden" position="relative" style={{ aspectRatio: '16/9' }}>
-        <Image
-          alt="YouTube thumbnail"
-          fill
-          sizes="(max-width: 1024px) 100vw, 280px"
-          src={thumbnailUrl}
-          style={{ objectFit: 'cover' }}
-        />
-      </Box>
-
-      <Button
-        asChild
-        size="sm"
-        style={{ borderColor: YOUTUBE_COLOR, color: YOUTUBE_COLOR }}
-        variant="ghost"
-        width="full"
-      >
-        <Link
-          _hover={{ textDecoration: 'none' }}
-          href={youtubeUrl}
-          rel="noopener noreferrer"
-          target="_blank"
+      {thumbnailUrl ? (
+        <Box
+          borderRadius="xl"
+          overflow="hidden"
+          position="relative"
+          style={{ aspectRatio: '16/9' }}
         >
-          <SiYoutube size={15} />
-          {t('watchOnYouTube')}
-        </Link>
-      </Button>
+          <Image
+            alt="YouTube thumbnail"
+            fill
+            sizes="(max-width: 1024px) 100vw, 280px"
+            src={thumbnailUrl}
+            style={{ objectFit: 'cover' }}
+          />
+        </Box>
+      ) : null}
+
+      {youtubeUrl ? (
+        <Button
+          asChild
+          size="sm"
+          style={{ borderColor: YOUTUBE_COLOR, color: YOUTUBE_COLOR }}
+          variant="ghost"
+          width="full"
+        >
+          <Link
+            _hover={{ textDecoration: 'none' }}
+            href={youtubeUrl}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <SiYoutube size={15} />
+            {t('watchOnYouTube')}
+          </Link>
+        </Button>
+      ) : null}
 
       {twitchUrl ? (
         <Button

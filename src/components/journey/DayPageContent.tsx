@@ -119,7 +119,7 @@ export function DayPageContent({ content, day }: Props) {
         </Stack>
 
         {/* Right: YouTube thumbnail */}
-        {content?.youtubeUrl ? (
+        {content?.youtubeUrl || content?.twitchUrl ? (
           <Box flexShrink={0} w={{ base: '100%', lg: '280px' }}>
             <DayYouTubeEmbed twitchUrl={content.twitchUrl} youtubeUrl={content.youtubeUrl} />
           </Box>

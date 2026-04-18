@@ -1225,6 +1225,24 @@ export const journeyData: DayEntry[] = [
     twitchUrl: 'https://www.twitch.tv/videos/2749841678',
     youtubeUrl: 'https://www.youtube.com/watch?v=EcB5H9ACGFU&pp=ygUJY2Rhd2d2b2Rz',
   },
-  { dayKey: 'day-14', destination: '', startPoint: '' },
+  {
+    dayKey: 'day-14',
+    destination: 'Kyoto Station',
+    destinationJa: '京都駅',
+    distanceKm: 69,
+    donationWars: [
+      {
+        endTimestamp: 1776488700,
+        startTimestamp: 1776486900,
+        title: 'Donation War - by Computer Game',
+        titleJa: '寄付対決（ゲーム）',
+        type: 'game',
+      },
+    ],
+    startPoint: 'Makino Sunny Beach - Lake Terrace',
+    startPointJa: 'マキノサニービーチ 湖のテラス',
+    totalAmountRaised: 1053888,
+    twitchUrl: 'https://www.twitch.tv/videos/2750667695',
+  },
   { dayKey: 'day-15', destination: '', startPoint: '' },
 ];
