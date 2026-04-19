@@ -65,6 +65,7 @@ const growthYears: GrowthYear[] = [
   { detailKey: 'year2023Detail', raised: 551000, yearKey: 'year2023' },
   { detailKey: 'year2024Detail', raised: 1058000, yearKey: 'year2024' },
   { detailKey: 'year2025Detail', raised: 1072000, yearKey: 'year2025' },
+  { detailKey: 'year2026Detail', raised: 1464000, yearKey: 'year2026' },
 ];
 
 function SectionLabel({ children }: { children: string }) {
