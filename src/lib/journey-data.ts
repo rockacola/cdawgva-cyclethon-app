@@ -1332,6 +1332,8 @@ export const journeyData: DayEntry[] = [
         titleJa: 'Sanrio Kyoto Porta Store',
       },
     ],
+    amountRaised: 152993,
+    amountRaisedCurrency: 'USD',
     startPoint: 'Lake Biwa',
     startPointJa: '琵琶湖',
     totalAmountRaised: 1053888,
