@@ -1,15 +1,17 @@
 'use client';
 
-import { Flex, Heading, Link, Text } from '@chakra-ui/react';
-import { ExternalLink } from 'lucide-react';
+import { Box, Flex, Grid, Text } from '@chakra-ui/react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { DonationActivityChart } from '@/components/DonationActivityChart';
 import { DonationFeed } from '@/components/DonationFeed';
 import { DonationProgressBar } from '@/components/DonationProgressBar';
 import { LiveDot } from '@/components/LiveDot';
+import { useAnimatedValue } from '@/hooks/useAnimatedValue';
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
 import { DONATIONS_URL, DONATION_REFETCH_INTERVAL } from '@/lib/constants';
+import { formatAmountParts } from '@/lib/donationUtils';
 import type { CampaignFact, Donation, DonationsData } from '@/lib/types';
 
 const MAX_DONATIONS = 100;
@@ -113,32 +115,167 @@ export function DonationLiveFeed({ initialCampaignFact, initialDonations }: Prop
     [donationMap]
   );
 
+  const currencyPrefix = useCurrencyPrefix();
+  const raisedCent = useAnimatedValue(campaignFact?.total_amount_raised_cent ?? 0);
+  const { whole: raisedWhole } = formatAmountParts(raisedCent, currencyPrefix);
+
   const t = useTranslations('donationLive');
 
   return (
-    <>
-      <Flex align="center" gap={4} mb={2}>
-        <Heading as="h1" size={{ base: 'xl', md: '2xl' }}>
-          {t('title')}
-        </Heading>
-        <LiveDot active={isConnected} />
-      </Flex>
-      <Text color="fg.muted" fontSize="sm" mb={6}>
-        {t('subtitle')}{' '}
-        <Link href="https://tiltify.com/@cdawgva/cyclethon-5" target="_blank">
-          {t('tiltify')} <ExternalLink size={10} />
-        </Link>
-      </Text>
+    <Box>
+      {/* ── Page header ───────────────────────────── */}
+      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 12 }}>
+        <Flex align="center" gap={3} mb={4}>
+          <Box bg="accent" flexShrink={0} h="1px" w={5} />
+          <Text
+            color="accent"
+            fontFamily="mono"
+            fontSize="xs"
+            letterSpacing="widest"
+            textTransform="uppercase"
+          >
+            {t('sectionLabel')}
+          </Text>
+        </Flex>
 
-      <DonationActivityChart />
+        <Text
+          as="h1"
+          fontFamily="heading"
+          fontSize={{ base: '5xl', md: '7xl' }}
+          fontWeight={400}
+          letterSpacing="-0.03em"
+          lineHeight="0.95"
+        >
+          {t('headline')}{' '}
+          <Box as="em" color="accent" fontStyle="italic">
+            {t('headlineAccent')}
+          </Box>
+        </Text>
 
-      <DonationProgressBar fact={campaignFact} mb={2} />
+        <Text
+          color="fg.muted"
+          fontSize={{ base: 'md', md: 'lg' }}
+          lineHeight={1.55}
+          maxW="2xl"
+          mt={5}
+        >
+          {t('description')}
+        </Text>
+      </Box>
 
-      <Text color="fg.muted" fontSize="xs" mb={4}>
-        {t('disclaimer')}
-      </Text>
+      {/* ── Status strip ──────────────────────────── */}
+      <Box
+        bg="bg.subtle"
+        borderBottomWidth="1px"
+        borderColor="border"
+        px={{ base: 4, md: 8 }}
+        py={5}
+      >
+        <Flex align="center" flexWrap="wrap" gap={8}>
+          <Flex align="center" gap={2.5}>
+            <LiveDot active={isConnected} />
+            <Text
+              color="fg.subtle"
+              fontFamily="mono"
+              fontSize="xs"
+              letterSpacing="widest"
+              textTransform="uppercase"
+            >
+              {isConnected ? t('connected') : t('disconnected')}
+            </Text>
+          </Flex>
+          <Box flex={1} />
+          {campaignFact ? (
+            <>
+              <Box textAlign="right">
+                <Text
+                  color="fg.subtle"
+                  fontFamily="mono"
+                  fontSize="xs"
+                  letterSpacing="widest"
+                  textTransform="uppercase"
+                >
+                  {t('totalRaised')}
+                </Text>
+                <Text
+                  fontFamily="heading"
+                  fontSize="2xl"
+                  letterSpacing="-0.02em"
+                  lineHeight={1}
+                  mt={1}
+                >
+                  {raisedWhole}
+                </Text>
+              </Box>
+            </>
+          ) : null}
+        </Flex>
+      </Box>
 
-      <DonationFeed donations={donations} />
-    </>
+      {/* ── Main content ──────────────────────────── */}
+      <Box py={{ base: 6, md: 8 }}>
+        <Grid
+          alignItems="start"
+          gap={{ base: 8, md: 12 }}
+          templateColumns={{ base: '1fr', md: '1fr 300px' }}
+        >
+          {/* Feed */}
+          <Box order={{ base: 1, md: 0 }}>
+            <Flex align="center" gap={3} mb={5}>
+              <Box bg="accent" flexShrink={0} h="1px" w={5} />
+              <Text
+                color="accent"
+                fontFamily="mono"
+                fontSize="xs"
+                letterSpacing="widest"
+                textTransform="uppercase"
+              >
+                {t('feedLabel')}
+              </Text>
+            </Flex>
+            <DonationFeed donations={donations} />
+            <Text color="fg.subtle" fontSize="xs" mt={6}>
+              {t('disclaimer')}
+            </Text>
+          </Box>
+
+          {/* Sidebar */}
+          <Box order={{ base: 0, md: 1 }} position={{ base: 'static', md: 'sticky' }} top={20}>
+            <Box borderColor="border" borderWidth="1px">
+              <Box borderBottomWidth="1px" borderColor="border" p={5}>
+                <Flex align="center" gap={3} mb={4}>
+                  <Box bg="accent" flexShrink={0} h="1px" w={5} />
+                  <Text
+                    color="accent"
+                    fontFamily="mono"
+                    fontSize="xs"
+                    letterSpacing="widest"
+                    textTransform="uppercase"
+                  >
+                    {t('activityLabel')}
+                  </Text>
+                </Flex>
+                <DonationActivityChart />
+              </Box>
+              <Box p={5}>
+                <Flex align="center" gap={3} mb={3}>
+                  <Box bg="accent" flexShrink={0} h="1px" w={5} />
+                  <Text
+                    color="accent"
+                    fontFamily="mono"
+                    fontSize="xs"
+                    letterSpacing="widest"
+                    textTransform="uppercase"
+                  >
+                    {t('campaignProgressLabel')}
+                  </Text>
+                </Flex>
+                <DonationProgressBar fact={campaignFact} />
+              </Box>
+            </Box>
+          </Box>
+        </Grid>
+      </Box>
+    </Box>
   );
 }

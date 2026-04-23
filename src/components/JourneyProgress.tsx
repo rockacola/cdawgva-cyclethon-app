@@ -4,7 +4,6 @@ import { Box, HStack } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 import { todayInOffset } from '@/lib/dateUtils';
-import { flags } from '@/lib/flags';
 import { getJourneyDays } from '@/lib/journey';
 import { journeyData } from '@/lib/journey-data';
 
@@ -88,8 +87,7 @@ export function JourneyProgress({ utcOffset }: JourneyProgressProps) {
           const isPast = dayStr < todayStr;
           const isCurrent = dayStr === todayStr;
           // Only link to days that have journey page content populated
-          const isClickable =
-            flags.showJourneyDotLinks && (isPast || isCurrent) && availableDays.has(slug);
+          const isClickable = (isPast || isCurrent) && availableDays.has(slug);
           const showLabel = day === 1 || day === 15 || isCurrent;
 
           const tooltip = `${label} · ${date.toLocaleDateString('en-AU', {

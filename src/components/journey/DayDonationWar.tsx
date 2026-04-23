@@ -4,7 +4,7 @@ import { Box, Text } from '@chakra-ui/react';
 
 import { useTranslations } from '@/hooks/useTranslations';
 import type { TimezoneMode } from '@/lib/constants';
-import type { DonationWarEntry } from '@/lib/journey-data';
+import type { DonationWarEntry } from '@/lib/journey';
 import { formatDonationTime } from '@/lib/timeUtils';
 import type { Donation } from '@/lib/types';
 import { useLocaleContext } from '@/providers/LocaleProvider';
@@ -20,6 +20,7 @@ interface Props {
 }
 
 export function DayDonationWar({ donations, wars }: Props) {
+  const t = useTranslations('dayPage');
   const { timezoneMode } = useTimezoneContext();
 
   return (
@@ -39,6 +40,9 @@ export function DayDonationWar({ donations, wars }: Props) {
           />
         </DonationWarCard>
       ))}
+      <Text color="fg.muted" fontSize="xs" mt={2}>
+        {t('disclaimer')}
+      </Text>
     </>
   );
 }
@@ -52,7 +56,6 @@ function DonationWarCard({
   timezoneMode: TimezoneMode;
   war: DonationWarEntry;
 }) {
-  const t = useTranslations('dayPage');
   const { resolvedLocale } = useLocaleContext();
   const displayTitle = resolvedLocale === 'JP' ? (war.titleJa ?? war.title) : war.title;
 
@@ -61,12 +64,9 @@ function DonationWarCard({
       <Text color="fg.muted" fontSize="sm" fontWeight="semibold" mb={1}>
         {displayTitle}
       </Text>
-      <Text color="fg.muted" fontSize="xs">
+      <Text color="fg.muted" fontSize="xs" mb={3}>
         {formatDonationTime(war.startTimestamp, timezoneMode, resolvedLocale)} –{' '}
         {formatDonationTime(war.endTimestamp, timezoneMode, resolvedLocale)} {timezoneMode}
-      </Text>
-      <Text color="fg.muted" fontSize="xs" mb={3}>
-        {t('disclaimer')}
       </Text>
       {children}
     </Box>

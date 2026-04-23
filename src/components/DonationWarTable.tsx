@@ -56,15 +56,47 @@ export function DonationWarTable({ type, donations, maxCount }: Props) {
   }
 
   return (
-    <Table.Root size="sm" variant="outline">
-      <Table.Header>
+    <Table.Root borderRadius="0" size="sm" variant="outline">
+      <Table.Header bg="bg.subtle">
         <Table.Row>
-          <Table.ColumnHeader textAlign="center" w={10} />
-          <Table.ColumnHeader>{typeLabel}</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right" width="80px">
+          <Table.ColumnHeader
+            color="fg.subtle"
+            fontFamily="mono"
+            fontSize="xs"
+            letterSpacing="widest"
+            textAlign="center"
+            textTransform="uppercase"
+            w={10}
+          />
+          <Table.ColumnHeader
+            color="fg.subtle"
+            fontFamily="mono"
+            fontSize="xs"
+            letterSpacing="widest"
+            textTransform="uppercase"
+          >
+            {typeLabel}
+          </Table.ColumnHeader>
+          <Table.ColumnHeader
+            color="fg.subtle"
+            fontFamily="mono"
+            fontSize="xs"
+            letterSpacing="widest"
+            textAlign="right"
+            textTransform="uppercase"
+            width="80px"
+          >
             {t('count')}
           </Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right" width="120px">
+          <Table.ColumnHeader
+            color="fg.subtle"
+            fontFamily="mono"
+            fontSize="xs"
+            letterSpacing="widest"
+            textAlign="right"
+            textTransform="uppercase"
+            width="120px"
+          >
             {t('total')}
           </Table.ColumnHeader>
         </Table.Row>

@@ -1,4 +1,28 @@
-import type { Donation, DonorTotal } from '@/lib/types';
+import type { DailyTotal, Donation, DonationsStats, DonorTotal } from '@/lib/types';
+
+export type SortOption = 'amount-asc' | 'amount-desc' | 'newest' | 'oldest';
+
+export const SORT_OPTIONS: { labelKey: string; value: SortOption }[] = [
+  { labelKey: 'sortAmountDesc', value: 'amount-desc' },
+  { labelKey: 'sortAmountAsc', value: 'amount-asc' },
+  { labelKey: 'sortNewest', value: 'newest' },
+  { labelKey: 'sortOldest', value: 'oldest' },
+];
+
+export function sortDonations(donations: Donation[], sort: SortOption): Donation[] {
+  return [...donations].sort((a, b) => {
+    if (sort === 'amount-desc') {
+      return b.amount_cent - a.amount_cent;
+    }
+    if (sort === 'amount-asc') {
+      return a.amount_cent - b.amount_cent;
+    }
+    if (sort === 'oldest') {
+      return a.completed_at - b.completed_at;
+    }
+    return b.completed_at - a.completed_at;
+  });
+}
 
 const TRACKED_CURRENCY = 'USD';
 
@@ -102,4 +126,18 @@ export function getDonationBoxShadow(
     return `inset ${insetWidth}px 0 0 0 var(--chakra-colors-orange-200)`;
   }
   return undefined;
+}
+
+export function getLastDailyTotal(stats: DonationsStats): DailyTotal | undefined {
+  return stats.stats.daily_totals.at(-1);
+}
+
+export function getTotalDonorCount(stats: DonationsStats): number {
+  return getLastDailyTotal(stats)?.cumulative_by_currency?.USD?.count ?? 0;
+}
+
+export function getTotalRaisedUSD(stats: DonationsStats): number {
+  return Math.floor(
+    (getLastDailyTotal(stats)?.cumulative_by_currency?.USD?.amount_cent ?? 0) / 100
+  );
 }

@@ -2,7 +2,7 @@ import { Box, HStack, Link, Stack, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import { SiTwitch, SiYoutube } from 'react-icons/si';
 
-import type { GuestCyclist } from '@/lib/journey-data';
+import type { GuestCyclist } from '@/lib/journey';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 
 const ICON_SIZE = 18;

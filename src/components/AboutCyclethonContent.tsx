@@ -1,260 +1,289 @@
 'use client';
 
-import {
-  Box,
-  Card,
-  Container,
-  HStack,
-  Heading,
-  Link,
-  SimpleGrid,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
-import {
-  Bike,
-  Calendar,
-  Heart,
-  MapPin,
-  Radio,
-  Route,
-  Ruler,
-  TrendingUp,
-  Trophy,
-  Users,
-} from 'lucide-react';
-import Image from 'next/image';
-import type { ReactNode } from 'react';
+import { Box, Flex, Grid, Link, Text } from '@chakra-ui/react';
 
 import { CyclethonGrowthChart } from '@/components/CyclethonGrowthChart';
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
+import { cyclethonHistory } from '@/lib/cyclethonHistory';
+import { useLocaleContext } from '@/providers/LocaleProvider';
 
-interface WhatItem {
-  icon: ReactNode;
-  textKey: string;
-}
-
-const whatItems: WhatItem[] = [
-  { icon: <Bike size={16} />, textKey: 'whatCycling' },
-  { icon: <Radio size={16} />, textKey: 'whatLivestream' },
-  { icon: <Heart size={16} />, textKey: 'whatDonations' },
-  { icon: <Users size={16} />, textKey: 'whatGuests' },
-  { icon: <Trophy size={16} />, textKey: 'whatIronmouse' },
-];
-
-interface TrackItem {
-  href: string;
-  icon: ReactNode;
-  textKey: string;
-}
-
-const trackItems: TrackItem[] = [
-  { href: '/journey', icon: <MapPin size={16} />, textKey: 'trackRoute' },
-  { href: '/journey', icon: <Bike size={16} />, textKey: 'trackDistance' },
-  { href: '/donations/live', icon: <TrendingUp size={16} />, textKey: 'trackDonations' },
-];
-
-interface GrowthYear {
-  detailKey: string;
+interface Edition {
+  days: number;
+  edition: string;
   raised: number;
-  yearKey: string;
+  route: string;
+  routeJa: string;
+  year: number;
 }
 
-const growthYears: GrowthYear[] = [
-  { detailKey: 'year2022Detail', raised: 316000, yearKey: 'year2022' },
-  { detailKey: 'year2023Detail', raised: 551000, yearKey: 'year2023' },
-  { detailKey: 'year2024Detail', raised: 1058000, yearKey: 'year2024' },
-  { detailKey: 'year2025Detail', raised: 1072000, yearKey: 'year2025' },
-  { detailKey: 'year2026Detail', raised: 1464000, yearKey: 'year2026' },
+const EDITION_META = [
+  { distanceKm: 750, edition: '1', route: 'Wakkanai → Hakodate', routeJa: '稚内 → 函館' },
+  { distanceKm: 850, edition: '2', route: 'Fukuoka → Kitakyushu', routeJa: '福岡 → 北九州' },
+  { distanceKm: 1200, edition: '3', route: 'Shimonoseki → Tokyo', routeJa: '下関 → 東京' },
+  { distanceKm: 1300, edition: '4', route: 'Cape Nosappu → Tokyo', routeJa: '納沙布岬 → 東京' },
+  { distanceKm: 1200, edition: '5', route: 'Cape Oma → Osaka', routeJa: '大間 → 大阪' },
 ];
+
+const EDITIONS: Edition[] = cyclethonHistory.map((series, i) => {
+  const nonNull = series.dailyTotals.filter((v): v is number => v !== null);
+  return {
+    days: nonNull.length,
+    edition: EDITION_META[i].edition,
+    raised: nonNull[nonNull.length - 1] ?? 0,
+    route: EDITION_META[i].route,
+    routeJa: EDITION_META[i].routeJa,
+    year: series.year,
+  };
+});
+
+const LIFETIME = EDITIONS.reduce((sum, e) => sum + e.raised, 0);
+
+function fmtShort(n: number, currencyPrefix: string): string {
+  if (n >= 1_000_000) {
+    return `${currencyPrefix}${(n / 1_000_000).toFixed(1)}M`;
+  }
+  if (n >= 1_000) {
+    return `${currencyPrefix}${Math.round(n / 1_000)}k`;
+  }
+  return `${currencyPrefix}${n}`;
+}
 
 function SectionLabel({ children }: { children: string }) {
   return (
-    <Text
-      color="fg.muted"
-      fontSize="xs"
-      fontWeight="semibold"
-      letterSpacing="wide"
-      textTransform="uppercase"
-    >
-      {children}
-    </Text>
-  );
-}
-
-function GrowthBarChart({ t }: { t: (key: string) => string }) {
-  const maxRaised = Math.max(...growthYears.map((y) => y.raised));
-
-  return (
-    <Stack gap={3}>
-      {growthYears.map(({ detailKey, raised, yearKey }) => (
-        <Box key={yearKey}>
-          <Stack
-            direction={{ base: 'column', md: 'row' }}
-            fontSize="sm"
-            gap={{ base: 0, md: 2 }}
-            justify="space-between"
-            mb={1}
-          >
-            <Text fontWeight="semibold">{t(yearKey)}</Text>
-            <Text color="fg.muted">{t(detailKey)}</Text>
-          </Stack>
-          <Box bg="bg.subtle" borderRadius="sm" h={3} overflow="hidden" w="100%">
-            <Box
-              bgColor={{ base: 'orange.300', _dark: 'orange.700' }}
-              borderRadius="sm"
-              h="100%"
-              transition="width 0.6s ease-out"
-              w={`${(raised / maxRaised) * 100}%`}
-            />
-          </Box>
-        </Box>
-      ))}
-      <Text color="fg.subtle" fontSize="xs" mt={1} textAlign="center">
-        Figures include Tiltify donations and merchandise sales.
+    <Flex align="center" gap={3} mb={5}>
+      <Box bg="accent" flexShrink={0} h="1px" w={5} />
+      <Text
+        color="accent"
+        fontFamily="mono"
+        fontSize="xs"
+        letterSpacing="widest"
+        textTransform="uppercase"
+      >
+        {children}
       </Text>
-    </Stack>
+    </Flex>
   );
 }
 
 export function AboutCyclethonContent() {
   const t = useTranslations('aboutCyclethon');
+  const currencyPrefix = useCurrencyPrefix();
+  const { resolvedLocale } = useLocaleContext();
+  const max = Math.max(...EDITIONS.map((e) => e.raised));
 
   return (
-    <Box py={{ base: 6, md: 20 }}>
-      <Container maxW="4xl" px={{ base: 3, md: 8 }}>
-        <Stack gap={16}>
-          {/* Hero + Cyclethon 5 card side by side */}
-          <Stack direction={{ base: 'column', lg: 'row' }} gap={8}>
-            {/* Intro text */}
-            <Stack flex={1} gap={4} minW={0}>
-              <Heading as="h1" size={{ base: 'xl', md: '2xl' }}>
-                {t('title')}
-              </Heading>
-              <Text color="fg.muted">{t('intro')}</Text>
-              <Text color="fg.muted">{t('cause')}</Text>
-              <Text color="fg.muted">{t('recognition')}</Text>
-
-              {/* Hero image */}
-              <Box borderRadius="md" mt={2} overflow="hidden" position="relative" w="100%">
-                <Image
-                  alt="Cyclethon"
-                  height={600}
-                  src="/images/cyclethon-4-3.jpg"
-                  style={{
-                    filter: 'sepia(0.2) opacity(0.75)',
-                    height: 'auto',
-                    width: '100%',
-                  }}
-                  width={900}
-                />
-              </Box>
-            </Stack>
-
-            {/* Cyclethon 5 highlight card */}
-            <Box flexShrink={0} w={{ base: '100%', lg: '280px' }}>
-              <Card.Root h="fit-content" variant="outline">
-                <Card.Body gap={4} p={5}>
-                  <HStack color="fg.subtle" gap={2}>
-                    <Bike size={18} />
-                    <Text color="fg" fontSize="md" fontWeight="bold">
-                      {t('currentLabel')}
-                    </Text>
-                  </HStack>
-                  <Stack gap={3}>
-                    <Box>
-                      <Text color="fg.muted" fontSize="xs" fontWeight="semibold">
-                        {t('currentDatesLabel')}
-                      </Text>
-                      <HStack gap={1.5}>
-                        <Calendar size={14} />
-                        <Text fontSize="sm">{t('currentDates')}</Text>
-                      </HStack>
-                    </Box>
-                    <Box>
-                      <Text color="fg.muted" fontSize="xs" fontWeight="semibold">
-                        {t('currentRouteLabel')}
-                      </Text>
-                      <HStack gap={1.5}>
-                        <Route size={14} />
-                        <Text fontSize="sm">{t('currentRoute')}</Text>
-                      </HStack>
-                    </Box>
-                    <Box>
-                      <Text color="fg.muted" fontSize="xs" fontWeight="semibold">
-                        {t('currentDistanceLabel')}
-                      </Text>
-                      <HStack gap={1.5}>
-                        <Ruler size={14} />
-                        <Text fontSize="sm">{t('currentDistance')}</Text>
-                      </HStack>
-                    </Box>
-                  </Stack>
-                </Card.Body>
-              </Card.Root>
-            </Box>
-          </Stack>
-
-          {/* What happens */}
-          <Stack gap={4}>
-            <SectionLabel>{t('whatHappensLabel')}</SectionLabel>
-            <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={3}>
-              {whatItems.map(({ icon, textKey }) => (
-                <Card.Root key={textKey} variant="outline">
-                  <Card.Body p={4}>
-                    <HStack gap={2}>
-                      <Box color="fg.subtle" flexShrink={0}>
-                        {icon}
-                      </Box>
-                      <Text fontSize="sm">{t(textKey)}</Text>
-                    </HStack>
-                  </Card.Body>
-                </Card.Root>
-              ))}
-            </SimpleGrid>
-          </Stack>
-
-          {/* What this site tracks */}
-          <Stack gap={4}>
-            <SectionLabel>{t('trackLabel')}</SectionLabel>
-            <SimpleGrid columns={{ base: 1, md: 3 }} gap={3}>
-              {trackItems.map(({ href, icon, textKey }) => (
-                <Link _hover={{ textDecoration: 'none' }} href={href} key={textKey}>
-                  <Card.Root
-                    _hover={{ borderColor: 'border.emphasized' }}
-                    transition="border-color 0.15s"
-                    variant="outline"
-                    width="100%"
-                  >
-                    <Card.Body p={4}>
-                      <HStack gap={2}>
-                        <Box color="fg.subtle" flexShrink={0}>
-                          {icon}
-                        </Box>
-                        <Text fontSize="sm" fontWeight="semibold">
-                          {t(textKey)}
-                        </Text>
-                      </HStack>
-                    </Card.Body>
-                  </Card.Root>
-                </Link>
-              ))}
-            </SimpleGrid>
-          </Stack>
-
-          {/* Growth */}
-          <Stack gap={4}>
-            <SectionLabel>{t('growthLabel')}</SectionLabel>
-            <CyclethonGrowthChart />
-            <GrowthBarChart t={t} />
-          </Stack>
-
-          {/* Closing */}
-          <Text color="fg.muted" maxW="2xl">
-            {t('closing')}
+    <Box>
+      {/* ── Page header ───────────────────────────── */}
+      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 12 }}>
+        <Flex align="center" gap={3} mb={4}>
+          <Box bg="accent" flexShrink={0} h="1px" w={5} />
+          <Text
+            color="accent"
+            fontFamily="mono"
+            fontSize="xs"
+            letterSpacing="widest"
+            textTransform="uppercase"
+          >
+            {t('sectionLabel')}
           </Text>
-        </Stack>
-      </Container>
+        </Flex>
+
+        <Text
+          as="h1"
+          fontFamily="heading"
+          fontSize={{ base: '5xl', md: '7xl' }}
+          fontWeight={400}
+          letterSpacing="-0.03em"
+          lineHeight="0.95"
+        >
+          {t('headline')}{' '}
+          <Box as="em" color="accent" fontStyle="italic">
+            {t('headlineAccent')}
+          </Box>
+          {t('headlineSuffix')}
+        </Text>
+
+        <Text
+          color="fg.muted"
+          fontSize={{ base: 'md', md: 'lg' }}
+          lineHeight={1.55}
+          maxW="2xl"
+          mt={5}
+        >
+          {t('headerDescription')}
+        </Text>
+
+        <Flex flexWrap="wrap" gap={{ base: 4, md: 8 }} mt={6}>
+          {[
+            t('metaFounded'),
+            t('metaPartner'),
+            t('metaLifetime', { amount: fmtShort(LIFETIME, currencyPrefix) }),
+          ].map((item) => (
+            <Text color="fg.subtle" fontFamily="mono" fontSize="xs" key={item} letterSpacing="wide">
+              {item}
+            </Text>
+          ))}
+        </Flex>
+      </Box>
+
+      {/* ── Story block ───────────────────────────── */}
+      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 12 }}>
+        <Grid gap={{ base: 8, md: 16 }} templateColumns={{ base: '1fr', md: '1fr 1fr' }}>
+          {/* Quote */}
+          <Box>
+            <Text
+              color="fg"
+              fontFamily="heading"
+              fontSize={{ base: 'xl', md: '2xl' }}
+              fontStyle="italic"
+              letterSpacing="-0.02em"
+              lineHeight={1.3}
+            >
+              {t('quote')}
+            </Text>
+          </Box>
+
+          {/* Prose */}
+          <Box color="fg.muted" fontSize="sm" lineHeight={1.7}>
+            <Text mt={0}>{t('intro')}</Text>
+            <Text mt={4}>{t('cause')}</Text>
+            <Text mt={4}>{t('recognition')}</Text>
+          </Box>
+        </Grid>
+      </Box>
+
+      {/* ── Editions · by raise ───────────────────── */}
+      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 10 }}>
+        <SectionLabel>{t('sectionEditions')}</SectionLabel>
+
+        {/* Bar chart area — labels are separate so they don't distort bar heights */}
+        <Grid
+          alignItems="end"
+          gap={5}
+          gridTemplateColumns={`repeat(${EDITIONS.length}, 1fr)`}
+          h={{ base: '180px', md: '240px' }}
+          pt={5}
+        >
+          {EDITIONS.map((e, i) => {
+            const isLatest = i === EDITIONS.length - 1;
+            const pct = e.raised / max;
+            return (
+              <Flex direction="column" h="100%" justify="flex-end" key={e.edition}>
+                <Text
+                  fontFamily="heading"
+                  fontSize={{ base: 'xs', md: 'md' }}
+                  fontVariantNumeric="tabular-nums"
+                  letterSpacing="-0.02em"
+                  mb={2}
+                >
+                  {fmtShort(e.raised, currencyPrefix)}
+                </Text>
+                <Box
+                  bg={isLatest ? 'accent' : 'fg'}
+                  borderTopColor="accent"
+                  borderTopWidth={isLatest ? '3px' : '0'}
+                  minH="4px"
+                  opacity={isLatest ? 1 : 0.15}
+                  style={{ height: `${pct * 100}%` }}
+                />
+              </Flex>
+            );
+          })}
+        </Grid>
+
+        {/* Label area */}
+        <Grid gap={5} gridTemplateColumns={`repeat(${EDITIONS.length}, 1fr)`} mt={4}>
+          {EDITIONS.map((e, i) => {
+            const isLatest = i === EDITIONS.length - 1;
+            return (
+              <Box key={e.edition}>
+                <Text
+                  color={isLatest ? 'accent' : 'fg'}
+                  fontFamily="heading"
+                  fontSize={{ base: 'sm', md: 'lg' }}
+                  fontStyle="italic"
+                >
+                  Cyclethon {e.edition}
+                </Text>
+                <Text
+                  color="fg.subtle"
+                  fontFamily="mono"
+                  fontSize="xs"
+                  letterSpacing="wide"
+                  mt={0.5}
+                  textTransform="uppercase"
+                >
+                  {e.year}
+                </Text>
+                <Text color="fg.muted" fontSize="xs" lineHeight={1.4} mt={1.5}>
+                  {resolvedLocale === 'JP' ? e.routeJa : e.route}
+                </Text>
+                <Text color="fg.subtle" fontFamily="mono" fontSize="xs" mt={1}>
+                  {t('editionDays', { count: e.days })}
+                </Text>
+              </Box>
+            );
+          })}
+        </Grid>
+      </Box>
+
+      {/* ── Growth chart ─────────────────────────── */}
+      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 10 }}>
+        <SectionLabel>{t('sectionCumulative')}</SectionLabel>
+        <CyclethonGrowthChart />
+      </Box>
+
+      {/* ── The charity ───────────────────────────── */}
+      <Box bg="bg.subtle" px={{ base: 4, md: 8 }} py={{ base: 8, md: 12 }}>
+        <Grid gap={{ base: 8, md: 16 }} templateColumns={{ base: '1fr', md: '1fr 1.3fr' }}>
+          <Box>
+            <SectionLabel>{t('sectionCharity')}</SectionLabel>
+            <Text
+              as="h2"
+              fontFamily="heading"
+              fontSize={{ base: '3xl', md: '4xl' }}
+              fontWeight={400}
+              letterSpacing="-0.02em"
+              lineHeight={1}
+            >
+              {t('charityName')}
+            </Text>
+            <Text
+              color="fg.subtle"
+              fontFamily="mono"
+              fontSize="xs"
+              letterSpacing="wide"
+              mt={3}
+              textTransform="uppercase"
+            >
+              {t('charityUrl')}
+            </Text>
+          </Box>
+
+          <Box color="fg.muted" fontSize="sm" lineHeight={1.7}>
+            <Text>{t('charityBody1')}</Text>
+            <Text mt={4}>{t('charityBody2')}</Text>
+            <Link
+              _hover={{ opacity: 0.85 }}
+              bg="accent"
+              color="white"
+              display="inline-block"
+              fontFamily="heading"
+              fontSize="sm"
+              fontWeight={500}
+              href="https://tiltify.com/@cdawgva/cyclethon-5"
+              mt={5}
+              px={5}
+              py={3}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {t('charityDonateLink')}
+            </Link>
+          </Box>
+        </Grid>
+      </Box>
     </Box>
   );
 }

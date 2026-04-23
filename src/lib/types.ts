@@ -32,6 +32,7 @@ export interface CurrencyTotal {
 
 export interface DailyTotal {
   by_currency: Record<string, CurrencyTotal>;
+  cumulative_by_currency: Record<string, CurrencyTotal>;
   date: string;
 }
 

@@ -1,4 +1,4 @@
-import { Box, Container } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
 import type { Metadata } from 'next';
 
 import { DonationLiveFeed } from '@/components/DonationLiveFeed';
@@ -16,10 +16,8 @@ export default async function DonationsLivePage() {
   ]);
 
   return (
-    <Box py={{ base: 6, md: 20 }}>
-      <Container maxW="4xl" px={{ base: 3, md: 8 }}>
-        <DonationLiveFeed initialCampaignFact={initialCampaignFact} initialDonations={donations} />
-      </Container>
-    </Box>
+    <Container maxW="960px" px={0}>
+      <DonationLiveFeed initialCampaignFact={initialCampaignFact} initialDonations={donations} />
+    </Container>
   );
 }

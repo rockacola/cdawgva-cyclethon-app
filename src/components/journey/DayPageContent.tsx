@@ -1,16 +1,13 @@
 'use client';
 
-import { Box, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react';
-import { ArrowRight } from 'lucide-react';
+import { Box, Flex, Grid, Text } from '@chakra-ui/react';
 
+import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDayDonations } from '@/hooks/useDayDonations';
 import { useTranslations } from '@/hooks/useTranslations';
-import { flags } from '@/lib/flags';
-import type { JourneyDay } from '@/lib/journey';
-import type { DayEntry } from '@/lib/journey-data';
+import type { DayEntry, JourneyDay } from '@/lib/journey';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 
-import { DayClips } from './DayClips';
 import { DayDonationChart } from './DayDonationChart';
 import { DayDonationWar } from './DayDonationWar';
 import { DayGuests } from './DayGuests';
@@ -20,11 +17,27 @@ import { DaySource } from './DaySource';
 import { DayStatsGrid } from './DayStatsGrid';
 import { DayTopDonations } from './DayTopDonations';
 import { DayYouTubeEmbed } from './DayYouTubeEmbed';
-import { FundraiseCard } from './FundraiseCard';
 
 interface Props {
   content: DayEntry | undefined;
   day: JourneyDay;
+}
+
+function SectionLabel({ children }: { children: string }) {
+  return (
+    <Flex align="center" gap={3} mb={5}>
+      <Box bg="accent" flexShrink={0} h="1px" w={5} />
+      <Text
+        color="accent"
+        fontFamily="mono"
+        fontSize="xs"
+        letterSpacing="widest"
+        textTransform="uppercase"
+      >
+        {children}
+      </Text>
+    </Flex>
+  );
 }
 
 export function DayPageContent({ content, day }: Props) {
@@ -32,6 +45,7 @@ export function DayPageContent({ content, day }: Props) {
   const tNav = useTranslations('dayNav');
   const { resolvedLocale } = useLocaleContext();
   const dateLocale = resolvedLocale === 'JP' ? 'ja-JP' : 'en-US';
+  const currencyPrefix = useCurrencyPrefix();
 
   const dateStr = day.date.toISOString().slice(0, 10);
   const dayDonations = useDayDonations(dateStr);
@@ -51,162 +65,216 @@ export function DayPageContent({ content, day }: Props) {
     resolvedLocale === 'JP'
       ? (content?.destinationJa ?? content?.destination)
       : content?.destination;
-  const hasRoute = startPoint || destination;
+
+  const hasRoute = startPoint && destination;
+  const hasVideo = content?.youtubeUrl || content?.twitchUrl;
+  const hasTelemetry = content?.distanceKm !== undefined;
+  const sectionIndex = { map: 1, locations: 0, donations: 0 };
+  let counter = 1;
+  if (hasTelemetry) {
+    counter++;
+  }
+  if (content?.mapEmbedUrl) {
+    sectionIndex.map = counter++;
+  }
+  if (content?.mapLocations?.length) {
+    sectionIndex.locations = counter++;
+  }
+  sectionIndex.donations = counter;
 
   return (
-    <Stack gap={10}>
-      <Stack align="flex-start" direction={{ base: 'column', lg: 'row' }} gap={6}>
-        {/* Left: header + amounts */}
-        <Stack flex={1} gap={5} minW={0} width="100%">
-          {/* Header */}
+    <Box>
+      {/* ── Day header ────────────────────────────── */}
+      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 12 }}>
+        <Grid
+          alignItems="start"
+          gap={{ base: 8, md: 12 }}
+          templateColumns={{ base: '1fr', md: '1.3fr 1fr' }}
+        >
+          {/* Left: info */}
           <Box>
-            <Text color="fg.muted" fontSize="sm" mb={1}>
+            <Text
+              color="fg.subtle"
+              fontFamily="mono"
+              fontSize="xs"
+              letterSpacing="widest"
+              mb={3}
+              textTransform="uppercase"
+            >
               {dateLabel}
             </Text>
-            <Heading as="h1" mb={hasRoute ? 3 : 0} size={{ base: 'xl', md: '2xl' }}>
+
+            <Text
+              color="fg.subtle"
+              fontFamily="heading"
+              fontSize="xl"
+              fontStyle="italic"
+              letterSpacing="-0.01em"
+              mb={1}
+            >
               {dayLabel}
-            </Heading>
+            </Text>
+
             {hasRoute ? (
-              <Stack
-                alignItems="center"
-                direction="row"
-                flexWrap="wrap"
-                fontSize={{ base: 'xl', md: '2xl' }}
-                fontWeight="bold"
-                gap={2}
+              <Text
+                as="h1"
+                fontFamily="heading"
+                fontSize={{ base: '3xl', md: '5xl' }}
+                fontWeight={400}
+                letterSpacing="-0.03em"
+                lineHeight="0.9"
               >
-                <Text>{startPoint}</Text>
-                <ArrowRight size={20} />
-                <Text>{destination}</Text>
-              </Stack>
+                {startPoint}{' '}
+                <Box as="em" color="accent" fontStyle="italic">
+                  →
+                </Box>
+                <br />
+                {destination}
+              </Text>
+            ) : (
+              <Text
+                as="h1"
+                fontFamily="heading"
+                fontSize={{ base: '3xl', md: '5xl' }}
+                fontWeight={400}
+                letterSpacing="-0.03em"
+                lineHeight="0.9"
+              >
+                {dayLabel}
+              </Text>
+            )}
+
+            {/* Fundraise stats */}
+            {content?.amountRaised !== undefined && (
+              <Grid borderColor="border" borderWidth="1px" gridTemplateColumns="1fr 1fr" mt={7}>
+                <Box p={4}>
+                  <Text
+                    color="fg.subtle"
+                    fontFamily="mono"
+                    fontSize="xs"
+                    letterSpacing="widest"
+                    textTransform="uppercase"
+                  >
+                    {t('dayRaised')}
+                  </Text>
+                  <Text
+                    fontFamily="heading"
+                    fontSize="2xl"
+                    fontVariantNumeric="tabular-nums"
+                    letterSpacing="-0.02em"
+                    lineHeight={1}
+                    mt={1}
+                  >
+                    {currencyPrefix}
+                    {content.amountRaised.toLocaleString()}
+                  </Text>
+                </Box>
+                {content.totalAmountRaised !== undefined && (
+                  <Box bg="bg.subtle" borderColor="border" borderLeftWidth="1px" p={4}>
+                    <Text
+                      color="fg.subtle"
+                      fontFamily="mono"
+                      fontSize="xs"
+                      letterSpacing="widest"
+                      textTransform="uppercase"
+                    >
+                      {t('totalRaised')}
+                    </Text>
+                    <Text
+                      fontFamily="heading"
+                      fontSize="2xl"
+                      fontVariantNumeric="tabular-nums"
+                      letterSpacing="-0.02em"
+                      lineHeight={1}
+                      mt={1}
+                    >
+                      {currencyPrefix}
+                      {content.totalAmountRaised.toLocaleString()}
+                    </Text>
+                  </Box>
+                )}
+              </Grid>
+            )}
+
+            {/* Guest cyclists */}
+            {content?.guests?.length ? (
+              <Box mt={5}>
+                <Text
+                  color="fg.subtle"
+                  fontFamily="mono"
+                  fontSize="xs"
+                  letterSpacing="widest"
+                  mb={3}
+                  textTransform="uppercase"
+                >
+                  {t('guestCyclists')}
+                </Text>
+                <DayGuests guests={content.guests} />
+              </Box>
             ) : null}
           </Box>
 
-          {/* Amount raised */}
-          {content?.amountRaised !== undefined ? (
-            <SimpleGrid columns={2} gap={3}>
-              <FundraiseCard
-                amount={content.amountRaised}
-                currency={content.amountRaisedCurrency}
-                label={t('dayRaised')}
-              />
-              {content.totalAmountRaised !== undefined ? (
-                <FundraiseCard
-                  amount={content.totalAmountRaised}
-                  currency={content.amountRaisedCurrency}
-                  label={t('totalRaised')}
-                />
-              ) : null}
-            </SimpleGrid>
-          ) : null}
-
-          {/* Guest cyclists */}
-          {content?.guests?.length ? (
+          {/* Right: video */}
+          {hasVideo ? (
             <Box>
-              <Text
-                color="fg.muted"
-                fontSize="xs"
-                fontWeight="semibold"
-                letterSpacing="wide"
-                mb={3}
-                textTransform="uppercase"
-              >
-                {t('guestCyclists')}
-              </Text>
-              <DayGuests guests={content.guests} />
+              <DayYouTubeEmbed twitchUrl={content?.twitchUrl} youtubeUrl={content?.youtubeUrl} />
             </Box>
           ) : null}
-        </Stack>
+        </Grid>
+      </Box>
 
-        {/* Right: YouTube thumbnail */}
-        {content?.youtubeUrl || content?.twitchUrl ? (
-          <Box flexShrink={0} w={{ base: '100%', lg: '280px' }}>
-            <DayYouTubeEmbed twitchUrl={content.twitchUrl} youtubeUrl={content.youtubeUrl} />
-          </Box>
-        ) : null}
-      </Stack>
-
-      {/* Stats */}
-      {content?.distanceKm !== undefined ? (
-        <DayStatsGrid
-          avgTempCelsius={content.avgTempCelsius!}
-          caloriesBurnt={content.caloriesBurnt!}
-          distanceKm={content.distanceKm}
-          timeCycling={content.timeCycling!}
-          windSpeedMs={content.windSpeedMs}
-        />
+      {/* ── 01 / Ride telemetry ───────────────────── */}
+      {hasTelemetry ? (
+        <Box borderBottomWidth="1px" borderColor="border" py={8}>
+          <SectionLabel>01 / Ride telemetry</SectionLabel>
+          <DayStatsGrid
+            avgTempCelsius={content!.avgTempCelsius}
+            caloriesBurnt={content!.caloriesBurnt}
+            distanceKm={content!.distanceKm}
+            timeCycling={content!.timeCycling}
+            windSpeedMs={content!.windSpeedMs}
+          />
+        </Box>
       ) : null}
 
-      {/* Map */}
+      {/* ── 02 / Route map ────────────────────────── */}
       {content?.mapEmbedUrl ? (
-        <Box>
-          <Text
-            color="fg.muted"
-            fontSize="xs"
-            fontWeight="semibold"
-            letterSpacing="wide"
-            mb={3}
-            textTransform="uppercase"
-          >
-            {t('routeMap')}
-          </Text>
+        <Box borderBottomWidth="1px" borderColor="border" py={8}>
+          <SectionLabel>{`0${sectionIndex.map} / Route map`}</SectionLabel>
           <DayMapEmbed embedUrl={content.mapEmbedUrl} title={t('routeMap')} />
         </Box>
       ) : null}
 
-      {/* Locations */}
+      {/* ── 03 / Locations log ────────────────────── */}
       {content?.mapLocations?.length ? (
-        <Box>
-          <Text
-            color="fg.muted"
-            fontSize="xs"
-            fontWeight="semibold"
-            letterSpacing="wide"
-            mb={3}
-            textTransform="uppercase"
-          >
-            {t('locations')}
-          </Text>
+        <Box borderBottomWidth="1px" borderColor="border" py={8}>
+          <SectionLabel>{`0${sectionIndex.locations} / Locations log`}</SectionLabel>
           <DayMapLocations locations={content.mapLocations} />
         </Box>
       ) : null}
 
-      {/* Donation activity + top donations */}
-      {content?.distanceKm !== undefined ? (
-        <Box>
-          <Text
-            color="fg.muted"
-            fontSize="xs"
-            fontWeight="semibold"
-            letterSpacing="wide"
-            mb={3}
-            textTransform="uppercase"
-          >
-            {t('donationActivity')}
-          </Text>
-          <Box bg="bg.subtle" borderRadius="md" p={3}>
+      {/* ── 04 / Donations that day ───────────────── */}
+      {hasTelemetry ? (
+        <Box py={8}>
+          <SectionLabel>{`0${sectionIndex.donations} / Donations that day`}</SectionLabel>
+          <Box borderColor="border" borderWidth="1px" mb={5}>
             <DayDonationChart dateStr={dateStr} donations={dayDonations} />
           </Box>
-          <Box mt={4}>
-            <DayTopDonations dateStr={dateStr} donations={dayDonations} />
-          </Box>
-          {content?.donationWars?.length ? (
-            <Box mt={4}>
-              <DayDonationWar donations={dayDonations} wars={content.donationWars} />
+          <DayTopDonations dateStr={dateStr} donations={dayDonations} />
+          {content!.donationWars?.length ? (
+            <Box mt={6}>
+              <DayDonationWar donations={dayDonations} wars={content!.donationWars} />
             </Box>
           ) : null}
         </Box>
       ) : null}
 
-      {/* Highlights */}
-      {flags.showJourneyHighlightVods ? <DayClips clips={content?.twitchClips} /> : null}
-
-      {/* Source attribution */}
+      {/* ── Source ────────────────────────────────── */}
       <DaySource
         redditAuthor={content?.redditAuthor}
         redditLabel={content?.redditLabel}
         redditUrl={content?.redditUrl}
       />
-    </Stack>
+    </Box>
   );
 }

@@ -1,12 +1,9 @@
 'use client';
 
-import { SimpleGrid } from '@chakra-ui/react';
-import { Flame, Gauge, Route, Thermometer, Timer, Wind } from 'lucide-react';
+import { Box, Grid, Text } from '@chakra-ui/react';
 
-import { StatCard } from '@/components/journey/StatCard';
-import type { StatCardProps } from '@/components/journey/StatCard';
 import { useTranslations } from '@/hooks/useTranslations';
-import type { DayEntry } from '@/lib/journey-data';
+import type { DayEntry } from '@/lib/journey';
 import {
   KCAL_TO_KJ,
   KM_TO_MI,
@@ -21,6 +18,12 @@ type Props = Pick<
   'avgTempCelsius' | 'caloriesBurnt' | 'distanceKm' | 'timeCycling' | 'windSpeedMs'
 >;
 
+interface StatItem {
+  label: string;
+  sub?: string;
+  value: string;
+}
+
 export function DayStatsGrid({
   avgTempCelsius,
   caloriesBurnt,
@@ -29,43 +32,33 @@ export function DayStatsGrid({
   windSpeedMs,
 }: Props) {
   const t = useTranslations('dayPage');
-  const avgSpeedKmh = distanceKm! / (timeCycling! / 60);
-  const statItems: StatCardProps[] = [
+
+  const avgSpeedKmh =
+    distanceKm !== undefined && timeCycling ? distanceKm / (timeCycling / 60) : undefined;
+
+  const items: StatItem[] = [
     {
-      color: '#3b82f6',
-      conversion: `≈ ${(distanceKm! * KM_TO_MI).toFixed(1)} mi`,
-      icon: <Route size={16} />,
       label: t('distance'),
+      sub: `≈ ${(distanceKm! * KM_TO_MI).toFixed(1)} mi`,
       value: `${distanceKm} km`,
     },
     ...(timeCycling !== undefined
-      ? [
-          {
-            color: '#8b5cf6',
-            icon: <Timer size={16} />,
-            label: t('cyclingTime'),
-            value: formatMinutesToCyclingTime(timeCycling!),
-          },
-        ]
+      ? [{ label: t('cyclingTime'), value: formatMinutesToCyclingTime(timeCycling) }]
       : []),
     ...(avgSpeedKmh
       ? [
           {
-            color: '#f97316',
-            conversion: `≈ ${(avgSpeedKmh * KM_TO_MI).toFixed(2)} mph`,
-            icon: <Gauge size={16} />,
             label: t('averageSpeed'),
-            value: `${avgSpeedKmh.toFixed(2)} km/h`,
+            sub: `≈ ${(avgSpeedKmh * KM_TO_MI).toFixed(1)} mph`,
+            value: `${avgSpeedKmh.toFixed(1)} km/h`,
           },
         ]
       : []),
     ...(avgTempCelsius !== undefined
       ? [
           {
-            color: '#06b6d4',
-            conversion: `≈ ${celsiusToFahrenheit(avgTempCelsius!).toFixed(1)}°F`,
-            icon: <Thermometer size={16} />,
             label: t('averageTemp'),
+            sub: `≈ ${celsiusToFahrenheit(avgTempCelsius).toFixed(1)}°F`,
             value: `${avgTempCelsius}°C`,
           },
         ]
@@ -73,39 +66,59 @@ export function DayStatsGrid({
     ...(caloriesBurnt !== undefined
       ? [
           {
-            color: '#ef4444',
-            conversion: `≈ ${Math.round(caloriesBurnt! * KCAL_TO_KJ).toLocaleString()} kJ`,
-            icon: <Flame size={16} />,
             label: t('caloriesBurnt'),
-            value: `${caloriesBurnt!.toLocaleString()} kcal`,
+            sub: `≈ ${Math.round(caloriesBurnt * KCAL_TO_KJ).toLocaleString()} kJ`,
+            value: `${caloriesBurnt.toLocaleString()} kcal`,
           },
         ]
       : []),
     ...(windSpeedMs !== undefined
       ? [
           {
-            color: '#64748b',
-            conversion: `≈ ${(windSpeedMs * MS_TO_MPH).toFixed(1)} mph`,
-            icon: <Wind size={16} />,
             label: t('windSpeed'),
+            sub: `≈ ${(windSpeedMs * MS_TO_MPH).toFixed(1)} mph`,
             value: `${(windSpeedMs * MS_TO_KMH).toFixed(1)} km/h`,
-          } satisfies StatCardProps,
+          },
         ]
       : []),
   ];
 
   return (
-    <SimpleGrid columns={{ base: 2, md: 3 }} gap={4}>
-      {statItems.map((item) => (
-        <StatCard
-          color={item.color}
-          conversion={item.conversion}
-          icon={item.icon}
-          key={item.label}
-          label={item.label}
-          value={item.value}
-        />
+    <Grid
+      bg="border"
+      borderColor="border"
+      borderWidth="1px"
+      gap="1px"
+      gridTemplateColumns={{ base: '1fr 1fr', md: 'repeat(3, 1fr)' }}
+    >
+      {items.map((item) => (
+        <Box bg="bg" key={item.label} p={5}>
+          <Text
+            color="fg.subtle"
+            fontFamily="mono"
+            fontSize="xs"
+            letterSpacing="widest"
+            textTransform="uppercase"
+          >
+            {item.label}
+          </Text>
+          <Text
+            fontFamily="heading"
+            fontSize="2xl"
+            fontVariantNumeric="tabular-nums"
+            letterSpacing="-0.02em"
+            lineHeight={1}
+            mt={1}
+          >
+            {item.value}
+          </Text>
+          {item.sub ? (
+            <Text color="fg.subtle" fontFamily="mono" fontSize="xs" mt={1}>
+              {item.sub}
+            </Text>
+          ) : null}
+        </Box>
       ))}
-    </SimpleGrid>
+    </Grid>
   );
 }

@@ -11,13 +11,14 @@ import {
   Span,
   Stack,
 } from '@chakra-ui/react';
-import { Flag, Home, Menu, Settings, X } from 'lucide-react';
+import { Menu, Settings, X } from 'lucide-react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SettingsModal } from '@/components/SettingsModal';
 import { useTranslations } from '@/hooks/useTranslations';
+import { MAIN_DONATION_URL } from '@/lib/constants';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 
 const standaloneNavLinks = [
@@ -31,7 +32,6 @@ const donationNavLinks = [
   { href: '/donations/top', labelKey: 'top' },
 ] as const;
 
-// Flat list for mobile drawer
 const allNavLinks = [
   { href: '/', labelKey: 'home' },
   { href: '/donations/live', labelKey: 'liveDonations' },
@@ -39,7 +39,6 @@ const allNavLinks = [
   { href: '/donations/top', labelKey: 'topDonors' },
   { href: '/journey', labelKey: 'journey' },
   { href: '/about-cyclethon', labelKey: 'aboutCyclethon' },
-  { href: '/finish-line', labelKey: 'finishLine' },
 ] as const;
 
 export function Header() {
@@ -49,13 +48,18 @@ export function Header() {
   const t = useTranslations('header');
   const { resolvedLocale, setLocaleMode } = useLocaleContext();
 
-  useEffect(() => {
-    setDrawerOpen(false);
-  }, [pathname]);
+  useEffect(
+    function closeDrawerOnNav() {
+      setDrawerOpen(false);
+    },
+    [pathname]
+  );
+
+  const isDonationsActive = pathname.startsWith('/donations');
 
   return (
-    <Box as="header" borderBottomWidth="1px" px={4} py={3}>
-      <HStack maxW="6xl" mx="auto">
+    <Box as="header" borderBottomWidth="1px" px={{ base: 4, md: 8 }} py={3}>
+      <HStack maxW="7xl" mx="auto">
         {/* Mobile burger */}
         <IconButton
           aria-label="Open menu"
@@ -67,130 +71,112 @@ export function Header() {
           <Menu size={18} />
         </IconButton>
 
-        {/* Desktop nav */}
-        <HStack display={{ base: 'none', md: 'flex' }} gap={6}>
-          {/* Home */}
-          <Link
-            _hover={{ color: 'fg', textDecoration: 'none' }}
-            asChild
-            color={pathname === '/' ? 'fg' : 'fg.muted'}
-          >
-            <NextLink aria-label="Home" href="/">
-              <Home size={18} />
-            </NextLink>
-          </Link>
-
-          {/* Donations group */}
-          <HStack bg="bg.subtle" borderRadius="lg" borderWidth="1px" gap={0} px={1} py={1}>
-            <Span color="fg.muted" fontSize="sm" opacity={0.4} px={2}>
-              {t('donations')}
-            </Span>
-            <Box alignSelf="stretch" borderLeftWidth="1px" />
-            {donationNavLinks.map(({ href, labelKey }, i) => {
-              const isActive = pathname.startsWith(href);
-              return (
-                <Fragment key={href}>
-                  {i > 0 && (
-                    <Span color="fg.subtle" fontSize="xs" opacity={0.4} userSelect="none">
-                      |
-                    </Span>
-                  )}
-                  <Link
-                    _hover={{ color: 'fg', textDecoration: 'none' }}
-                    asChild
-                    borderRadius="md"
-                    color={isActive ? 'fg' : 'fg.muted'}
-                    px={2}
-                    py={0.5}
-                  >
-                    <NextLink href={href}>
-                      <Span fontSize="sm" fontWeight={isActive ? 600 : 400}>
-                        {t(labelKey)}
-                      </Span>
-                    </NextLink>
-                  </Link>
-                </Fragment>
-              );
-            })}
-          </HStack>
-
-          {/* Standalone links (e.g. Journey) */}
-          {standaloneNavLinks.map(({ href, labelKey }) => {
-            const isActive = pathname.startsWith(href);
-            return (
-              <Link
-                _hover={{ color: 'fg', textDecoration: 'none' }}
-                asChild
-                color={isActive ? 'fg' : 'fg.muted'}
+        {/* Wordmark */}
+        <HStack asChild gap={2.5} textDecoration="none">
+          <NextLink href="/">
+            <Box display={{ base: 'none', sm: 'block' }}>
+              <Span
+                color="fg"
                 fontSize="sm"
-                key={href}
+                fontWeight="semibold"
+                lineHeight={1.2}
+                textTransform="uppercase"
               >
-                <NextLink href={href}>
-                  <Span fontWeight={isActive ? 600 : 400}>{t(labelKey)}</Span>
-                </NextLink>
-              </Link>
-            );
-          })}
+                Cyclethon
+              </Span>{' '}
+              <Span
+                color="fg.subtle"
+                fontFamily="mono"
+                fontSize="sm"
+                letterSpacing="widest"
+                lineHeight={1.2}
+                textTransform="uppercase"
+              >
+                Tracker
+              </Span>
+            </Box>
+          </NextLink>
         </HStack>
 
-        <Spacer />
+        {/* Desktop nav */}
+        <HStack display={{ base: 'none', md: 'flex' }} flex={1} gap={0} justify="center">
+          <NavLink active={pathname === '/'} href="/">
+            {t('home')}
+          </NavLink>
 
-        <Link
-          _dark={{
-            bgColor: 'orange.500',
-            color: 'white',
-          }}
-          _hover={{
-            _dark: { bgColor: 'orange.400' },
-            bgColor: 'orange.600',
-            textDecoration: 'none',
-          }}
-          alignItems="center"
-          asChild
-          bgColor="orange.500"
-          borderRadius="md"
-          color="white"
-          display={{ base: 'none', md: 'inline-flex' }}
-          fontSize="sm"
-          fontWeight="semibold"
-          gap={1.5}
-          px={3}
-          py={2}
-          transition="background-color 0.15s"
-        >
-          <NextLink href="/finish-line">
-            <Flag size={14} />
-            {t('finishLine')}
-          </NextLink>
-        </Link>
+          {/* Donations group */}
+          <NavLink active={isDonationsActive} href="/donations/live">
+            {t('donations')}
+          </NavLink>
+          {isDonationsActive
+            ? donationNavLinks.map(({ href, labelKey }) => (
+                <NavLink active={pathname.startsWith(href)} href={href} key={href} sub>
+                  {t(labelKey)}
+                </NavLink>
+              ))
+            : null}
 
-        <IconButton
-          _dark={{
-            bgColor: resolvedLocale === 'EN' ? 'blue.900/40' : 'red.900/40',
-            borderColor: resolvedLocale === 'EN' ? 'blue.400/30' : 'red.400/30',
-            color: resolvedLocale === 'EN' ? 'blue.300' : 'red.300',
-          }}
-          aria-label="Switch language"
-          bgColor={resolvedLocale === 'EN' ? 'blue.50' : 'red.50'}
-          borderColor={resolvedLocale === 'EN' ? 'blue.500/30' : 'red.500/30'}
-          color={resolvedLocale === 'EN' ? 'blue.600' : 'red.600'}
-          onClick={() => setLocaleMode(resolvedLocale === 'EN' ? 'JP' : 'EN')}
-          size="md"
-          variant="outline"
-        >
-          <Span fontSize="sm" fontWeight="semibold">
-            {resolvedLocale === 'EN' ? '日' : 'EN'}
-          </Span>
-        </IconButton>
+          {standaloneNavLinks.map(({ href, labelKey }) => (
+            <NavLink active={pathname.startsWith(href)} href={href} key={href}>
+              {t(labelKey)}
+            </NavLink>
+          ))}
+        </HStack>
 
-        <IconButton
-          aria-label="Open settings"
-          onClick={() => setSettingsOpen(true)}
-          size="md"
-          variant="outline"
-        >
-          <Settings size={20} />
-        </IconButton>
+        <Spacer display={{ base: 'flex', md: 'none' }} />
+
+        {/* Right controls */}
+        <HStack gap={2}>
+          {/* Locale */}
+          <Box
+            _hover={{ color: 'fg' }}
+            as="button"
+            borderRadius="sm"
+            color="fg.subtle"
+            cursor="pointer"
+            display={{ base: 'none', md: 'block' }}
+            fontFamily="mono"
+            fontSize="sm"
+            fontWeight="semibold"
+            letterSpacing="widest"
+            onClick={() => setLocaleMode(resolvedLocale === 'EN' ? 'JP' : 'EN')}
+            px={1.5}
+            py={1}
+            textTransform="uppercase"
+          >
+            {resolvedLocale === 'EN' ? '日本語' : 'EN'}
+          </Box>
+
+          <IconButton
+            aria-label="Open settings"
+            onClick={() => setSettingsOpen(true)}
+            size="sm"
+            variant="ghost"
+          >
+            <Settings size={16} />
+          </IconButton>
+
+          {/* Donate CTA */}
+          <Link
+            _hover={{ bg: 'accent', textDecoration: 'none' }}
+            bg="fg"
+            borderRadius="2px"
+            color="bg"
+            display={{ base: 'none', md: 'inline-flex' }}
+            fontSize="xs"
+            fontWeight="semibold"
+            href={MAIN_DONATION_URL}
+            letterSpacing="wide"
+            px={3}
+            py={1.5}
+            rel="noopener noreferrer"
+            target="_blank"
+            textTransform="uppercase"
+            transition="background 0.15s"
+          >
+            {t('donateNow')}
+          </Link>
+        </HStack>
 
         <SettingsModal onClose={() => setSettingsOpen(false)} open={settingsOpen} />
 
@@ -225,7 +211,7 @@ export function Header() {
                           _hover={{ bg: 'bg.subtle', textDecoration: 'none' }}
                           asChild
                           bgColor={isActive ? 'bg.subtle' : undefined}
-                          borderRadius="md"
+                          borderRadius="sm"
                           display="block"
                           fontWeight={isActive ? 'semibold' : 'normal'}
                           key={href}
@@ -236,6 +222,26 @@ export function Header() {
                         </Link>
                       );
                     })}
+                    <Link
+                      _hover={{ bg: 'accent', textDecoration: 'none' }}
+                      bg="fg"
+                      borderRadius="2px"
+                      color="bg"
+                      display="block"
+                      fontSize="xs"
+                      fontWeight="semibold"
+                      href={MAIN_DONATION_URL}
+                      letterSpacing="wide"
+                      mt={2}
+                      px={3}
+                      py={2}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      textTransform="uppercase"
+                      transition="background 0.15s"
+                    >
+                      {t('donateNow')}
+                    </Link>
                   </Stack>
                 </Drawer.Body>
               </Drawer.Content>
@@ -244,5 +250,39 @@ export function Header() {
         </Drawer.Root>
       </HStack>
     </Box>
+  );
+}
+
+function NavLink({
+  active,
+  children,
+  href,
+  sub = false,
+}: {
+  active: boolean;
+  children: React.ReactNode;
+  href: string;
+  sub?: boolean;
+}) {
+  return (
+    <Link
+      _hover={{ color: 'fg', textDecoration: 'none', borderBottomColor: 'accent' }}
+      asChild
+      borderBottomColor={active ? 'accent' : 'transparent'}
+      borderBottomWidth="1.5px"
+      color={active ? 'fg' : 'fg.muted'}
+      fontSize={sub ? '11px' : 'sm'}
+      fontWeight={active ? 600 : 400}
+      letterSpacing={sub ? 'wide' : 'normal'}
+      pb={0.5}
+      px={sub ? 2 : 3}
+      py={1}
+      textTransform={sub ? 'uppercase' : 'none'}
+      transition="all 0.12s"
+    >
+      <NextLink href={href}>
+        <Span>{children}</Span>
+      </NextLink>
+    </Link>
   );
 }

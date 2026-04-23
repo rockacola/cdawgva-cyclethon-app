@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 
 import { JourneyPageContent } from '@/components/journey/JourneyPageContent';
-import { getCampaignFact } from '@/lib/getCampaignFact';
-import { getStats } from '@/lib/getStats';
-import type { GuestCyclist } from '@/lib/journey-data';
+import type { GuestCyclist } from '@/lib/journey';
+import { getCompletedDays, getTotalDistanceKm } from '@/lib/journey';
 import { journeyData } from '@/lib/journey-data';
 
 export const metadata: Metadata = {
@@ -11,10 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default async function JourneyPage() {
-  const [stats, initialCampaignFact] = await Promise.all([getStats(), getCampaignFact()]);
-
-  const completedDays = journeyData.filter((d) => d.distanceKm !== undefined);
-  const totalDistanceKm = completedDays.reduce((sum, d) => sum + (d.distanceKm ?? 0), 0);
+  const completedDays = getCompletedDays();
+  const totalDistanceKm = getTotalDistanceKm();
   const totalCaloriesBurnt = completedDays.reduce((sum, d) => sum + (d.caloriesBurnt ?? 0), 0);
   const totalTimeCycling = completedDays.reduce((sum, d) => sum + (d.timeCycling ?? 0), 0);
 
@@ -31,11 +28,9 @@ export default async function JourneyPage() {
   return (
     <JourneyPageContent
       guests={guests}
-      initialCampaignFact={initialCampaignFact}
       totalCaloriesBurnt={totalCaloriesBurnt}
       totalDistanceKm={totalDistanceKm}
       totalTimeCycling={totalTimeCycling}
-      utcOffset={stats._meta.utc_offset}
     />
   );
 }

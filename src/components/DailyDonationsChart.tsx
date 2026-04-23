@@ -1,7 +1,16 @@
 'use client';
 
-import { Center, Spinner, useBreakpointValue } from '@chakra-ui/react';
-import { Bar, ComposedChart, Line, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
+import { Box, Center, Spinner, useBreakpointValue } from '@chakra-ui/react';
+import {
+  Bar,
+  CartesianGrid,
+  ComposedChart,
+  Line,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import type { NameType, Payload, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import type { TooltipProps } from 'recharts/types/component/Tooltip';
 
@@ -123,17 +132,20 @@ function ChartTooltip({
 export function DailyDonationsChart() {
   const { dailyTotals, isLoading } = useDailyTotals();
   const barSize = useBreakpointValue({ base: 12, md: 18 });
-  const barColor = useColorModeValue('#a5b4fc', '#a5b4fc'); // indigo.300
-  const barColorActive = useColorModeValue('#818cf8', '#818cf8'); // indigo.400
-  const lineColor = useColorModeValue('#f97316', '#fb923c'); // orange.500 / orange.400
-  const tooltipBg = useColorModeValue('#ffffff', '#1f2937');
-  const tooltipBorder = useColorModeValue('#e5e7eb', '#374151');
-  const tooltipText = useColorModeValue('#111827', '#f9fafb');
+  const barColor = useColorModeValue('#e8b49c', '#c47840');
+  const barColorActive = useColorModeValue('#d94a1f', '#e8633a');
+  const lineColor = useColorModeValue('#d94a1f', '#e8633a');
+  const tooltipBg = useColorModeValue('#f6f1e7', '#2a1f1a');
+  const tooltipBorder = useColorModeValue('#dcd3bf', '#4a3830');
+  const tooltipText = useColorModeValue('#1a1614', '#f0e8d8');
+  const chartBg = useColorModeValue('#f6f1e7', '#1e1510');
+  const gridColor = useColorModeValue('rgba(0,0,0,0.07)', 'rgba(255,255,255,0.07)');
+  const tickColor = useColorModeValue('#9a8f83', '#6e5f52');
 
   if (isLoading) {
     return (
       <Center height={240} width="100%">
-        <Spinner color="blue.300" />
+        <Spinner color="fg.subtle" />
       </Center>
     );
   }
@@ -147,43 +159,63 @@ export function DailyDonationsChart() {
   const lineCumulativeMinCeiling = 1_000_000;
 
   return (
-    <ResponsiveContainer height={240} width="100%">
-      <ComposedChart data={data} margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
-        <YAxis domain={[0, barAxisMax]} hide yAxisId="bars" />
-        <YAxis
-          domain={[0, (max: number) => Math.max(max, lineCumulativeMinCeiling)]}
-          hide
-          orientation="right"
-          yAxisId="line"
-        />
-        <Tooltip
-          content={(props) => (
-            <ChartTooltip
-              {...props}
-              bg={tooltipBg}
-              borderColor={tooltipBorder}
-              textColor={tooltipText}
-            />
-          )}
-          cursor={{ fill: 'transparent' }}
-        />
-        <Line
-          dataKey="cumulative"
-          dot={false}
-          stroke={lineColor}
-          strokeWidth={2}
-          type="monotone"
-          yAxisId="line"
-        />
-        <Bar
-          activeBar={{ fill: barColorActive }}
-          barSize={barSize}
-          dataKey="dollars"
-          fill={barColor}
-          radius={[2, 2, 0, 0]}
-          yAxisId="bars"
-        />
-      </ComposedChart>
-    </ResponsiveContainer>
+    <Box bg={chartBg} borderRadius="sm" px={2} py={3}>
+      <ResponsiveContainer height={240} width="100%">
+        <ComposedChart data={data} margin={{ bottom: 0, left: 0, right: 0, top: 8 }}>
+          <CartesianGrid stroke={gridColor} strokeDasharray="2 4" vertical={false} />
+          <YAxis domain={[0, barAxisMax]} hide yAxisId="bars" />
+          <YAxis
+            domain={[0, (max: number) => Math.max(max, lineCumulativeMinCeiling)]}
+            hide
+            orientation="right"
+            yAxisId="line"
+          />
+          <XAxis
+            axisLine={false}
+            dataKey="day"
+            tick={{ fill: tickColor, fontSize: 10 }}
+            tickFormatter={(val: string) => {
+              if (val === 'Pre' || val === 'Post') {
+                return val;
+              }
+              const match = val.match(/^Day (\d+)$/);
+              if (!match) {
+                return '';
+              }
+              const n = parseInt(match[1]);
+              return n % 2 === 1 ? String(n) : '';
+            }}
+            tickLine={false}
+          />
+          <Tooltip
+            content={(props) => (
+              <ChartTooltip
+                {...props}
+                bg={tooltipBg}
+                borderColor={tooltipBorder}
+                textColor={tooltipText}
+              />
+            )}
+            cursor={{ fill: 'transparent' }}
+          />
+          <Line
+            dataKey="cumulative"
+            dot={false}
+            stroke={lineColor}
+            strokeWidth={2}
+            type="monotone"
+            yAxisId="line"
+          />
+          <Bar
+            activeBar={{ fill: barColorActive }}
+            barSize={barSize}
+            dataKey="dollars"
+            fill={barColor}
+            radius={[2, 2, 0, 0]}
+            yAxisId="bars"
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
+    </Box>
   );
 }

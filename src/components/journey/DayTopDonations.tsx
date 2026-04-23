@@ -1,7 +1,6 @@
 'use client';
 
-import { Box, Span, Table, Text } from '@chakra-ui/react';
-import { Crown } from 'lucide-react';
+import { Box, Grid, Text } from '@chakra-ui/react';
 import { useMemo } from 'react';
 
 import { DonorName } from '@/components/DonorName';
@@ -15,6 +14,8 @@ interface Props {
   dateStr: string;
   donations: Donation[];
 }
+
+const COL = '160px 1fr 90px';
 
 export function DayTopDonations({ dateStr, donations }: Props) {
   const currencyPrefix = useCurrencyPrefix();
@@ -33,52 +34,66 @@ export function DayTopDonations({ dateStr, donations }: Props) {
   }
 
   return (
-    <Table.Root size="sm" variant="outline">
-      <Table.Header>
-        <Table.Row>
-          <Table.ColumnHeader textAlign="center" w={10} />
-          <Table.ColumnHeader>{t('donor')}</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="right">{t('amount')}</Table.ColumnHeader>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {topDonations.map((d, i) => {
-          return (
-            <Table.Row _hover={{ bg: 'bg.muted' }} key={d.id}>
-              <Table.Cell>
-                <Box display="flex" justifyContent="center">
-                  {i === 0 ? (
-                    <Crown color="#eab308" size={14} />
-                  ) : (
-                    <Text color="fg.subtle">{i + 1}</Text>
-                  )}
-                </Box>
-              </Table.Cell>
-              <Table.Cell>
-                <Span>
-                  <DonorName name={d.donor_name} />
-                </Span>
-                {d.donor_comment ? (
-                  <Text color="fg.subtle" fontSize="xs" mt={0.5}>
-                    {d.donor_comment}
-                  </Text>
-                ) : null}
-              </Table.Cell>
-              <Table.Cell textAlign="right" whiteSpace="nowrap">
-                {(() => {
-                  const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
-                  return (
-                    <>
-                      {whole}
-                      <Span color="fg.subtle">{cents}</Span>
-                    </>
-                  );
-                })()}
-              </Table.Cell>
-            </Table.Row>
-          );
-        })}
-      </Table.Body>
-    </Table.Root>
+    <Box borderColor="border" borderWidth="1px" overflow="hidden">
+      {/* Column headers */}
+      <Grid
+        bg="bg.subtle"
+        borderBottomWidth="1px"
+        borderColor="border"
+        gap={6}
+        gridTemplateColumns={COL}
+        px={5}
+        py={3}
+      >
+        {[t('donor'), t('total'), t('amount')].map((col, i) => (
+          <Text
+            color="fg.subtle"
+            fontFamily="mono"
+            fontSize="xs"
+            key={col}
+            letterSpacing="widest"
+            textAlign={i === 2 ? 'right' : 'left'}
+            textTransform="uppercase"
+          >
+            {col}
+          </Text>
+        ))}
+      </Grid>
+
+      {topDonations.map((d, i) => {
+        const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
+        return (
+          <Grid
+            alignItems="baseline"
+            borderBottomWidth={i < topDonations.length - 1 ? '1px' : undefined}
+            borderColor="border"
+            gap={6}
+            gridTemplateColumns={COL}
+            key={d.id}
+            px={5}
+            py={3.5}
+          >
+            <Text fontSize="sm" fontWeight={500}>
+              <DonorName name={d.donor_name} />
+            </Text>
+            {d.donor_comment ? (
+              <Text color="fg.muted" fontSize="sm" fontStyle="italic" lineHeight={1.4}>
+                {d.donor_comment}
+              </Text>
+            ) : (
+              <Text color="fg.subtle" fontFamily="mono" fontSize="xs" fontStyle="italic">
+                —
+              </Text>
+            )}
+            <Text color="accent" fontFamily="mono" fontSize="sm" textAlign="right">
+              {whole}
+              <Text as="span" color="fg.subtle" fontSize="xs">
+                {cents}
+              </Text>
+            </Text>
+          </Grid>
+        );
+      })}
+    </Box>
   );
 }

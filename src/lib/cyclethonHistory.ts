@@ -113,7 +113,7 @@ export const cyclethonHistory: CyclethonSeries[] = [
 
 export function buildChartRows() {
   return Array.from({ length: DAY_COUNT }, (_, i) => {
-    const row: Record<string, number | null | string> = { day: `Day ${i + 1}` };
+    const row: Record<string, number | null | string> = { day: i + 1 };
     for (const series of cyclethonHistory) {
       row[series.label] = series.dailyTotals[i] ?? null;
     }

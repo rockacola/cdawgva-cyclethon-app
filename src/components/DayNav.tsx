@@ -20,7 +20,13 @@ export function DayNav({ availableDaySlugs, days }: Props) {
   const dateLocale = resolvedLocale === 'JP' ? 'ja-JP' : 'en-US';
 
   return (
-    <Box as="nav" overflowX={{ base: 'auto', md: 'visible' }} w={{ base: 'full', md: '44' }}>
+    <Box
+      as="nav"
+      overflowX={{ base: 'auto', md: 'visible' }}
+      position={{ md: 'sticky' }}
+      top={{ md: 4 }}
+      w={{ base: 'full', md: '44' }}
+    >
       {/* Mobile: horizontal scroll */}
       <Stack direction={{ base: 'row', md: 'column' }} gap={1} pb={{ base: 2, md: 0 }}>
         {days.map(({ date, day, slug }) => {

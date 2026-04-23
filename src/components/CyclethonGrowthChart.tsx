@@ -8,6 +8,7 @@ import type { TooltipProps } from 'recharts/types/component/Tooltip';
 
 import { useColorModeValue } from '@/components/ui/color-mode';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
+import { useTranslations } from '@/hooks/useTranslations';
 import { buildChartRows, cyclethonHistory } from '@/lib/cyclethonHistory';
 
 const data = buildChartRows();
@@ -137,6 +138,7 @@ export function CyclethonGrowthChart() {
   const tooltipBorder = useColorModeValue('#e5e7eb', '#374151');
   const tooltipText = useColorModeValue('#111827', '#f9fafb');
   const axisColor = useColorModeValue('#9ca3af', '#6b7280');
+  const tNav = useTranslations('dayNav');
   const currencyPrefix = useCurrencyPrefix();
   const showDayLabel = useBreakpointValue({ base: false, md: true });
   const [hidden, setHidden] = useState<Set<string>>(new Set());
@@ -166,7 +168,7 @@ export function CyclethonGrowthChart() {
               x,
               y,
             }: {
-              payload: { value: string };
+              payload: { value: number };
               x: string | number;
               y: string | number;
             }) => (
@@ -177,7 +179,7 @@ export function CyclethonGrowthChart() {
                 x={Number(x)}
                 y={Number(y) + 12}
               >
-                {showDayLabel ? payload.value : payload.value.replace('Day ', '')}
+                {showDayLabel ? tNav('dayLabel', { day: payload.value }) : String(payload.value)}
               </text>
             )}
             tickLine={false}
@@ -205,7 +207,7 @@ export function CyclethonGrowthChart() {
               </text>
             )}
             tickLine={false}
-            width={60}
+            width={72}
           />
           <Tooltip
             content={(props) => (

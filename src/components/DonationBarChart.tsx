@@ -35,11 +35,11 @@ interface Props {
 export function DonationBarChart({ buckets, height = 90 }: Props) {
   const { timezoneMode } = useTimezoneContext();
 
-  const barColor = useColorModeValue('#a5b4fc', '#a5b4fc'); // indigo.300
-  const barColorActive = useColorModeValue('#818cf8', '#818cf8'); // indigo.400
-  const tooltipBg = useColorModeValue('#ffffff', '#1f2937');
-  const tooltipBorder = useColorModeValue('#e5e7eb', '#374151');
-  const tooltipText = useColorModeValue('#111827', '#f9fafb');
+  const barColor = useColorModeValue('#e8b49c', '#c47840');
+  const barColorActive = useColorModeValue('#d94a1f', '#e8633a');
+  const tooltipBg = useColorModeValue('#f6f1e7', '#2a1f1a');
+  const tooltipBorder = useColorModeValue('#dcd3bf', '#4a3830');
+  const tooltipText = useColorModeValue('#1a1614', '#f0e8d8');
 
   const logScale = (v: number) => Math.pow(v, SCALE_EXPONENT);
   const scaledBuckets = buckets.map((b) => ({ ...b, scaledAmount: logScale(b.amountCent) }));

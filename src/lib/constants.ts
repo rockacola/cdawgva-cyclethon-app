@@ -49,9 +49,17 @@ export const TIMEZONE_TRANSLATION_KEYS: Record<TimezoneMode, string> = {
   UTC: 'timezoneUTC',
 };
 
+// External links
+export const MAIN_DONATION_URL = 'https://tiltify.com/@cdawgva/cyclethon-5';
+
 // Top donors leaderboard display limits
 export const TOP_DONORS_CARDS = 3;
 export const TOP_DONORS_TABLE_END = 20;
+
+// Donation search
+export const SEARCH_PAGE_SIZES = [10, 30, 60, 100] as const;
+export const SEARCH_PAGE_SIZE_DEFAULT = 30;
+export const LARGE_DONATION_CENT = 50_000; // $500
 
 // Activity chart bar counts per breakpoint
 export const ACTIVITY_CHART_BARS_MOBILE = 30;
