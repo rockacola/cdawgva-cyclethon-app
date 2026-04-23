@@ -121,7 +121,6 @@ export function SettingsModal({ onClose, open }: Props) {
               />
               <SettingRow
                 label={t('timezone')}
-                last={!showLanguage}
                 options={TIMEZONE_MODES.map((mode) => ({
                   active: mode === timezoneMode,
                   label: t(TIMEZONE_TRANSLATION_KEYS[mode]),

@@ -66,12 +66,6 @@ export const journeyData: DayEntry[] = [
     startPoint: 'Cape Oma',
     startPointJa: '大間崎',
     timeCycling: 418,
-    twitchClips: [
-      { id: 'clip-placeholder-1' },
-      { id: 'clip-placeholder-2' },
-      { id: 'clip-placeholder-3' },
-      { id: 'clip-placeholder-4' },
-    ],
     twitchUrl: 'https://www.twitch.tv/videos/2740154602',
     youtubeUrl: 'https://www.youtube.com/watch?v=MbzOfE_6dqM',
   },

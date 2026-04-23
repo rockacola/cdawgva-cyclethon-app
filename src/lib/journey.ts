@@ -79,7 +79,6 @@ export interface DayEntry {
   guests?: GuestCyclist[];
   landmarks?: string[];
   mapLocations?: MapLocation[];
-  twitchClips?: TwitchClip[];
 }
 
 export function getCompletedDays(): (DayEntry & { distanceKm: number })[] {
