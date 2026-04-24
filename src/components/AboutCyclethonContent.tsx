@@ -4,21 +4,13 @@ import { Box, Flex, Grid, Text } from '@chakra-ui/react';
 
 import { CyclethonGrowthChart } from '@/components/CyclethonGrowthChart';
 import { DonateLinkButton } from '@/components/DonateLinkButton';
+import type { Edition } from '@/components/EditionsByRaiseChart';
+import { EditionsByRaiseChart } from '@/components/EditionsByRaiseChart';
 import { PageHeader } from '@/components/PageHeader';
 import { SectionLabel } from '@/components/SectionLabel';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
 import { cyclethonHistory } from '@/lib/cyclethonHistory';
-import { useLocaleContext } from '@/providers/LocaleProvider';
-
-interface Edition {
-  days: number;
-  edition: string;
-  raised: number;
-  route: string;
-  routeJa: string;
-  year: number;
-}
 
 const EDITION_META = [
   { distanceKm: 750, edition: '1', route: 'Wakkanai → Hakodate', routeJa: '稚内 → 函館' },
@@ -55,8 +47,6 @@ function fmtShort(n: number, currencyPrefix: string): string {
 export function AboutCyclethonContent() {
   const t = useTranslations('aboutCyclethon');
   const currencyPrefix = useCurrencyPrefix();
-  const { resolvedLocale } = useLocaleContext();
-  const max = Math.max(...EDITIONS.map((e) => e.raised));
 
   return (
     <>
@@ -142,76 +132,7 @@ export function AboutCyclethonContent() {
       {/* ── Editions · by raise ───────────────────── */}
       <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 10 }}>
         <SectionLabel>{t('sectionEditions')}</SectionLabel>
-
-        {/* Bar chart area — labels are separate so they don't distort bar heights */}
-        <Grid
-          alignItems="end"
-          gap={5}
-          gridTemplateColumns={`repeat(${EDITIONS.length}, 1fr)`}
-          h={{ base: '180px', md: '240px' }}
-          pt={5}
-        >
-          {EDITIONS.map((e, i) => {
-            const isLatest = i === EDITIONS.length - 1;
-            const pct = e.raised / max;
-            return (
-              <Flex direction="column" h="100%" justify="flex-end" key={e.edition}>
-                <Text
-                  fontFamily="heading"
-                  fontSize={{ base: 'xs', md: 'md' }}
-                  fontVariantNumeric="tabular-nums"
-                  letterSpacing="-0.02em"
-                  mb={2}
-                >
-                  {fmtShort(e.raised, currencyPrefix)}
-                </Text>
-                <Box
-                  bg={isLatest ? 'accent' : 'fg'}
-                  borderTopColor="accent"
-                  borderTopWidth={isLatest ? '3px' : '0'}
-                  minH="4px"
-                  opacity={isLatest ? 1 : 0.15}
-                  style={{ height: `${pct * 100}%` }}
-                />
-              </Flex>
-            );
-          })}
-        </Grid>
-
-        {/* Label area */}
-        <Grid gap={5} gridTemplateColumns={`repeat(${EDITIONS.length}, 1fr)`} mt={4}>
-          {EDITIONS.map((e, i) => {
-            const isLatest = i === EDITIONS.length - 1;
-            return (
-              <Box key={e.edition}>
-                <Text
-                  color={isLatest ? 'accent' : 'fg'}
-                  fontFamily="heading"
-                  fontSize={{ base: 'sm', md: 'lg' }}
-                  fontStyle="italic"
-                >
-                  Cyclethon {e.edition}
-                </Text>
-                <Text
-                  color="fg.subtle"
-                  fontFamily="mono"
-                  fontSize="xs"
-                  letterSpacing="wide"
-                  mt={0.5}
-                  textTransform="uppercase"
-                >
-                  {e.year}
-                </Text>
-                <Text color="fg.muted" fontSize="xs" lineHeight={1.4} mt={1.5}>
-                  {resolvedLocale === 'JA' ? e.routeJa : e.route}
-                </Text>
-                <Text color="fg.subtle" fontFamily="mono" fontSize="xs" mt={1}>
-                  {t('editionDays', { count: e.days })}
-                </Text>
-              </Box>
-            );
-          })}
-        </Grid>
+        <EditionsByRaiseChart currencyPrefix={currencyPrefix} editions={EDITIONS} />
       </Box>
 
       {/* ── Growth chart ─────────────────────────── */}
