@@ -1,5 +1,6 @@
 'use client';
 
+import type { BoxProps } from '@chakra-ui/react';
 import { Box, Flex, Grid, Link, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
@@ -26,15 +27,21 @@ interface Props {
 }
 
 interface StatCellProps {
-  borderLeft?: boolean;
+  borderLeftWidth?: BoxProps['borderLeftWidth'];
+  borderRightWidth?: BoxProps['borderRightWidth'];
   label: string;
   sub?: string;
   value: string;
 }
 
-function StatCell({ borderLeft, label, sub, value }: StatCellProps) {
+function StatCell({ borderLeftWidth, borderRightWidth, label, sub, value }: StatCellProps) {
   return (
-    <Box borderColor="border" borderLeftWidth={borderLeft ? '1px' : undefined} p={5}>
+    <Box
+      borderColor="border"
+      borderLeftWidth={borderLeftWidth}
+      borderRightWidth={borderRightWidth}
+      p={5}
+    >
       <Text
         color="fg.subtle"
         fontFamily="mono"
@@ -152,12 +159,13 @@ export function JourneyPageContent({
             value={`${totalDistanceKm.toFixed(0)} km`}
           />
           <StatCell
-            borderLeft
+            borderLeftWidth="1px"
             label={t('totalCyclingTime')}
             value={formatMinutesToCyclingTime(totalTimeCycling)}
           />
           <StatCell
-            borderLeft
+            borderLeftWidth={{ base: 0, md: '1px' }}
+            borderRightWidth={{ base: '1px', md: 0 }}
             label={t('totalCaloriesBurnt')}
             sub={`≈ ${kJ} kJ`}
             value={`${totalCaloriesBurnt.toLocaleString()} kcal`}
