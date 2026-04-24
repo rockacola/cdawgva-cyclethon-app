@@ -64,7 +64,7 @@ function ChartTooltip({
       }}
     >
       <div style={{ fontWeight: 600, marginBottom: 4 }}>
-        {label != null ? tNav('dayLabel', { day: label }) : null}
+        {label ? tNav('dayLabel', { day: label }) : null}
       </div>
       {entries.map((p) => (
         <div
