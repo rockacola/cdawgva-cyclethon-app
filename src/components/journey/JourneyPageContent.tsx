@@ -2,6 +2,7 @@
 
 import type { BoxProps } from '@chakra-ui/react';
 import { Box, Flex, Grid, Link, Text } from '@chakra-ui/react';
+import { Flag } from 'lucide-react';
 import NextLink from 'next/link';
 
 import { DailyDonationsChart } from '@/components/DailyDonationsChart';
@@ -127,6 +128,7 @@ export function JourneyPageContent({
 
         <Link
           _hover={{ bg: 'accent', textDecoration: 'none' }}
+          alignItems="center"
           asChild
           bg="fg"
           borderRadius="2px"
@@ -134,6 +136,7 @@ export function JourneyPageContent({
           display="inline-flex"
           fontSize="xs"
           fontWeight="semibold"
+          gap={1.5}
           letterSpacing="wide"
           mt={6}
           px={3}
@@ -141,7 +144,10 @@ export function JourneyPageContent({
           textTransform="uppercase"
           transition="background 0.15s"
         >
-          <NextLink href="/finish-line">{tHeader('finishLine')}</NextLink>
+          <NextLink href="/finish-line">
+            <Flag size={12} />
+            {tHeader('finishLine')}
+          </NextLink>
         </Link>
       </PageHeader>
 
