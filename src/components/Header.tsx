@@ -16,9 +16,9 @@ import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { DonateLinkButton } from '@/components/DonateLinkButton';
 import { SettingsModal } from '@/components/SettingsModal';
 import { useTranslations } from '@/hooks/useTranslations';
-import { MAIN_DONATION_URL } from '@/lib/constants';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 
 const standaloneNavLinks = [
@@ -156,25 +156,7 @@ export function Header() {
           </IconButton>
 
           {/* Donate CTA */}
-          <Link
-            _hover={{ bg: 'accent', textDecoration: 'none' }}
-            bg="fg"
-            borderRadius="2px"
-            color="bg"
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize="xs"
-            fontWeight="semibold"
-            href={MAIN_DONATION_URL}
-            letterSpacing="wide"
-            px={3}
-            py={1.5}
-            rel="noopener noreferrer"
-            target="_blank"
-            textTransform="uppercase"
-            transition="background 0.15s"
-          >
-            {t('donateNow')}
-          </Link>
+          <DonateLinkButton display={{ base: 'none', md: 'inline-block' }} />
         </HStack>
 
         <SettingsModal onClose={() => setSettingsOpen(false)} open={settingsOpen} />
@@ -221,26 +203,7 @@ export function Header() {
                         </Link>
                       );
                     })}
-                    <Link
-                      _hover={{ bg: 'accent', textDecoration: 'none' }}
-                      bg="fg"
-                      borderRadius="2px"
-                      color="bg"
-                      display="block"
-                      fontSize="xs"
-                      fontWeight="semibold"
-                      href={MAIN_DONATION_URL}
-                      letterSpacing="wide"
-                      mt={2}
-                      px={3}
-                      py={2}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      textTransform="uppercase"
-                      transition="background 0.15s"
-                    >
-                      {t('donateNow')}
-                    </Link>
+                    <DonateLinkButton display="block" mt={2} />
                   </Stack>
                 </Drawer.Body>
               </Drawer.Content>

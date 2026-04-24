@@ -1,8 +1,9 @@
 'use client';
 
-import { Box, Flex, Grid, Link, Text } from '@chakra-ui/react';
+import { Box, Flex, Grid, Text } from '@chakra-ui/react';
 
 import { CyclethonGrowthChart } from '@/components/CyclethonGrowthChart';
+import { DonateLinkButton } from '@/components/DonateLinkButton';
 import { SectionLabel } from '@/components/SectionLabel';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
@@ -248,23 +249,7 @@ export function AboutCyclethonContent() {
           <Box color="fg.muted" fontSize="sm" lineHeight={1.7}>
             <Text>{t('charityBody1')}</Text>
             <Text mt={4}>{t('charityBody2')}</Text>
-            <Link
-              _hover={{ opacity: 0.85 }}
-              bg="accent"
-              color="white"
-              display="inline-block"
-              fontFamily="heading"
-              fontSize="sm"
-              fontWeight={500}
-              href="https://tiltify.com/@cdawgva/cyclethon-5"
-              mt={5}
-              px={5}
-              py={3}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              {t('charityDonateLink')}
-            </Link>
+            <DonateLinkButton mt={5} />
           </Box>
         </Grid>
       </Box>
