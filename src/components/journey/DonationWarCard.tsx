@@ -15,7 +15,7 @@ interface Props {
 
 export function DonationWarCard({ children, timezoneMode, war }: Props) {
   const { resolvedLocale } = useLocaleContext();
-  const displayTitle = resolvedLocale === 'JP' ? (war.titleJa ?? war.title) : war.title;
+  const displayTitle = resolvedLocale === 'JA' ? (war.titleJa ?? war.title) : war.title;
 
   return (
     <Box my={4}>

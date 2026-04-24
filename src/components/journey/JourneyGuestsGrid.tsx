@@ -33,7 +33,7 @@ export function JourneyGuestsGrid({ guests }: Props) {
   return (
     <SimpleGrid columns={{ base: 2, md: 3 }} gap={1}>
       {guests.map((guest) => {
-        const displayName = resolvedLocale === 'JP' ? (guest.nameJa ?? guest.name) : guest.name;
+        const displayName = resolvedLocale === 'JA' ? (guest.nameJa ?? guest.name) : guest.name;
         const days = guestDays.get(guest.handler) ?? 1;
 
         return (

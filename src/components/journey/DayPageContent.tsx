@@ -29,7 +29,7 @@ export function DayPageContent({ content, day }: Props) {
   const t = useTranslations('dayPage');
   const tNav = useTranslations('dayNav');
   const { resolvedLocale } = useLocaleContext();
-  const dateLocale = resolvedLocale === 'JP' ? 'ja-JP' : 'en-US';
+  const dateLocale = resolvedLocale === 'JA' ? 'ja-JP' : 'en-US';
   const currencyPrefix = useCurrencyPrefix();
 
   const dateStr = day.date.toISOString().slice(0, 10);
@@ -45,9 +45,9 @@ export function DayPageContent({ content, day }: Props) {
 
   const dayLabel = tNav('dayLabel', { day: day.day });
   const startPoint =
-    resolvedLocale === 'JP' ? (content?.startPointJa ?? content?.startPoint) : content?.startPoint;
+    resolvedLocale === 'JA' ? (content?.startPointJa ?? content?.startPoint) : content?.startPoint;
   const destination =
-    resolvedLocale === 'JP'
+    resolvedLocale === 'JA'
       ? (content?.destinationJa ?? content?.destination)
       : content?.destination;
 

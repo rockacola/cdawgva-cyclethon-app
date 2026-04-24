@@ -46,7 +46,7 @@ export function formatDonationTime(
 ): string {
   const date = new Date(timestamp * 1000);
   const timeZone = getTimezoneId(mode);
-  const intlLocale = locale === 'JP' ? 'ja-JP' : 'en-US';
+  const intlLocale = locale === 'JA' ? 'ja-JP' : 'en-US';
 
   const time = new Intl.DateTimeFormat(intlLocale, {
     hour: 'numeric',
@@ -62,7 +62,7 @@ export function formatDonationTime(
   const day = new Intl.DateTimeFormat(intlLocale, { day: 'numeric', timeZone }).format(date);
   const month = new Intl.DateTimeFormat(intlLocale, { month: 'short', timeZone }).format(date);
 
-  if (locale === 'JP') {
+  if (locale === 'JA') {
     return `${month}${day}日 ${time}`;
   }
   return `${day} ${month}, ${time}`;

@@ -1,5 +1,5 @@
-import { LocaleRedirect } from '@/components/LocaleRedirect';
+import { permanentRedirect } from 'next/navigation';
 
 export default function JpPage() {
-  return <LocaleRedirect locale="JP" />;
+  permanentRedirect('/ja');
 }

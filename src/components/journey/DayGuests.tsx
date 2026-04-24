@@ -18,7 +18,7 @@ export function DayGuests({ guests }: Props) {
   return (
     <Stack direction={{ base: 'column', md: 'row' }} gap={4}>
       {guests.map((guest) => {
-        const displayName = resolvedLocale === 'JP' ? (guest.nameJa ?? guest.name) : guest.name;
+        const displayName = resolvedLocale === 'JA' ? (guest.nameJa ?? guest.name) : guest.name;
 
         return (
           <HStack gap={3} key={guest.handler}>

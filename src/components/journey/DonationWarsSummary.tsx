@@ -33,7 +33,7 @@ function buildWarRows(
         .filter((d) => d.completed_at >= war.startTimestamp && d.completed_at <= war.endTimestamp)
         .reduce((sum, d) => sum + d.amount_cent, 0);
 
-      const title = locale === 'JP' ? (war.titleJa ?? war.title) : war.title;
+      const title = locale === 'JA' ? (war.titleJa ?? war.title) : war.title;
       rows.push({ amountCent, dayLabel, title });
     }
   }

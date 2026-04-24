@@ -61,5 +61,5 @@ export function itemIdToName(type: DonationWarType, id: string, locale: string =
     return id;
   }
 
-  return locale === 'JP' ? entry.nameJa : entry.name;
+  return locale === 'JA' ? entry.nameJa : entry.name;
 }

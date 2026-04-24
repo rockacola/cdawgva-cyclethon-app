@@ -27,13 +27,13 @@ export type TimezoneMode = (typeof TIMEZONE_MODES)[number];
 export const TIMEZONE_MODE_DEFAULT: TimezoneMode = 'JST';
 
 // Locale options
-export const LOCALE_MODES = ['EN', 'JP', 'System'] as const;
+export const LOCALE_MODES = ['EN', 'JA', 'System'] as const;
 export type LocaleMode = (typeof LOCALE_MODES)[number];
 export const LOCALE_MODE_DEFAULT: LocaleMode = 'System';
 
 export const LOCALE_LABELS: Record<LocaleMode, string> = {
   EN: 'English',
-  JP: '日本語',
+  JA: '日本語',
   System: 'System',
 };
 

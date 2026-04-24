@@ -7,7 +7,7 @@ import useLocalStorageState from 'use-local-storage-state';
 import { LOCALE_MODE_DEFAULT, STORAGE_KEYS } from '@/lib/constants';
 import type { LocaleMode } from '@/lib/constants';
 
-export type ResolvedLocale = 'EN' | 'JP';
+export type ResolvedLocale = 'EN' | 'JA';
 
 interface LocaleContextValue {
   localeMode: LocaleMode;
@@ -27,7 +27,7 @@ function detectBrowserLocale(): ResolvedLocale {
   }
   const lang = navigator.language || '';
   if (lang.startsWith('ja')) {
-    return 'JP';
+    return 'JA';
   }
   return 'EN';
 }
@@ -47,7 +47,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   // Sync html lang attribute
   useEffect(
     function syncHtmlLang() {
-      const lang = resolvedLocale === 'JP' ? 'ja' : 'en';
+      const lang = resolvedLocale === 'JA' ? 'ja' : 'en';
       document.documentElement.lang = lang;
     },
     [resolvedLocale]

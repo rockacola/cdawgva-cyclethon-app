@@ -138,7 +138,7 @@ export function Header() {
             fontSize="sm"
             fontWeight="semibold"
             letterSpacing="widest"
-            onClick={() => setLocaleMode(resolvedLocale === 'EN' ? 'JP' : 'EN')}
+            onClick={() => setLocaleMode(resolvedLocale === 'EN' ? 'JA' : 'EN')}
             px={1.5}
             py={1}
             textTransform="uppercase"

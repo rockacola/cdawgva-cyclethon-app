@@ -201,7 +201,7 @@ export function AboutCyclethonContent() {
                   {e.year}
                 </Text>
                 <Text color="fg.muted" fontSize="xs" lineHeight={1.4} mt={1.5}>
-                  {resolvedLocale === 'JP' ? e.routeJa : e.route}
+                  {resolvedLocale === 'JA' ? e.routeJa : e.route}
                 </Text>
                 <Text color="fg.subtle" fontFamily="mono" fontSize="xs" mt={1}>
                   {t('editionDays', { count: e.days })}

@@ -27,7 +27,7 @@ export function DayMapLocations({ locations }: Props) {
   return (
     <Box borderTopColor="fg" borderTopWidth="1px">
       {locations.map((loc) => {
-        const displayTitle = resolvedLocale === 'JP' ? (loc.titleJa ?? loc.title) : loc.title;
+        const displayTitle = resolvedLocale === 'JA' ? (loc.titleJa ?? loc.title) : loc.title;
         const categoryLabel = t(CATEGORY_TRANSLATION_KEYS[loc.category]);
         const isTerminal = loc.category === 'Terminal';
 

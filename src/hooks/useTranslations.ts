@@ -8,7 +8,7 @@ import { useLocaleContext } from '@/providers/LocaleProvider';
 
 const messages: Record<string, Record<string, Record<string, string>>> = {
   EN: en,
-  JP: ja,
+  JA: ja,
 };
 
 /**

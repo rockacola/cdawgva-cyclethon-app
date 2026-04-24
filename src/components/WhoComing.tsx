@@ -272,7 +272,7 @@ export function WhoComing() {
           <Box mt={4}>
             <Box alignItems="center" display="flex" justifyContent="space-between">
               <Text fontFamily="heading" fontSize="xl" fontWeight={400} letterSpacing="-0.02em">
-                {resolvedLocale === 'JP' ? p.nameJa : p.name}
+                {resolvedLocale === 'JA' ? p.nameJa : p.name}
               </Text>
               {p.socials ? (
                 <Box display="flex" gap={2}>

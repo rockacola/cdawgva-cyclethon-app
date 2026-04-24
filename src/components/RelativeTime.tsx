@@ -16,7 +16,7 @@ interface Props {
 export function RelativeTime({ timestamp, showAbsoluteTime = false }: Props) {
   const { timezoneMode } = useTimezoneContext();
   const { resolvedLocale } = useLocaleContext();
-  const intlLocale = resolvedLocale === 'JP' ? 'ja' : 'en';
+  const intlLocale = resolvedLocale === 'JA' ? 'ja' : 'en';
   const [relative, setRelative] = useState<string>(
     formatRelative(new Date(timestamp * 1000), intlLocale)
   );

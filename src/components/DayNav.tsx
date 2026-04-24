@@ -17,7 +17,7 @@ export function DayNav({ availableDaySlugs, days }: Props) {
   const pathname = usePathname();
   const t = useTranslations('dayNav');
   const { resolvedLocale } = useLocaleContext();
-  const dateLocale = resolvedLocale === 'JP' ? 'ja-JP' : 'en-US';
+  const dateLocale = resolvedLocale === 'JA' ? 'ja-JP' : 'en-US';
 
   return (
     <Box
