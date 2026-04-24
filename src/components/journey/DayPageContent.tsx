@@ -2,6 +2,7 @@
 
 import { Box, Grid, Text } from '@chakra-ui/react';
 
+import { PageHeader } from '@/components/PageHeader';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDayDonations } from '@/hooks/useDayDonations';
 import { useTranslations } from '@/hooks/useTranslations';
@@ -70,7 +71,7 @@ export function DayPageContent({ content, day }: Props) {
   return (
     <Box>
       {/* ── Day header ────────────────────────────── */}
-      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 12 }}>
+      <PageHeader>
         <Grid
           alignItems="start"
           gap={{ base: 8, md: 12 }}
@@ -206,7 +207,7 @@ export function DayPageContent({ content, day }: Props) {
             </Box>
           ) : null}
         </Grid>
-      </Box>
+      </PageHeader>
 
       {/* ── 01 / Ride telemetry ───────────────────── */}
       {hasTelemetry ? (

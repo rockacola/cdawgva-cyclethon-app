@@ -44,7 +44,7 @@ export function DayNav({ availableDaySlugs, days }: Props) {
           if (!hasData) {
             return (
               <Box
-                borderRadius="md"
+                borderRadius="sm"
                 cursor="default"
                 key={slug}
                 opacity={0.35}
@@ -67,7 +67,7 @@ export function DayNav({ availableDaySlugs, days }: Props) {
               _hover={{ bg: 'bg.subtle', color: 'fg', textDecoration: 'none' }}
               asChild
               bgColor={isActive ? 'bg.subtle' : undefined}
-              borderRadius="md"
+              borderRadius="sm"
               color={isActive ? 'fg' : 'fg.muted'}
               display="block"
               fontWeight={isActive ? 'semibold' : 'normal'}

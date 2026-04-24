@@ -8,7 +8,7 @@ interface Props {
 export function DayMapEmbed({ embedUrl, title = 'Route Map' }: Props) {
   return (
     <Box
-      borderRadius="xl"
+      borderRadius="sm"
       h={{ base: '280px', md: '400px', lg: '480px' }}
       overflow="hidden"
       w="100%"

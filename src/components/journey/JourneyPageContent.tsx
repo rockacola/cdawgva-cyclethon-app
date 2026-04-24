@@ -4,6 +4,7 @@ import { Box, Flex, Grid, Link, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 import { DailyDonationsChart } from '@/components/DailyDonationsChart';
+import { PageHeader } from '@/components/PageHeader';
 import { useTranslations } from '@/hooks/useTranslations';
 import type { GuestCyclist } from '@/lib/journey';
 import { KCAL_TO_KJ, KM_TO_MI, formatMinutesToCyclingTime } from '@/lib/unitConversions';
@@ -77,7 +78,7 @@ export function JourneyPageContent({
   return (
     <Box>
       {/* ── Page header ───────────────────────────── */}
-      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 12 }}>
+      <PageHeader>
         <Flex align="center" gap={3} mb={4}>
           <Box bg="accent" flexShrink={0} h="1px" w={5} />
           <Text
@@ -135,7 +136,7 @@ export function JourneyPageContent({
         >
           <NextLink href="/finish-line">{tHeader('finishLine')}</NextLink>
         </Link>
-      </Box>
+      </PageHeader>
 
       {/* ── 01 / Ride totals ──────────────────────── */}
       <Box borderBottomWidth="1px" borderColor="border" py={8}>

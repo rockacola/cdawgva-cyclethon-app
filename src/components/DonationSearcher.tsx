@@ -4,6 +4,7 @@ import { Box, Flex, Grid, Input, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import { DonationFeedMobile } from '@/components/DonationFeedMobile';
+import { PageHeader } from '@/components/PageHeader';
 import { SearchResultRow } from '@/components/SearchResultRow';
 import { useDonations } from '@/contexts/DonationsContext';
 import { useDonationsPolling } from '@/hooks/useDonationsPolling';
@@ -115,7 +116,7 @@ export function DonationSearcher() {
   return (
     <Box>
       {/* ── Page header ───────────────────────────── */}
-      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 12 }}>
+      <PageHeader borderBottomWidth="0">
         <Flex align="center" gap={3} mb={4}>
           <Box bg="accent" flexShrink={0} h="1px" w={5} />
           <Text
@@ -152,13 +153,15 @@ export function DonationSearcher() {
         >
           {t('description')}
         </Text>
-      </Box>
+      </PageHeader>
 
       {/* ── Filter bar ────────────────────────────── */}
       <Box
         bg="bg.subtle"
         borderBottomWidth="1px"
         borderColor="border"
+        borderTopWidth="1px"
+        mx={{ base: -4, md: -8 }}
         px={{ base: 4, md: 8 }}
         py={{ base: 5, md: 7 }}
       >
@@ -310,7 +313,7 @@ export function DonationSearcher() {
                 color={sort === opt.value ? 'bg' : 'fg.muted'}
                 cursor="pointer"
                 fontFamily="mono"
-                fontSize="xs"
+                fontSize={{ base: '2xs', md: 'xs' }}
                 key={opt.value}
                 letterSpacing="wide"
                 onClick={() => handleSortChange(opt.value)}
@@ -325,7 +328,7 @@ export function DonationSearcher() {
       </Box>
 
       {/* ── Results ───────────────────────────────── */}
-      <Box px={{ base: 4, md: 0 }} py={{ base: 6, md: 8 }}>
+      <Box py={{ base: 6, md: 8 }}>
         {/* Desktop table */}
         <Box display={{ base: 'none', md: 'block' }}>
           {/* Column headers */}
@@ -370,7 +373,7 @@ export function DonationSearcher() {
 
       {/* ── Pagination ────────────────────────────── */}
       {totalPages > 1 && (
-        <Box borderColor="border" borderTopWidth="1px" py={6}>
+        <Box pb={6}>
           <Flex align="center" flexWrap="wrap" gap={4} justify="space-between">
             <Text color="fg.subtle" fontFamily="mono" fontSize="xs" letterSpacing="wide">
               {t('pageOf', { page, total: totalPages })} ·{' '}

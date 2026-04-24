@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { JourneyPageContent } from '@/components/journey/JourneyPageContent';
+import { PageContainer } from '@/components/PageContainer';
 import type { GuestCyclist } from '@/lib/journey';
 import { getCompletedDays, getTotalDistanceKm } from '@/lib/journey';
 import { journeyData } from '@/lib/journey-data';
@@ -26,11 +27,13 @@ export default async function JourneyPage() {
   const guests = [...guestsByHandler.values()];
 
   return (
-    <JourneyPageContent
-      guests={guests}
-      totalCaloriesBurnt={totalCaloriesBurnt}
-      totalDistanceKm={totalDistanceKm}
-      totalTimeCycling={totalTimeCycling}
-    />
+    <PageContainer>
+      <JourneyPageContent
+        guests={guests}
+        totalCaloriesBurnt={totalCaloriesBurnt}
+        totalDistanceKm={totalDistanceKm}
+        totalTimeCycling={totalTimeCycling}
+      />
+    </PageContainer>
   );
 }

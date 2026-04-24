@@ -13,7 +13,7 @@ export function DonationActivityChart() {
     ACTIVITY_CHART_BARS_DESKTOP;
 
   return (
-    <Box bg="bg.subtle" borderRadius="md">
+    <Box bg="bg.subtle" borderRadius="sm">
       <DonationBarChart buckets={buckets.slice(-barCount)} />
     </Box>
   );

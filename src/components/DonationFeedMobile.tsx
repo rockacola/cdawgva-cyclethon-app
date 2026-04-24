@@ -19,7 +19,7 @@ export function DonationFeedMobile({ donations }: Props) {
   const now = useNow(1000);
 
   return (
-    <Stack borderRadius="md" borderWidth="1px" gap={0} overflow="hidden">
+    <Stack borderRadius="sm" borderWidth="1px" gap={0} overflow="hidden">
       {donations.map((d) => {
         return (
           <Box

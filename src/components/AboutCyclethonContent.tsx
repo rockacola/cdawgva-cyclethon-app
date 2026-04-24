@@ -4,6 +4,7 @@ import { Box, Flex, Grid, Text } from '@chakra-ui/react';
 
 import { CyclethonGrowthChart } from '@/components/CyclethonGrowthChart';
 import { DonateLinkButton } from '@/components/DonateLinkButton';
+import { PageHeader } from '@/components/PageHeader';
 import { SectionLabel } from '@/components/SectionLabel';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
@@ -58,9 +59,9 @@ export function AboutCyclethonContent() {
   const max = Math.max(...EDITIONS.map((e) => e.raised));
 
   return (
-    <Box>
+    <>
       {/* ── Page header ───────────────────────────── */}
-      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 12 }}>
+      <PageHeader>
         <Flex align="center" gap={3} mb={4}>
           <Box bg="accent" flexShrink={0} h="1px" w={5} />
           <Text
@@ -110,7 +111,7 @@ export function AboutCyclethonContent() {
             </Text>
           ))}
         </Flex>
-      </Box>
+      </PageHeader>
 
       {/* ── Story block ───────────────────────────── */}
       <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 12 }}>
@@ -214,13 +215,20 @@ export function AboutCyclethonContent() {
       </Box>
 
       {/* ── Growth chart ─────────────────────────── */}
-      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 10 }}>
+      <Box py={{ base: 8, md: 10 }}>
         <SectionLabel>{t('sectionCumulative')}</SectionLabel>
         <CyclethonGrowthChart />
       </Box>
 
       {/* ── The charity ───────────────────────────── */}
-      <Box bg="bg.subtle" px={{ base: 4, md: 8 }} py={{ base: 8, md: 12 }}>
+      <Box
+        bg="bg.subtle"
+        borderColor="border"
+        borderTopWidth="1px"
+        mx={{ base: -4, md: -8 }}
+        px={{ base: 4, md: 8 }}
+        py={{ base: 8, md: 12 }}
+      >
         <Grid gap={{ base: 8, md: 16 }} templateColumns={{ base: '1fr', md: '1fr 1.3fr' }}>
           <Box>
             <SectionLabel>{t('sectionCharity')}</SectionLabel>
@@ -253,6 +261,6 @@ export function AboutCyclethonContent() {
           </Box>
         </Grid>
       </Box>
-    </Box>
+    </>
   );
 }

@@ -1,11 +1,12 @@
 'use client';
 
-import { Box, Container, Flex, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, Flex, SimpleGrid, Text } from '@chakra-ui/react';
 import { Activity, Droplets, Hash, Heart, MessageSquare, Tv } from 'lucide-react';
 import type { ReactNode } from 'react';
 
 import { FlatCard } from '@/components/FlatCard';
 import { LedgerSection } from '@/components/LedgerSection';
+import { PageHeader } from '@/components/PageHeader';
 import { useTranslations } from '@/hooks/useTranslations';
 
 interface Source {
@@ -74,87 +75,85 @@ export function AboutContent() {
   const t = useTranslations('about');
 
   return (
-    <Box py={{ base: 10, md: 16 }}>
-      <Container maxW="5xl" px={{ base: 3, md: 8 }}>
-        {/* Page header */}
-        <Box borderBottomWidth="1px" borderColor="border" mb={0} pb={{ base: 8, md: 12 }}>
-          <Flex align="center" gap={3} mb={4}>
-            <Box bg="accent" flexShrink={0} h="1px" w={5} />
-            <Text
-              color="accent"
-              fontFamily="mono"
-              fontSize="xs"
-              letterSpacing="widest"
-              textTransform="uppercase"
-            >
-              {t('sectionLabel')}
-            </Text>
-          </Flex>
+    <Box>
+      {/* Page header */}
+      <PageHeader>
+        <Flex align="center" gap={3} mb={4}>
+          <Box bg="accent" flexShrink={0} h="1px" w={5} />
           <Text
-            as="h1"
-            fontFamily="heading"
-            fontSize={{ base: '4xl', md: '6xl' }}
-            fontWeight={400}
-            letterSpacing="-0.03em"
-            lineHeight="0.95"
+            color="accent"
+            fontFamily="mono"
+            fontSize="xs"
+            letterSpacing="widest"
+            textTransform="uppercase"
           >
-            {t('title')}
+            {t('sectionLabel')}
           </Text>
-          <Text
-            color="fg.muted"
-            fontSize={{ base: 'md', md: 'lg' }}
-            lineHeight={1.6}
-            maxW="2xl"
-            mt={5}
-          >
-            {t('intro1')}
-          </Text>
-          <Text
-            color="fg.muted"
-            fontSize={{ base: 'md', md: 'lg' }}
-            lineHeight={1.6}
-            maxW="2xl"
-            mt={3}
-          >
-            {t('intro2')}
-          </Text>
-        </Box>
+        </Flex>
+        <Text
+          as="h1"
+          fontFamily="heading"
+          fontSize={{ base: '4xl', md: '6xl' }}
+          fontWeight={400}
+          letterSpacing="-0.03em"
+          lineHeight="0.95"
+        >
+          {t('title')}
+        </Text>
+        <Text
+          color="fg.muted"
+          fontSize={{ base: 'md', md: 'lg' }}
+          lineHeight={1.6}
+          maxW="2xl"
+          mt={5}
+        >
+          {t('intro1')}
+        </Text>
+        <Text
+          color="fg.muted"
+          fontSize={{ base: 'md', md: 'lg' }}
+          lineHeight={1.6}
+          maxW="2xl"
+          mt={3}
+        >
+          {t('intro2')}
+        </Text>
+      </PageHeader>
 
-        {/* Data sources */}
-        <LedgerSection index="01" title={t('dataSourcesLabel')}>
-          <SimpleGrid columns={{ base: 1, md: 3 }} gap={2}>
-            {SOURCES.map(({ nameKey, detailKey, href, linkKey, icon }) => (
-              <FlatCard
-                body={t(detailKey)}
-                href={href}
-                icon={icon}
-                key={nameKey}
-                label={linkKey ? t(linkKey) : undefined}
-                title={t(nameKey)}
-              />
-            ))}
-          </SimpleGrid>
-        </LedgerSection>
+      {/* Data sources */}
+      <LedgerSection index="01" title={t('dataSourcesLabel')}>
+        <SimpleGrid columns={{ base: 1, md: 3 }} gap={2}>
+          {SOURCES.map(({ nameKey, detailKey, href, linkKey, icon }) => (
+            <FlatCard
+              body={t(detailKey)}
+              href={href}
+              icon={icon}
+              key={nameKey}
+              label={linkKey ? t(linkKey) : undefined}
+              title={t(nameKey)}
+            />
+          ))}
+        </SimpleGrid>
+      </LedgerSection>
 
-        {/* How to support */}
-        <LedgerSection borderBottom={false} index="02" title={t('supportLabel')}>
-          <Text color="fg.muted" fontSize="sm" lineHeight={1.6} mb={5}>
-            {t('supportIntro')}
-          </Text>
-          <SimpleGrid columns={{ base: 1, md: 3 }} gap={2}>
-            {SUPPORT_LINKS.map(({ titleKey, bodyKey, href, labelKey, icon }) => (
-              <FlatCard
-                body={t(bodyKey)}
-                href={href}
-                icon={icon}
-                key={titleKey}
-                label={t(labelKey)}
-                title={t(titleKey)}
-              />
-            ))}
-          </SimpleGrid>
-        </LedgerSection>
-      </Container>
+      {/* How to support */}
+      <LedgerSection borderBottom={false} index="02" title={t('supportLabel')}>
+        <Text color="fg.muted" fontSize="sm" lineHeight={1.6} mb={5}>
+          {t('supportIntro')}
+        </Text>
+        <SimpleGrid columns={{ base: 1, md: 3 }} gap={2}>
+          {SUPPORT_LINKS.map(({ titleKey, bodyKey, href, labelKey, icon }) => (
+            <FlatCard
+              body={t(bodyKey)}
+              href={href}
+              icon={icon}
+              key={titleKey}
+              label={t(labelKey)}
+              title={t(titleKey)}
+            />
+          ))}
+        </SimpleGrid>
+      </LedgerSection>
     </Box>
   );
 }

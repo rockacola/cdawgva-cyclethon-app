@@ -19,7 +19,7 @@ export function DaySource({ redditAuthor, redditLabel, redditUrl }: Props) {
   }
 
   return (
-    <Box bg="bg.subtle" borderRadius="xl" p={4}>
+    <Box bg="bg.subtle" borderRadius="sm" mb={6} p={8}>
       <HStack gap={2} mb={2}>
         <MessageSquare size={15} />
         <Text fontSize="sm" fontWeight="semibold">

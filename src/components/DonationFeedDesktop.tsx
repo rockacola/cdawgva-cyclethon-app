@@ -39,6 +39,7 @@ export function DonationFeedDesktop({ donations }: Props) {
             gridTemplateColumns="140px 1fr 120px"
             key={d.id}
             position="relative"
+            px={2}
             py={5}
             transition="box-shadow 0.3s ease"
           >

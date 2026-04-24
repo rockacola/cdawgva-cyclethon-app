@@ -1,11 +1,12 @@
 'use client';
 
-import { Box, Container, Flex, Link, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, Flex, Link, SimpleGrid, Text } from '@chakra-ui/react';
 import { Calendar, Clock, ExternalLink, MapPin, Pizza } from 'lucide-react';
 
 import { FlatCard } from '@/components/FlatCard';
 import { DayMapEmbed } from '@/components/journey/DayMapEmbed';
 import { LedgerSection } from '@/components/LedgerSection';
+import { PageHeader } from '@/components/PageHeader';
 import { SectionLabel } from '@/components/SectionLabel';
 import { useTranslations } from '@/hooks/useTranslations';
 
@@ -41,108 +42,106 @@ export function FinishLineContent() {
   const t = useTranslations('finishLine');
 
   return (
-    <Box py={{ base: 10, md: 16 }}>
-      <Container maxW="5xl" px={{ base: 3, md: 8 }}>
-        {/* Page header */}
-        <Box borderBottomWidth="1px" borderColor="border" pb={{ base: 8, md: 12 }}>
-          <SectionLabel>{t('eventLabel')}</SectionLabel>
-          <Text
-            as="h1"
-            fontFamily="heading"
-            fontSize={{ base: '4xl', md: '6xl' }}
-            fontWeight={400}
-            letterSpacing="-0.03em"
-            lineHeight="0.95"
-          >
-            {t('title')}
-          </Text>
-          <Text
-            color="fg.muted"
-            fontSize={{ base: 'md', md: 'lg' }}
-            lineHeight={1.6}
-            maxW="2xl"
-            mt={5}
-          >
-            {t('blurb1')}
-          </Text>
-          <Text
-            color="fg.muted"
-            fontSize={{ base: 'md', md: 'lg' }}
-            lineHeight={1.6}
-            maxW="2xl"
-            mt={3}
-          >
-            {t('blurb2')}
-          </Text>
-        </Box>
+    <Box>
+      {/* Page header */}
+      <PageHeader>
+        <SectionLabel>{t('eventLabel')}</SectionLabel>
+        <Text
+          as="h1"
+          fontFamily="heading"
+          fontSize={{ base: '4xl', md: '6xl' }}
+          fontWeight={400}
+          letterSpacing="-0.03em"
+          lineHeight="0.95"
+        >
+          {t('title')}
+        </Text>
+        <Text
+          color="fg.muted"
+          fontSize={{ base: 'md', md: 'lg' }}
+          lineHeight={1.6}
+          maxW="2xl"
+          mt={5}
+        >
+          {t('blurb1')}
+        </Text>
+        <Text
+          color="fg.muted"
+          fontSize={{ base: 'md', md: 'lg' }}
+          lineHeight={1.6}
+          maxW="2xl"
+          mt={3}
+        >
+          {t('blurb2')}
+        </Text>
+      </PageHeader>
 
-        {/* Event info */}
-        <LedgerSection index="01" title={t('eventSectionLabel')}>
-          <SimpleGrid columns={{ base: 1, md: 3 }} gap={2}>
-            {EVENT_INFO.map(({ detailKey, icon, labelKey }) => (
-              <FlatCard body={t(detailKey)} icon={icon} key={labelKey} title={t(labelKey)} />
+      {/* Event info */}
+      <LedgerSection index="01" title={t('eventSectionLabel')}>
+        <SimpleGrid columns={{ base: 1, md: 3 }} gap={2}>
+          {EVENT_INFO.map(({ detailKey, icon, labelKey }) => (
+            <FlatCard body={t(detailKey)} icon={icon} key={labelKey} title={t(labelKey)} />
+          ))}
+        </SimpleGrid>
+      </LedgerSection>
+
+      {/* Location */}
+      <LedgerSection index="02" title={t('locationSectionLabel')}>
+        <DayMapEmbed embedUrl={MAP_EMBED_URL} title={t('venue')} />
+        <Link
+          _hover={{ color: 'fg' }}
+          alignItems="center"
+          color="fg.subtle"
+          display="inline-flex"
+          fontFamily="mono"
+          fontSize="xs"
+          gap={1.5}
+          href={MAP_LINK_URL}
+          letterSpacing="wide"
+          mt={4}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {t('viewOnGoogleMaps')} <ExternalLink size={10} />
+        </Link>
+      </LedgerSection>
+
+      {/* Reservations */}
+      <LedgerSection index="03" title={t('reservationsSectionLabel')}>
+        <Box borderColor="border" borderWidth="1px" p={5}>
+          {RESERVATION_ROWS.map(({ labelKey, timeKey }) => (
+            <Flex justify="space-between" key={labelKey} mb={3}>
+              <Text fontSize="sm" fontWeight="semibold">
+                {t(labelKey)}
+              </Text>
+              <Text color="fg.muted" fontSize="sm">
+                {t(timeKey)}
+              </Text>
+            </Flex>
+          ))}
+          <Box borderTopWidth="1px" pt={4}>
+            {RESERVATION_NOTE_KEYS.map((key) => (
+              <Text color="fg.muted" fontSize="sm" key={key} lineHeight={1.6} mb={1}>
+                {t(key)}
+              </Text>
             ))}
-          </SimpleGrid>
-        </LedgerSection>
-
-        {/* Location */}
-        <LedgerSection index="02" title={t('locationSectionLabel')}>
-          <DayMapEmbed embedUrl={MAP_EMBED_URL} title={t('venue')} />
-          <Link
-            _hover={{ color: 'fg' }}
-            alignItems="center"
-            color="fg.subtle"
-            display="inline-flex"
-            fontFamily="mono"
-            fontSize="xs"
-            gap={1.5}
-            href={MAP_LINK_URL}
-            letterSpacing="wide"
-            mt={4}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            {t('viewOnGoogleMaps')} <ExternalLink size={10} />
-          </Link>
-        </LedgerSection>
-
-        {/* Reservations */}
-        <LedgerSection index="03" title={t('reservationsSectionLabel')}>
-          <Box borderColor="border" borderWidth="1px" p={5}>
-            {RESERVATION_ROWS.map(({ labelKey, timeKey }) => (
-              <Flex justify="space-between" key={labelKey} mb={3}>
-                <Text fontSize="sm" fontWeight="semibold">
-                  {t(labelKey)}
-                </Text>
-                <Text color="fg.muted" fontSize="sm">
-                  {t(timeKey)}
-                </Text>
-              </Flex>
-            ))}
-            <Box borderTopWidth="1px" pt={4}>
-              {RESERVATION_NOTE_KEYS.map((key) => (
-                <Text color="fg.muted" fontSize="sm" key={key} lineHeight={1.6} mb={1}>
-                  {t(key)}
-                </Text>
-              ))}
-            </Box>
           </Box>
-        </LedgerSection>
+        </Box>
+      </LedgerSection>
 
-        {/* Special pizzas */}
-        <LedgerSection borderBottom={false} index="04" title={t('pizzasSectionLabel')}>
-          <SimpleGrid columns={{ base: 1, md: 2 }} gap={2}>
-            {SPECIAL_PIZZAS.map(({ nameKey, toppingsKey }) => (
-              <FlatCard
-                body={t(toppingsKey)}
-                icon={<Pizza size={14} />}
-                key={nameKey}
-                title={t(nameKey)}
-              />
-            ))}
-          </SimpleGrid>
-        </LedgerSection>
-      </Container>
+      {/* Special pizzas */}
+      <LedgerSection borderBottom={false} index="04" title={t('pizzasSectionLabel')}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} gap={2}>
+          {SPECIAL_PIZZAS.map(({ nameKey, toppingsKey }) => (
+            <FlatCard
+              body={t(toppingsKey)}
+              icon={<Pizza size={14} />}
+              key={nameKey}
+              title={t(nameKey)}
+            />
+          ))}
+        </SimpleGrid>
+      </LedgerSection>
     </Box>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Heading, Span, Table, Text } from '@chakra-ui/react';
+import { Box, Heading, Span, Table, Text } from '@chakra-ui/react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
@@ -8,6 +8,7 @@ import { DonationTime } from '@/components/DonationTime';
 import { DonationWarTable } from '@/components/DonationWarTable';
 import { DonorName } from '@/components/DonorName';
 import { LastChecked } from '@/components/LastChecked';
+import { PageContainer } from '@/components/PageContainer';
 import { useDonations } from '@/contexts/DonationsContext';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDonationsPolling } from '@/hooks/useDonationsPolling';
@@ -51,133 +52,131 @@ function DonationWarContent() {
   const totalDonationsInCents = filteredDonations.reduce((sum, d) => sum + d.amount_cent, 0);
 
   return (
-    <Box py={{ base: 6, md: 20 }}>
-      <Container maxW="4xl" px={{ base: 3, md: 8 }}>
-        <Heading as="h1" mb={2} size={{ base: 'xl', md: '2xl' }}>
-          Donations: {formatDonationTime(startTimestamp, timezoneMode)} –{' '}
-          {formatDonationTime(endTimestamp, timezoneMode)} {timezoneMode}
+    <PageContainer>
+      <Heading as="h1" mb={2} size={{ base: 'xl', md: '2xl' }}>
+        Donations: {formatDonationTime(startTimestamp, timezoneMode)} –{' '}
+        {formatDonationTime(endTimestamp, timezoneMode)} {timezoneMode}
+      </Heading>
+      <Text color="fg.muted" fontSize="sm" mb={1}>
+        {filteredDonations.length} donations - Total: {currencyPrefix}
+        {(totalDonationsInCents / 100).toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
+      </Text>
+      <Box mb={6}>
+        <LastChecked isRefreshing={isRefreshing} timestamp={lastCheckedAt} />
+      </Box>
+
+      <Box mb={10}>
+        <Heading as="h2" mb={3} size="md">
+          By {type}
         </Heading>
-        <Text color="fg.muted" fontSize="sm" mb={1}>
-          {filteredDonations.length} donations - Total: {currencyPrefix}
-          {(totalDonationsInCents / 100).toLocaleString('en-US', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })}
-        </Text>
-        <Box mb={6}>
-          <LastChecked isRefreshing={isRefreshing} timestamp={lastCheckedAt} />
-        </Box>
+        <DonationWarTable donations={filteredDonations} type={type} />
+      </Box>
 
+      {noMatchDonations.length > 0 && (
         <Box mb={10}>
-          <Heading as="h2" mb={3} size="md">
-            By {type}
+          <Heading as="h2" mb={1} size="md">
+            No Match
           </Heading>
-          <DonationWarTable donations={filteredDonations} type={type} />
+          <Text color="fg.muted" fontSize="sm" mb={3}>
+            {noMatchDonations.length} donations
+          </Text>
+          <Table.Root size="sm" variant="outline">
+            <Table.Header>
+              <Table.Row>
+                <Table.ColumnHeader minW="100px">Time</Table.ColumnHeader>
+                <Table.ColumnHeader minW="120px">Donor</Table.ColumnHeader>
+                <Table.ColumnHeader textAlign="right">Amount</Table.ColumnHeader>
+                <Table.ColumnHeader>Comment</Table.ColumnHeader>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {noMatchDonations.map((d) => (
+                <Table.Row _hover={{ bg: { base: 'bg.muted', _dark: 'gray.800' } }} key={d.id}>
+                  <Table.Cell color="fg.muted" fontSize="sm">
+                    <DonationTime timestamp={d.completed_at} />
+                  </Table.Cell>
+                  <Table.Cell overflowWrap="break-word" wordBreak="break-word">
+                    <DonorName name={d.donor_name} />
+                  </Table.Cell>
+                  <Table.Cell textAlign="right" whiteSpace="nowrap">
+                    {(() => {
+                      const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
+                      return (
+                        <>
+                          {whole}
+                          <Span color="fg.subtle">{cents}</Span>
+                        </>
+                      );
+                    })()}
+                  </Table.Cell>
+                  <Table.Cell fontSize="sm" overflowWrap="break-word" wordBreak="break-word">
+                    {d.donor_comment || '—'}
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table.Root>
         </Box>
+      )}
 
-        {noMatchDonations.length > 0 && (
-          <Box mb={10}>
-            <Heading as="h2" mb={1} size="md">
-              No Match
-            </Heading>
-            <Text color="fg.muted" fontSize="sm" mb={3}>
-              {noMatchDonations.length} donations
-            </Text>
-            <Table.Root size="sm" variant="outline">
-              <Table.Header>
-                <Table.Row>
-                  <Table.ColumnHeader minW="100px">Time</Table.ColumnHeader>
-                  <Table.ColumnHeader minW="120px">Donor</Table.ColumnHeader>
-                  <Table.ColumnHeader textAlign="right">Amount</Table.ColumnHeader>
-                  <Table.ColumnHeader>Comment</Table.ColumnHeader>
+      {filteredDonations.length === 0 ? (
+        <Text color="fg.muted">No donations in this time window.</Text>
+      ) : (
+        <Box mb={10}>
+          <Heading as="h2" mb={1} size="md">
+            All Matched Donations
+          </Heading>
+          <Text color="fg.muted" fontSize="sm" mb={3}>
+            {filteredDonations.length} donations found
+          </Text>
+          <Table.Root size="sm" variant="outline">
+            <Table.Header>
+              <Table.Row>
+                <Table.ColumnHeader minW="100px">Time</Table.ColumnHeader>
+                <Table.ColumnHeader minW="120px">Donor</Table.ColumnHeader>
+                <Table.ColumnHeader textAlign="right">Amount</Table.ColumnHeader>
+                <Table.ColumnHeader>Item</Table.ColumnHeader>
+                <Table.ColumnHeader>Comment</Table.ColumnHeader>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {filteredDonations.map((d) => (
+                <Table.Row _hover={{ bg: { base: 'bg.muted', _dark: 'gray.800' } }} key={d.id}>
+                  <Table.Cell color="fg.muted" fontSize="sm">
+                    <DonationTime timestamp={d.completed_at} />
+                  </Table.Cell>
+                  <Table.Cell overflowWrap="break-word" wordBreak="break-word">
+                    <DonorName name={d.donor_name} />
+                  </Table.Cell>
+                  <Table.Cell textAlign="right" whiteSpace="nowrap">
+                    {(() => {
+                      const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
+                      return (
+                        <>
+                          {whole}
+                          <Span color="fg.subtle">{cents}</Span>
+                        </>
+                      );
+                    })()}
+                  </Table.Cell>
+                  <Table.Cell fontSize="sm">
+                    {(() => {
+                      const itemId = detectItemIdFromComment(type, d.donor_comment);
+                      return itemId ? itemIdToName(type, itemId) : '—';
+                    })()}
+                  </Table.Cell>
+                  <Table.Cell fontSize="sm" overflowWrap="break-word" wordBreak="break-word">
+                    {d.donor_comment || '—'}
+                  </Table.Cell>
                 </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {noMatchDonations.map((d) => (
-                  <Table.Row _hover={{ bg: { base: 'bg.muted', _dark: 'gray.800' } }} key={d.id}>
-                    <Table.Cell color="fg.muted" fontSize="sm">
-                      <DonationTime timestamp={d.completed_at} />
-                    </Table.Cell>
-                    <Table.Cell overflowWrap="break-word" wordBreak="break-word">
-                      <DonorName name={d.donor_name} />
-                    </Table.Cell>
-                    <Table.Cell textAlign="right" whiteSpace="nowrap">
-                      {(() => {
-                        const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
-                        return (
-                          <>
-                            {whole}
-                            <Span color="fg.subtle">{cents}</Span>
-                          </>
-                        );
-                      })()}
-                    </Table.Cell>
-                    <Table.Cell fontSize="sm" overflowWrap="break-word" wordBreak="break-word">
-                      {d.donor_comment || '—'}
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table.Root>
-          </Box>
-        )}
-
-        {filteredDonations.length === 0 ? (
-          <Text color="fg.muted">No donations in this time window.</Text>
-        ) : (
-          <Box mb={10}>
-            <Heading as="h2" mb={1} size="md">
-              All Matched Donations
-            </Heading>
-            <Text color="fg.muted" fontSize="sm" mb={3}>
-              {filteredDonations.length} donations found
-            </Text>
-            <Table.Root size="sm" variant="outline">
-              <Table.Header>
-                <Table.Row>
-                  <Table.ColumnHeader minW="100px">Time</Table.ColumnHeader>
-                  <Table.ColumnHeader minW="120px">Donor</Table.ColumnHeader>
-                  <Table.ColumnHeader textAlign="right">Amount</Table.ColumnHeader>
-                  <Table.ColumnHeader>Item</Table.ColumnHeader>
-                  <Table.ColumnHeader>Comment</Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {filteredDonations.map((d) => (
-                  <Table.Row _hover={{ bg: { base: 'bg.muted', _dark: 'gray.800' } }} key={d.id}>
-                    <Table.Cell color="fg.muted" fontSize="sm">
-                      <DonationTime timestamp={d.completed_at} />
-                    </Table.Cell>
-                    <Table.Cell overflowWrap="break-word" wordBreak="break-word">
-                      <DonorName name={d.donor_name} />
-                    </Table.Cell>
-                    <Table.Cell textAlign="right" whiteSpace="nowrap">
-                      {(() => {
-                        const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
-                        return (
-                          <>
-                            {whole}
-                            <Span color="fg.subtle">{cents}</Span>
-                          </>
-                        );
-                      })()}
-                    </Table.Cell>
-                    <Table.Cell fontSize="sm">
-                      {(() => {
-                        const itemId = detectItemIdFromComment(type, d.donor_comment);
-                        return itemId ? itemIdToName(type, itemId) : '—';
-                      })()}
-                    </Table.Cell>
-                    <Table.Cell fontSize="sm" overflowWrap="break-word" wordBreak="break-word">
-                      {d.donor_comment || '—'}
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table.Root>
-          </Box>
-        )}
-      </Container>
-    </Box>
+              ))}
+            </Table.Body>
+          </Table.Root>
+        </Box>
+      )}
+    </PageContainer>
   );
 }

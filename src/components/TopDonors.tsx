@@ -4,6 +4,7 @@ import { Box, Flex, Grid, Text } from '@chakra-ui/react';
 import { useMemo } from 'react';
 
 import { DonorLeaderboard } from '@/components/DonorLeaderboard';
+import { PageHeader } from '@/components/PageHeader';
 import { TransactionLeaderboard } from '@/components/TransactionLeaderboard';
 import { useDonations } from '@/contexts/DonationsContext';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
@@ -61,7 +62,7 @@ export function TopDonors() {
   return (
     <Box>
       {/* ── Page header ───────────────────────────── */}
-      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 12 }}>
+      <PageHeader>
         <Flex align="center" gap={3} mb={4}>
           <Box bg="accent" flexShrink={0} h="1px" w={5} />
           <Text
@@ -98,7 +99,7 @@ export function TopDonors() {
         >
           {t('description')}
         </Text>
-      </Box>
+      </PageHeader>
 
       {/* ── Top-line stats ────────────────────────── */}
       {stats && topDonorAmount && topTxAmount && medianAmount ? (

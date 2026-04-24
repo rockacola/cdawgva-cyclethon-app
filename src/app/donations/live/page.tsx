@@ -1,7 +1,7 @@
-import { Container } from '@chakra-ui/react';
 import type { Metadata } from 'next';
 
 import { DonationLiveFeed } from '@/components/DonationLiveFeed';
+import { PageContainer } from '@/components/PageContainer';
 import { getCampaignFact } from '@/lib/getCampaignFact';
 import { getDonations } from '@/lib/getDonations';
 
@@ -16,8 +16,8 @@ export default async function DonationsLivePage() {
   ]);
 
   return (
-    <Container maxW="960px" px={0}>
+    <PageContainer>
       <DonationLiveFeed initialCampaignFact={initialCampaignFact} initialDonations={donations} />
-    </Container>
+    </PageContainer>
   );
 }

@@ -7,6 +7,7 @@ import { DonationActivityChart } from '@/components/DonationActivityChart';
 import { DonationFeed } from '@/components/DonationFeed';
 import { DonationProgressBar } from '@/components/DonationProgressBar';
 import { LiveDot } from '@/components/LiveDot';
+import { PageHeader } from '@/components/PageHeader';
 import { useAnimatedValue } from '@/hooks/useAnimatedValue';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
@@ -124,7 +125,7 @@ export function DonationLiveFeed({ initialCampaignFact, initialDonations }: Prop
   return (
     <Box>
       {/* ── Page header ───────────────────────────── */}
-      <Box borderBottomWidth="1px" borderColor="border" py={{ base: 8, md: 12 }}>
+      <PageHeader>
         <Flex align="center" gap={3} mb={4}>
           <Box bg="accent" flexShrink={0} h="1px" w={5} />
           <Text
@@ -161,7 +162,7 @@ export function DonationLiveFeed({ initialCampaignFact, initialDonations }: Prop
         >
           {t('description')}
         </Text>
-      </Box>
+      </PageHeader>
 
       {/* ── Status strip ──────────────────────────── */}
       <Box

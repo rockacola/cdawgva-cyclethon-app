@@ -18,7 +18,7 @@ export default async function JourneyLayout({ children }: { children: React.Reac
 
   return (
     <DonationsProvider initialDonations={donations}>
-      <Container maxW="6xl" px={{ base: 3, md: 8 }} py={{ base: 6, md: 10 }}>
+      <Container maxW="6xl" px={{ base: 2, md: 0 }}>
         <Flex align="start" direction={{ base: 'column', md: 'row' }} gap={8}>
           <DayNav availableDaySlugs={availableDaySlugs} days={days} />
           <Box flex={1} minW={0}>

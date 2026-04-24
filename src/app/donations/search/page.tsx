@@ -1,7 +1,7 @@
-import { Container } from '@chakra-ui/react';
 import type { Metadata } from 'next';
 
 import { DonationSearcher } from '@/components/DonationSearcher';
+import { PageContainer } from '@/components/PageContainer';
 
 export const metadata: Metadata = {
   title: 'Search Donations | Cyclethon Tracker',
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function DonationSearchPage() {
   return (
-    <Container maxW="960px" px={0}>
+    <PageContainer>
       <DonationSearcher />
-    </Container>
+    </PageContainer>
   );
 }

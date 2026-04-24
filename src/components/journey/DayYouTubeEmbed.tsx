@@ -24,7 +24,7 @@ export function DayYouTubeEmbed({ twitchUrl, youtubeUrl }: Props) {
     <Stack gap={2}>
       {thumbnailUrl ? (
         <Box
-          borderRadius="xl"
+          borderRadius="sm"
           overflow="hidden"
           position="relative"
           style={{ aspectRatio: '16/9' }}

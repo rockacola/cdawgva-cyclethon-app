@@ -1,6 +1,6 @@
-import { Container } from '@chakra-ui/react';
 import type { Metadata } from 'next';
 
+import { PageContainer } from '@/components/PageContainer';
 import { TopDonors } from '@/components/TopDonors';
 
 export const metadata: Metadata = {
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function TopDonorsPage() {
   return (
-    <Container maxW="960px" px={0}>
+    <PageContainer>
       <TopDonors />
-    </Container>
+    </PageContainer>
   );
 }

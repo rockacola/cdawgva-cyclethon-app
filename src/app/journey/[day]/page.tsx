@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import { DayPageContent } from '@/components/journey/DayPageContent';
+import { PageContainer } from '@/components/PageContainer';
 import { getJourneyDay } from '@/lib/journey';
 import { journeyData } from '@/lib/journey-data';
 
@@ -17,5 +18,9 @@ export default async function DayPage({ params }: Props) {
 
   const content = journeyData.find((d) => d.dayKey === slug);
 
-  return <DayPageContent content={content} day={day} />;
+  return (
+    <PageContainer>
+      <DayPageContent content={content} day={day} />
+    </PageContainer>
+  );
 }
