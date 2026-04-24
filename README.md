@@ -12,11 +12,14 @@ Built with **Next.js 15**, **React 19**, **Chakra UI v3**, and **TypeScript**. S
 
 Key screens include:
 
-- **Live Feed**: streaming donation table with relative timestamps
-- **Top Donors**: ranked leaderboard by total donated and largest single donation
-- **Search**: full history with text search, amount filtering, sorting, and pagination
-- **Journey**: day-by-day route tracker with maps, daily stats, and embedded clips
-- **Donation Wars**: real-time category tallies where donations are classified by theme (anime, games, countries, Pokemon, etc.) using regex pattern matching on donor comments
+- **Live Feed** (`/donations/live`): streaming donation table with relative timestamps
+- **Top Donors** (`/donations/top`): ranked leaderboard by total donated and largest single donation
+- **Search** (`/donations/search`): full history with text search, amount filtering, sorting, and pagination
+- **Journey** (`/journey`): day-by-day route tracker with maps, daily stats, and embedded clips
+- **About Cyclethon** (`/about-cyclethon`): historical context across all five editions — cumulative donation charts, edition comparisons by route, days, and total raised
+- **Finish Line** (`/finish-line`): details for the IRL finish line event (venue, reservations, special pizzas)
+- **About** (`/about`): tracker data sources and ways to support the cause
+- **Donation Wars** (`/stats/donation-war`): category tallies where donations are classified by theme (anime, games, countries, etc.) using regex pattern matching on donor comments
 
 ## Tech Stack
 
@@ -27,7 +30,7 @@ Key screens include:
 | Language     | TypeScript 5.8 (strict mode)                          |
 | Real-time    | Tiltify Webhooks (HMAC-SHA256) + Server-Sent Events   |
 | Data         | Cloudflare R2 (public JSON bucket)                    |
-| i18n         | Custom hook-based system (EN/JP), no external library |
+| i18n         | Custom hook-based system (EN/JA), no external library |
 | Hosting      | Vercel (auto-deploy on push to `main`)                |
 | Code Quality | ESLint 9, Prettier, TypeScript strict                 |
 
@@ -51,12 +54,12 @@ Browser  <--  SSE stream  ──  Next.js API route  <--  Tiltify webhook (HMAC 
 
 - Server Components handle initial data fetch (SSR with cache revalidation)
 - A **DonationsContext** provider shares donation state across client components
-- Three context providers manage user preferences: appearance (dark/light/system), locale (EN/JP), and timezone (JST/UTC/local), all persisted in localStorage
+- Three context providers manage user preferences: appearance (dark/light/system), locale (EN/JA), and timezone (JST/UTC/local), all persisted in localStorage
 
 ## Key Features
 
 - **Real-time updates** via webhook-driven SSE with polling fallback
-- **Donation war classifier**: regex pattern engine that categorizes donations into themed wars (anime, games, countries, pizza, Pokemon, Gacha, etc.) by parsing donor comments
+- **Donation war classifier**: regex pattern engine that categorizes donations into themed wars (anime, games, countries, consoles, pizza, Pokemon, Gacha, Sanrio, Uma Musume, etc.) by parsing donor comments
 - **Custom i18n**: lightweight hook-based translation system with namespace scoping, no external dependency
 - **Multi-timezone support**: timestamps render in JST, UTC, or local time; currency symbols adapt accordingly
 - **Animated counters**: donation totals animate smoothly using `requestAnimationFrame` with cubic ease-out
@@ -128,17 +131,22 @@ npm run check        # Run format + lint + typecheck
 
 ```text
 src/
-├── app/                  # Next.js App Router pages
-│   ├── api/              # API routes (webhook handler, SSE stream)
-│   ├── donations/        # Live, search, and top donor pages
-│   ├── journey/          # Day-by-day journey pages ([day] dynamic route)
-│   └── stats/            # Donation war tracker
-├── components/           # React components (UI, charts, leaderboards)
-├── contexts/             # DonationsContext (global donation state)
-├── hooks/                # Custom hooks (polling, translations, animation)
-├── lib/                  # Data fetching, types, utilities, pattern matchers
-├── messages/             # Translation files (en.json, ja.json)
-└── providers/            # Chakra, appearance, locale, timezone providers
+├── app/                     # Next.js App Router pages
+│   ├── api/                 # API routes (webhook handler, SSE stream)
+│   ├── about/               # About the tracker (data sources, how to support)
+│   ├── about-cyclethon/     # Cyclethon history and edition comparisons
+│   ├── donations/           # Donations section: live, search, top donors
+│   ├── finish-line/         # Finish line IRL event details
+│   ├── journey/             # Day-by-day journey pages ([day] dynamic route)
+│   ├── stats/               # Donation Wars tracker
+│   └── en/, ja/             # Locale redirect routes
+├── components/              # React components (UI, charts, leaderboards)
+│   └── journey/             # Journey-specific sub-components
+├── contexts/                # DonationsContext (global donation state)
+├── hooks/                   # Custom hooks (polling, translations, animation)
+├── lib/                     # Data fetching, types, utilities, pattern matchers
+├── messages/                # Translation files (en.json, ja.json)
+└── providers/               # Chakra, appearance, locale, timezone providers
 ```
 
 ## Future Improvements
