@@ -41,6 +41,7 @@ function ChartTooltip({
 }: TooltipProps<ValueType, NameType> &
   ChartTooltipExtraProps & { payload?: readonly Payload<ValueType, NameType>[] }) {
   const currencyPrefix = useCurrencyPrefix();
+  const tNav = useTranslations('dayNav');
 
   if (!active || !payload?.length) {
     return null;
@@ -62,7 +63,9 @@ function ChartTooltip({
         padding: '6px 10px',
       }}
     >
-      <div style={{ fontWeight: 600, marginBottom: 4 }}>{label}</div>
+      <div style={{ fontWeight: 600, marginBottom: 4 }}>
+        {label != null ? tNav('dayLabel', { day: label }) : null}
+      </div>
       {entries.map((p) => (
         <div
           key={p.name}
