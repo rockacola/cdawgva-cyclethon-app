@@ -134,7 +134,6 @@ export function Header() {
             borderRadius="sm"
             color="fg.subtle"
             cursor="pointer"
-            display={{ base: 'none', md: 'block' }}
             fontFamily="mono"
             fontSize="sm"
             fontWeight="semibold"
