@@ -8,6 +8,8 @@ import { useTranslations } from '@/hooks/useTranslations';
 import type { GuestCyclist } from '@/lib/journey';
 import { KCAL_TO_KJ, KM_TO_MI, formatMinutesToCyclingTime } from '@/lib/unitConversions';
 
+import { SectionLabel } from '../SectionLabel';
+
 import { DayMapEmbed } from './DayMapEmbed';
 import { DonationWarsSummary } from './DonationWarsSummary';
 import { JourneyGuestsGrid } from './JourneyGuestsGrid';
@@ -57,23 +59,6 @@ function StatCell({ borderLeft, label, sub, value }: StatCellProps) {
         </Text>
       ) : null}
     </Box>
-  );
-}
-
-function SectionLabel({ children }: { children: string }) {
-  return (
-    <Flex align="center" gap={3} mb={5}>
-      <Box bg="accent" flexShrink={0} h="1px" w={5} />
-      <Text
-        color="accent"
-        fontFamily="mono"
-        fontSize="xs"
-        letterSpacing="widest"
-        textTransform="uppercase"
-      >
-        {children}
-      </Text>
-    </Flex>
   );
 }
 

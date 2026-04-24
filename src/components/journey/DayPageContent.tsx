@@ -1,12 +1,14 @@
 'use client';
 
-import { Box, Flex, Grid, Text } from '@chakra-ui/react';
+import { Box, Grid, Text } from '@chakra-ui/react';
 
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDayDonations } from '@/hooks/useDayDonations';
 import { useTranslations } from '@/hooks/useTranslations';
 import type { DayEntry, JourneyDay } from '@/lib/journey';
 import { useLocaleContext } from '@/providers/LocaleProvider';
+
+import { SectionLabel } from '../SectionLabel';
 
 import { DayDonationChart } from './DayDonationChart';
 import { DayDonationWar } from './DayDonationWar';
@@ -21,23 +23,6 @@ import { DayYouTubeEmbed } from './DayYouTubeEmbed';
 interface Props {
   content: DayEntry | undefined;
   day: JourneyDay;
-}
-
-function SectionLabel({ children }: { children: string }) {
-  return (
-    <Flex align="center" gap={3} mb={5}>
-      <Box bg="accent" flexShrink={0} h="1px" w={5} />
-      <Text
-        color="accent"
-        fontFamily="mono"
-        fontSize="xs"
-        letterSpacing="widest"
-        textTransform="uppercase"
-      >
-        {children}
-      </Text>
-    </Flex>
-  );
 }
 
 export function DayPageContent({ content, day }: Props) {

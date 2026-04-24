@@ -1,9 +1,10 @@
 'use client';
 
-import { Box, Container, Flex, Link, SimpleGrid, Text } from '@chakra-ui/react';
-import { Activity, Droplets, ExternalLink, Hash, Heart, MessageSquare, Tv } from 'lucide-react';
+import { Box, Container, Flex, SimpleGrid, Text } from '@chakra-ui/react';
+import { Activity, Droplets, Hash, Heart, MessageSquare, Tv } from 'lucide-react';
 import type { ReactNode } from 'react';
 
+import { FlatCard } from '@/components/FlatCard';
 import { LedgerSection } from '@/components/LedgerSection';
 import { useTranslations } from '@/hooks/useTranslations';
 
@@ -15,7 +16,7 @@ interface Source {
   nameKey: string;
 }
 
-const sources: Source[] = [
+const SOURCES: Source[] = [
   {
     detailKey: 'sourceTiltifyDetail',
     icon: <Activity size={14} />,
@@ -45,7 +46,7 @@ interface SupportLink {
   titleKey: string;
 }
 
-const supportLinks: SupportLink[] = [
+const SUPPORT_LINKS: SupportLink[] = [
   {
     bodyKey: 'donateBody',
     href: 'https://tiltify.com/@cdawgva/cyclethon-5',
@@ -68,52 +69,6 @@ const supportLinks: SupportLink[] = [
     titleKey: 'spreadTitle',
   },
 ];
-
-function FlatCard({
-  body,
-  href,
-  icon,
-  label,
-  title,
-}: {
-  body: string;
-  href?: string;
-  icon: ReactNode;
-  label?: string;
-  title: string;
-}) {
-  return (
-    <Box borderColor="border" borderWidth="1px" p={5}>
-      <Flex align="center" color="accent" gap={2} mb={3}>
-        {icon}
-        <Text fontFamily="mono" fontSize="xs" letterSpacing="widest" textTransform="uppercase">
-          {title}
-        </Text>
-      </Flex>
-      <Text color="fg.muted" fontSize="sm" lineHeight={1.6}>
-        {body}
-      </Text>
-      {href && label ? (
-        <Link
-          _hover={{ color: 'fg' }}
-          alignItems="center"
-          color="fg.subtle"
-          display="inline-flex"
-          fontFamily="mono"
-          fontSize="xs"
-          gap={1.5}
-          href={href}
-          letterSpacing="wide"
-          mt={3}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          {label} <ExternalLink size={10} />
-        </Link>
-      ) : null}
-    </Box>
-  );
-}
 
 export function AboutContent() {
   const t = useTranslations('about');
@@ -168,7 +123,7 @@ export function AboutContent() {
         {/* Data sources */}
         <LedgerSection index="01" title={t('dataSourcesLabel')}>
           <SimpleGrid columns={{ base: 1, md: 3 }} gap={2}>
-            {sources.map(({ nameKey, detailKey, href, linkKey, icon }) => (
+            {SOURCES.map(({ nameKey, detailKey, href, linkKey, icon }) => (
               <FlatCard
                 body={t(detailKey)}
                 href={href}
@@ -187,7 +142,7 @@ export function AboutContent() {
             {t('supportIntro')}
           </Text>
           <SimpleGrid columns={{ base: 1, md: 3 }} gap={2}>
-            {supportLinks.map(({ titleKey, bodyKey, href, labelKey, icon }) => (
+            {SUPPORT_LINKS.map(({ titleKey, bodyKey, href, labelKey, icon }) => (
               <FlatCard
                 body={t(bodyKey)}
                 href={href}

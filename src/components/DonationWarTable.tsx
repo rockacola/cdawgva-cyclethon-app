@@ -102,28 +102,26 @@ export function DonationWarTable({ type, donations, maxCount }: Props) {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {stats.map((row, i) => (
-          <Table.Row _hover={{ bg: { base: 'bg.muted', _dark: 'gray.800' } }} key={row.item}>
-            <Table.Cell>
-              <Box display="flex" justifyContent="center">
-                {i === 0 ? <Crown color="var(--chakra-colors-yellow-400)" size={16} /> : i + 1}
-              </Box>
-            </Table.Cell>
-            <Table.Cell>{itemIdToName(type, row.item, resolvedLocale)}</Table.Cell>
-            <Table.Cell textAlign="right">{row.count}</Table.Cell>
-            <Table.Cell textAlign="right" whiteSpace="nowrap">
-              {(() => {
-                const { whole, cents } = formatAmountParts(row.sumCent, currencyPrefix);
-                return (
-                  <>
-                    {whole}
-                    <Span color="fg.subtle">{cents}</Span>
-                  </>
-                );
-              })()}
-            </Table.Cell>
-          </Table.Row>
-        ))}
+        {stats.map((row, i) => {
+          const { whole, cents } = formatAmountParts(row.sumCent, currencyPrefix);
+          const isFirst = i === 0;
+
+          return (
+            <Table.Row _hover={{ bg: { base: 'bg.muted', _dark: 'gray.800' } }} key={row.item}>
+              <Table.Cell>
+                <Box display="flex" justifyContent="center">
+                  {isFirst ? <Crown color="var(--chakra-colors-yellow-400)" size={16} /> : i + 1}
+                </Box>
+              </Table.Cell>
+              <Table.Cell>{itemIdToName(type, row.item, resolvedLocale)}</Table.Cell>
+              <Table.Cell textAlign="right">{row.count}</Table.Cell>
+              <Table.Cell textAlign="right" whiteSpace="nowrap">
+                {whole}
+                <Span color="fg.subtle">{cents}</Span>
+              </Table.Cell>
+            </Table.Row>
+          );
+        })}
       </Table.Body>
     </Table.Root>
   );

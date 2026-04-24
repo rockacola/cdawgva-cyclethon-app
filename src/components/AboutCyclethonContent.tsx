@@ -3,6 +3,7 @@
 import { Box, Flex, Grid, Link, Text } from '@chakra-ui/react';
 
 import { CyclethonGrowthChart } from '@/components/CyclethonGrowthChart';
+import { SectionLabel } from '@/components/SectionLabel';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
 import { cyclethonHistory } from '@/lib/cyclethonHistory';
@@ -47,23 +48,6 @@ function fmtShort(n: number, currencyPrefix: string): string {
     return `${currencyPrefix}${Math.round(n / 1_000)}k`;
   }
   return `${currencyPrefix}${n}`;
-}
-
-function SectionLabel({ children }: { children: string }) {
-  return (
-    <Flex align="center" gap={3} mb={5}>
-      <Box bg="accent" flexShrink={0} h="1px" w={5} />
-      <Text
-        color="accent"
-        fontFamily="mono"
-        fontSize="xs"
-        letterSpacing="widest"
-        textTransform="uppercase"
-      >
-        {children}
-      </Text>
-    </Flex>
-  );
 }
 
 export function AboutCyclethonContent() {
