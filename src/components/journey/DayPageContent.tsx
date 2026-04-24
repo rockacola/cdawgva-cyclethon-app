@@ -212,7 +212,7 @@ export function DayPageContent({ content, day }: Props) {
       {/* ── 01 / Ride telemetry ───────────────────── */}
       {hasTelemetry ? (
         <Box borderBottomWidth="1px" borderColor="border" py={8}>
-          <SectionLabel>01 / Ride telemetry</SectionLabel>
+          <SectionLabel>01 / {t('rideTelemetry')}</SectionLabel>
           <DayStatsGrid
             avgTempCelsius={content!.avgTempCelsius}
             caloriesBurnt={content!.caloriesBurnt}
@@ -226,7 +226,7 @@ export function DayPageContent({ content, day }: Props) {
       {/* ── 02 / Route map ────────────────────────── */}
       {content?.mapEmbedUrl ? (
         <Box borderBottomWidth="1px" borderColor="border" py={8}>
-          <SectionLabel>{`0${sectionIndex.map} / Route map`}</SectionLabel>
+          <SectionLabel>{`0${sectionIndex.map} / ${t('routeMap')}`}</SectionLabel>
           <DayMapEmbed embedUrl={content.mapEmbedUrl} title={t('routeMap')} />
         </Box>
       ) : null}
@@ -234,7 +234,7 @@ export function DayPageContent({ content, day }: Props) {
       {/* ── 03 / Locations log ────────────────────── */}
       {content?.mapLocations?.length ? (
         <Box borderBottomWidth="1px" borderColor="border" py={8}>
-          <SectionLabel>{`0${sectionIndex.locations} / Locations log`}</SectionLabel>
+          <SectionLabel>{`0${sectionIndex.locations} / ${t('locationsLog')}`}</SectionLabel>
           <DayMapLocations locations={content.mapLocations} />
         </Box>
       ) : null}
@@ -242,7 +242,7 @@ export function DayPageContent({ content, day }: Props) {
       {/* ── 04 / Donations that day ───────────────── */}
       {hasTelemetry ? (
         <Box py={8}>
-          <SectionLabel>{`0${sectionIndex.donations} / Donations that day`}</SectionLabel>
+          <SectionLabel>{`0${sectionIndex.donations} / ${t('donationsThatDay')}`}</SectionLabel>
           <Box borderColor="border" borderWidth="1px" mb={5}>
             <DayDonationChart dateStr={dateStr} donations={dayDonations} />
           </Box>

@@ -32,7 +32,7 @@ const EDITIONS: Edition[] = cyclethonHistory.map((series, i) => {
   };
 });
 
-const LIFETIME = EDITIONS.reduce((sum, e) => sum + e.raised, 0);
+const LIFETIME = 5_000_000;
 
 function fmtShort(n: number, currencyPrefix: string): string {
   if (n >= 1_000_000) {
@@ -77,7 +77,6 @@ export function AboutCyclethonContent() {
           <Box as="em" color="accent" fontStyle="italic">
             {t('headlineAccent')}
           </Box>
-          {t('headlineSuffix')}
         </Text>
 
         <Text
