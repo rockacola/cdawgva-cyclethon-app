@@ -110,24 +110,6 @@ export function isAnonymous(name: string): boolean {
   return name.toLowerCase() === 'anonymous';
 }
 
-const DONATION_AGE_HOT_MS = 10_000;
-const DONATION_AGE_NEW_MS = 30_000;
-
-export function getDonationBoxShadow(
-  completedAtSeconds: number,
-  nowMs: number,
-  insetWidth: number
-): string | undefined {
-  const ageMs = nowMs - completedAtSeconds * 1000;
-  if (ageMs < DONATION_AGE_HOT_MS) {
-    return `inset ${insetWidth}px 0 0 0 var(--chakra-colors-orange-400)`;
-  }
-  if (ageMs <= DONATION_AGE_NEW_MS) {
-    return `inset ${insetWidth}px 0 0 0 var(--chakra-colors-orange-200)`;
-  }
-  return undefined;
-}
-
 export function getLastDailyTotal(stats: DonationsStats): DailyTotal | undefined {
   return stats.stats.daily_totals.at(-1);
 }

@@ -1,0 +1,13 @@
+@keyframes donation-glow {
+  0%,
+  33.33% {
+    box-shadow: inset 3px 0 0 0 var(--chakra-colors-orange-400);
+  }
+  33.34%,
+  99.9% {
+    box-shadow: inset 3px 0 0 0 var(--chakra-colors-orange-200);
+  }
+  100% {
+    box-shadow: none;
+  }
+}

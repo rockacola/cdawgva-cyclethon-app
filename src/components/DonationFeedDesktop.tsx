@@ -6,8 +6,7 @@ import { DonationTime } from '@/components/DonationTime';
 import { DonorName } from '@/components/DonorName';
 import { RelativeTime } from '@/components/RelativeTime';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
-import { useNow } from '@/hooks/useNow';
-import { formatAmountParts, getDonationBoxShadow } from '@/lib/donationUtils';
+import { formatAmountParts } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 
 export type SortDir = 'asc' | 'desc';
@@ -19,29 +18,38 @@ interface Props {
 
 const LARGE_AMOUNT_CENT = 10_000; // $100
 
+const GLOW_DURATION_MS = 30_000;
+
 export function DonationFeedDesktop({ donations }: Props) {
   const currencyPrefix = useCurrencyPrefix();
-  const now = useNow(1000);
+  const renderNow = Date.now();
 
   return (
     <Box borderColor="border" borderTopWidth="1px">
       {donations.map((d) => {
         const { whole, cents } = formatAmountParts(d.amount_cent, currencyPrefix);
         const isLarge = d.amount_cent >= LARGE_AMOUNT_CENT;
+        const ageMs = renderNow - d.completed_at * 1000;
+        const glowStyle =
+          ageMs < GLOW_DURATION_MS
+            ? {
+                animation: `donation-glow ${GLOW_DURATION_MS}ms linear`,
+                animationDelay: `-${ageMs}ms`,
+              }
+            : undefined;
         return (
           <Grid
             _hover={{ bg: 'bg.subtle' }}
             alignItems="baseline"
             borderBottomWidth="1px"
             borderColor="border"
-            boxShadow={getDonationBoxShadow(d.completed_at, now, 3)}
             gap={5}
             gridTemplateColumns="140px 1fr 120px"
             key={d.id}
             position="relative"
             px={2}
             py={5}
-            transition="box-shadow 0.3s ease"
+            style={glowStyle}
           >
             {/* Amount */}
             <Text

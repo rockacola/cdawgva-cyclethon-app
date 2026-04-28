@@ -6,31 +6,39 @@ import { DonationTime } from '@/components/DonationTime';
 import { DonorName } from '@/components/DonorName';
 import { RelativeTime } from '@/components/RelativeTime';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
-import { useNow } from '@/hooks/useNow';
-import { formatAmount, getDonationBoxShadow } from '@/lib/donationUtils';
+import { formatAmount } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 
 interface Props {
   donations: Donation[];
 }
 
+const GLOW_DURATION_MS = 30_000;
+
 export function DonationFeedMobile({ donations }: Props) {
   const currencyPrefix = useCurrencyPrefix();
-  const now = useNow(1000);
+  const renderNow = Date.now();
 
   return (
     <Stack borderRadius="sm" borderWidth="1px" gap={0} overflow="hidden">
       {donations.map((d) => {
+        const ageMs = renderNow - d.completed_at * 1000;
+        const glowStyle =
+          ageMs < GLOW_DURATION_MS
+            ? {
+                animation: `donation-glow ${GLOW_DURATION_MS}ms linear`,
+                animationDelay: `-${ageMs}ms`,
+              }
+            : undefined;
         return (
           <Box
             _hover={{ bg: 'bg.muted' }}
             _last={{ borderBottomWidth: 0 }}
             borderBottomWidth="1px"
-            boxShadow={getDonationBoxShadow(d.completed_at, now, 3)}
             key={d.id}
             px={2}
             py={1.5}
-            transition="box-shadow 0.3s ease"
+            style={glowStyle}
           >
             <Box alignItems="baseline" display="flex" justifyContent="space-between">
               <Text fontSize="xs" fontWeight="semibold">
