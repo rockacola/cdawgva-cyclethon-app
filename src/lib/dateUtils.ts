@@ -8,8 +8,12 @@ export function todayInOffset(utcOffset: string): string {
   return new Date(Date.now() + offsetMs).toISOString().slice(0, 10);
 }
 
-export function formatRelative(date: Date, locale: string = 'en'): string {
-  const diffMs = date.getTime() - Date.now();
+export function formatRelative(
+  date: Date,
+  locale: string = 'en',
+  nowMs: number = Date.now()
+): string {
+  const diffMs = date.getTime() - nowMs;
   const diffMin = Math.round(diffMs / 60_000);
   const diffHr = Math.round(diffMin / 60);
   const diffDay = Math.round(diffHr / 24);

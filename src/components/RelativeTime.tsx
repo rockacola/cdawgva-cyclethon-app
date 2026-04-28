@@ -1,8 +1,8 @@
 'use client';
 
 import { Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
 
+import { useNow } from '@/hooks/useNow';
 import { formatRelative } from '@/lib/dateUtils';
 import { formatAbsoluteTime } from '@/lib/timeUtils';
 import { useLocaleContext } from '@/providers/LocaleProvider';
@@ -17,22 +17,8 @@ export function RelativeTime({ timestamp, showAbsoluteTime = false }: Props) {
   const { timezoneMode } = useTimezoneContext();
   const { resolvedLocale } = useLocaleContext();
   const intlLocale = resolvedLocale === 'JA' ? 'ja' : 'en';
-  const [relative, setRelative] = useState<string>(
-    formatRelative(new Date(timestamp * 1000), intlLocale)
-  );
-
-  useEffect(
-    function syncRelativeTime() {
-      const d = new Date(timestamp * 1000);
-      setRelative(formatRelative(d, intlLocale));
-      const interval = setInterval(
-        () => setRelative(formatRelative(new Date(timestamp * 1000), intlLocale)),
-        60_000
-      );
-      return () => clearInterval(interval);
-    },
-    [timestamp, intlLocale]
-  );
+  const now = useNow(60_000);
+  const relative = formatRelative(new Date(timestamp * 1000), intlLocale, now);
 
   if (showAbsoluteTime) {
     const absolute = formatAbsoluteTime(timestamp, timezoneMode);
