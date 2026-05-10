@@ -11,10 +11,10 @@ export const DONATIONS_FULL_URL = `${R2_BASE_URL}/${DONATIONS_FULL_FILE}`;
 export const DONATIONS_STATS_URL = `${R2_BASE_URL}/${DONATIONS_STATS_FILE}`;
 
 // Server-side revalidation window in seconds
-export const FETCH_CACHE_REVALIDATE = 60;
+export const FETCH_CACHE_REVALIDATE = 3600;
 
 // Client-side polling interval in milliseconds
-export const DONATION_REFETCH_INTERVAL = 30_000;
+export const DONATION_REFETCH_INTERVAL = 300_000;
 
 // Appearance mode options
 export const APPEARANCE_MODES = ['Light', 'Dark', 'System'] as const;

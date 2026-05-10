@@ -6,6 +6,8 @@ import { PageContainer } from '@/components/PageContainer';
 import { getDonations } from '@/lib/getDonations';
 import { getStats } from '@/lib/getStats';
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: 'Cyclethon Tracker',
 };
