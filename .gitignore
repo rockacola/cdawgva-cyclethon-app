@@ -29,3 +29,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# cypress
+cypress/screenshots
+cypress/videos
+cypress/snapshots/__diff_output__
+cypress-image-diff-html-report
+cypress-image-diff-screenshots/comparison
+cypress-image-diff-screenshots/diff

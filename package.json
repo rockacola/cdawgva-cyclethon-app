@@ -10,7 +10,11 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "check": "npm run format && npm run lint && npm run typecheck"
+    "typecheck:cy": "tsc --noEmit --project cypress/tsconfig.json",
+    "check": "npm run format && npm run lint && npm run typecheck && npm run typecheck:cy",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:headless": "cypress run --headless"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.16.0",
@@ -31,6 +35,8 @@
     "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
+    "cypress": "^15.14.2",
+    "cypress-image-diff-js": "^2.8.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.3.0",
     "eslint-config-prettier": "^10.0.0",

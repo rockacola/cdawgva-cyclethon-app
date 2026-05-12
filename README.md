@@ -127,6 +127,18 @@ npm run format       # Prettier (write)
 npm run check        # Run format + lint + typecheck
 ```
 
+### Visual Regression Tests (Cypress)
+
+Requires the dev server to be running (`npm run dev`) in a separate terminal.
+
+```bash
+npm run cy:open          # Open Cypress UI (interactive, good for authoring)
+npm run cy:run           # Run all specs in the terminal
+npm run cy:run:headless  # Same but forces headless Chrome
+```
+
+**First run** captures baseline screenshots under `cypress/snapshots/`. Subsequent runs diff against those baselines and fail if the pixel difference exceeds 3%. To update a baseline after an intentional UI change, delete its PNG from `cypress/snapshots/` and re-run.
+
 ## Project Structure
 
 ```text

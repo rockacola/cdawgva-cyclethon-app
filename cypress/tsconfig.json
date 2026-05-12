@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "lib": ["es2015", "dom"],
+    "skipLibCheck": true,
+    "types": ["cypress", "cypress-image-diff-js", "node"]
+  },
+  "include": ["**/*.ts"]
+}
