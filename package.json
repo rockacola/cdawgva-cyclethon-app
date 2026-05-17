@@ -7,11 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "typecheck:cy": "tsc --noEmit --project cypress/tsconfig.json",
-    "check": "npm run format && npm run lint && npm run typecheck && npm run typecheck:cy",
+    "check": "npm run format && npm run lint:fix && npm run typecheck && npm run typecheck:cy",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:run:headless": "cypress run --headless"
