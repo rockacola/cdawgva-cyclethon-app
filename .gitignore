@@ -37,3 +37,6 @@ cypress/snapshots/__diff_output__
 cypress-image-diff-html-report
 cypress-image-diff-screenshots/comparison
 cypress-image-diff-screenshots/diff
+
+# Claude Code
+.claude/
