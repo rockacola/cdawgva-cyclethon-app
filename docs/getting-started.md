@@ -46,6 +46,7 @@ npm run check           # format + lint:fix + typecheck + typecheck:cy (run befo
 npm run cy:open         # open Cypress Test Runner
 npm run cy:run          # run Cypress tests
 npm run cy:run:headless # run Cypress tests headless
+npm run snapshot        # full-page screenshots of every route, archived to snapshots/<timestamp>/
 ```
 
 ---
@@ -85,6 +86,10 @@ Deployed to Vercel. Push to `main` triggers a production deploy automatically.
 ### Cypress
 
 End-to-end tests live in `cypress/`. Visual regression uses `cypress-image-diff-js`.
+
+### Playwright
+
+Used only for `npm run snapshot`. Not wired into the test suite — just a Node script (`scripts/snapshot.js`) that launches Chromium, visits every route, and saves full-page PNGs to `snapshots/<timestamp>/`.
 
 ---
 
@@ -139,6 +144,8 @@ src/
 cypress/                        # E2E tests
 docs/                           # Documentation
 public/                         # Static assets
+scripts/
+  snapshot.js                   # Playwright snapshot script (npm run snapshot)
 ```
 
 ---
