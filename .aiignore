@@ -1,0 +1,9 @@
+.env
+.env.*
+*.key
+*.pem
+.next/
+node_modules/
+snapshots/
+cypress-image-diff-screenshots/
+cypress-image-diff-html-report/
