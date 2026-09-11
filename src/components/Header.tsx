@@ -14,7 +14,7 @@ import {
 import { Menu, Settings, X } from 'lucide-react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { DonateLinkButton } from '@/components/DonateLinkButton';
 import { SettingsModal } from '@/components/SettingsModal';
@@ -45,15 +45,14 @@ export function Header() {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
   const t = useTranslations('header');
   const { resolvedLocale, setLocaleMode } = useLocaleContext();
 
-  useEffect(
-    function closeDrawerOnNav() {
-      setDrawerOpen(false);
-    },
-    [pathname]
-  );
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setDrawerOpen(false);
+  }
 
   const isDonationsActive = pathname.startsWith('/donations');
 

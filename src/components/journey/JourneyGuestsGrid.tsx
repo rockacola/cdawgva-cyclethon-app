@@ -28,7 +28,7 @@ function computeGuestDays(): Map<string, number> {
 export function JourneyGuestsGrid({ guests }: Props) {
   const t = useTranslations('journey');
   const { resolvedLocale } = useLocaleContext();
-  const guestDays = useMemo(computeGuestDays, []);
+  const guestDays = useMemo(() => computeGuestDays(), []);
 
   return (
     <SimpleGrid columns={{ base: 2, md: 3 }} gap={1}>

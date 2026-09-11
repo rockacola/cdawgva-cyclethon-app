@@ -6,6 +6,7 @@ import { DonationTime } from '@/components/DonationTime';
 import { DonorName } from '@/components/DonorName';
 import { RelativeTime } from '@/components/RelativeTime';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
+import { useNow } from '@/hooks/useNow';
 import { formatAmountParts } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 
@@ -22,7 +23,7 @@ const GLOW_DURATION_MS = 30_000;
 
 export function DonationFeedDesktop({ donations }: Props) {
   const currencyPrefix = useCurrencyPrefix();
-  const renderNow = Date.now();
+  const renderNow = useNow();
 
   return (
     <Box borderColor="border" borderTopWidth="1px">

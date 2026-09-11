@@ -3,6 +3,8 @@ import { fileURLToPath } from 'url';
 
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
+import nextTypescript from 'eslint-config-next/typescript';
 import importPlugin from 'eslint-plugin-import';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,7 +14,9 @@ const compat = new FlatCompat({ baseDirectory: __dirname });
 
 const eslintConfig = [
   js.configs.recommended,
-  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
+  ...nextCoreWebVitals,
+  ...nextTypescript,
+  ...compat.extends('prettier'),
   {
     plugins: {
       import: importPlugin,
@@ -94,6 +98,9 @@ const eslintConfig = [
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-react': 'off',
     },
+  },
+  {
+    ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
   },
 ];
 

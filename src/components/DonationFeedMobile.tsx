@@ -6,6 +6,7 @@ import { DonationTime } from '@/components/DonationTime';
 import { DonorName } from '@/components/DonorName';
 import { RelativeTime } from '@/components/RelativeTime';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
+import { useNow } from '@/hooks/useNow';
 import { formatAmount } from '@/lib/donationUtils';
 import type { Donation } from '@/lib/types';
 
@@ -17,7 +18,7 @@ const GLOW_DURATION_MS = 30_000;
 
 export function DonationFeedMobile({ donations }: Props) {
   const currencyPrefix = useCurrencyPrefix();
-  const renderNow = Date.now();
+  const renderNow = useNow();
 
   return (
     <Stack borderRadius="sm" borderWidth="1px" gap={0} overflow="hidden">
