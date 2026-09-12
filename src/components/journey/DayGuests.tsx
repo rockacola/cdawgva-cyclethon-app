@@ -6,7 +6,7 @@ import type { GuestCyclist } from '@/lib/journey';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 
 const ICON_SIZE = 18;
-const PLACEHOLDER_IMAGE = '/images/placeholder-avatar.svg';
+const PLACEHOLDER_IMAGE = '/images/2026/placeholder-avatar.svg';
 
 interface Props {
   guests: GuestCyclist[];

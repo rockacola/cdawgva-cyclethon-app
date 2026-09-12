@@ -9,7 +9,7 @@ import type { GuestCyclist } from '@/lib/journey';
 import { journeyData } from '@/lib/journey-data';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 
-const PLACEHOLDER_IMAGE = '/images/placeholder-avatar.svg';
+const PLACEHOLDER_IMAGE = '/images/2026/placeholder-avatar.svg';
 
 interface Props {
   guests: GuestCyclist[];

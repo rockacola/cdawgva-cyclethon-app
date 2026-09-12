@@ -160,7 +160,9 @@ src/
     TimezoneProvider.tsx
 cypress/                        # E2E tests
 docs/                           # Documentation
-public/                         # Static assets
+public/
+  images/
+    2026/                        # This edition's photos/avatars — future years get their own subfolder
 scripts/
   snapshot.js                   # Playwright snapshot script (npm run snapshot)
 ```

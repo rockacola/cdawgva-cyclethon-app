@@ -70,7 +70,7 @@ export function HomeCause() {
         <Image
           alt="The Cause"
           fill
-          src="/images/cyclethon-4-4.jpg"
+          src="/images/2026/cyclethon-4-4.jpg"
           style={{ filter: 'sepia(0.2)', objectFit: 'cover' }}
         />
       </Box>

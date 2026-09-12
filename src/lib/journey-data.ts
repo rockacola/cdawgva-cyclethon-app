@@ -82,7 +82,7 @@ export const journeyData: DayEntry[] = [
     guests: [
       {
         handler: 'JSchlatt',
-        imageUrl: '/images/avatar-jschlatt.jpg',
+        imageUrl: '/images/2026/avatar-jschlatt.jpg',
         name: 'Schlatt',
         nameJa: 'ジャシュラット',
         twitchUrl: 'https://www.twitch.tv/schlatt',
@@ -191,7 +191,7 @@ export const journeyData: DayEntry[] = [
     guests: [
       {
         handler: 'JSchlatt',
-        imageUrl: '/images/avatar-jschlatt.jpg',
+        imageUrl: '/images/2026/avatar-jschlatt.jpg',
         name: 'Schlatt',
         nameJa: 'ジャシュラット',
         twitchUrl: 'https://www.twitch.tv/schlatt',
@@ -297,7 +297,7 @@ export const journeyData: DayEntry[] = [
     guests: [
       {
         handler: 'Gigguk',
-        imageUrl: '/images/avatar-gigguk.jpg',
+        imageUrl: '/images/2026/avatar-gigguk.jpg',
         name: 'Garnt',
         nameJa: 'ギグック',
         twitchUrl: 'https://www.twitch.tv/gigguk',
@@ -404,7 +404,7 @@ export const journeyData: DayEntry[] = [
     guests: [
       {
         handler: 'Gigguk',
-        imageUrl: '/images/avatar-gigguk.jpg',
+        imageUrl: '/images/2026/avatar-gigguk.jpg',
         name: 'Garnt',
         nameJa: 'ギグック',
         twitchUrl: 'https://www.twitch.tv/gigguk',
@@ -489,7 +489,7 @@ export const journeyData: DayEntry[] = [
     guests: [
       {
         handler: 'RobCDee',
-        imageUrl: '/images/avatar-robcdee.jpg',
+        imageUrl: '/images/2026/avatar-robcdee.jpg',
         name: 'Rob',
         nameJa: 'ロブ',
         twitchUrl: 'https://www.twitch.tv/robcdee',
@@ -606,7 +606,7 @@ export const journeyData: DayEntry[] = [
     guests: [
       {
         handler: 'RobCDee',
-        imageUrl: '/images/avatar-robcdee.jpg',
+        imageUrl: '/images/2026/avatar-robcdee.jpg',
         name: 'Rob',
         nameJa: 'ロブ',
         twitchUrl: 'https://www.twitch.tv/robcdee',
@@ -691,7 +691,7 @@ export const journeyData: DayEntry[] = [
     guests: [
       {
         handler: 'RobCDee',
-        imageUrl: '/images/avatar-robcdee.jpg',
+        imageUrl: '/images/2026/avatar-robcdee.jpg',
         name: 'Rob',
         nameJa: 'ロブ',
         twitchUrl: 'https://www.twitch.tv/robcdee',
@@ -792,7 +792,7 @@ export const journeyData: DayEntry[] = [
     guests: [
       {
         handler: 'PewDiePie',
-        imageUrl: '/images/avatar-pewdiepie.jpg',
+        imageUrl: '/images/2026/avatar-pewdiepie.jpg',
         name: 'Felix',
         nameJa: 'ピューディパイ',
         twitchUrl: 'https://www.twitch.tv/pewdiepie',
@@ -1210,7 +1210,7 @@ export const journeyData: DayEntry[] = [
     guests: [
       {
         handler: 'ironmouse',
-        imageUrl: '/images/avatar-ironmouse.png',
+        imageUrl: '/images/2026/avatar-ironmouse.png',
         name: 'Ironmouse',
         nameJa: 'アイアンマウス',
         twitchUrl: 'https://www.twitch.tv/ironmouse',
@@ -1282,14 +1282,14 @@ export const journeyData: DayEntry[] = [
     guests: [
       {
         handler: 'PremierTwo',
-        imageUrl: '/images/avatar-premiertwo.jpg',
+        imageUrl: '/images/2026/avatar-premiertwo.jpg',
         name: 'Peter',
         nameJa: 'ピーター',
         twitchUrl: 'https://www.twitch.tv/premiertwo',
       },
       {
         handler: 'ironmouse',
-        imageUrl: '/images/avatar-ironmouse.png',
+        imageUrl: '/images/2026/avatar-ironmouse.png',
         name: 'Ironmouse',
         nameJa: 'アイアンマウス',
         twitchUrl: 'https://www.twitch.tv/ironmouse',

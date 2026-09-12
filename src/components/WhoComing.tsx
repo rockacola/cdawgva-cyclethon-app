@@ -27,7 +27,7 @@ const CAST: CastMember[] = [
   {
     days: 15,
     handle: 'CDawgVA',
-    image: '/images/avatar-connor.jpg',
+    image: '/images/2026/avatar-connor.jpg',
     name: 'Connor',
     nameJa: 'コナー',
     role: 'roleHost',
@@ -49,7 +49,7 @@ const CAST: CastMember[] = [
   {
     days: 15,
     handle: 'Abroad in Japan',
-    image: '/images/avatar-chris.jpg',
+    image: '/images/2026/avatar-chris.jpg',
     name: 'Chris',
     nameJa: 'クリス',
     role: 'roleCohost',
@@ -65,7 +65,7 @@ const CAST: CastMember[] = [
   {
     days: 2,
     handle: 'JSchlatt',
-    image: '/images/avatar-jschlatt.jpg',
+    image: '/images/2026/avatar-jschlatt.jpg',
     name: 'Schlatt',
     nameJa: 'シュラット',
     role: 'roleGuestCyclist',
@@ -87,7 +87,7 @@ const CAST: CastMember[] = [
   {
     days: 2,
     handle: 'GiggukAZ',
-    image: '/images/avatar-gigguk.jpg',
+    image: '/images/2026/avatar-gigguk.jpg',
     name: 'Garnt',
     nameJa: 'ガーント',
     role: 'roleGuestCyclist',
@@ -109,7 +109,7 @@ const CAST: CastMember[] = [
   {
     days: 3,
     handle: 'RobCDee',
-    image: '/images/avatar-robcdee.jpg',
+    image: '/images/2026/avatar-robcdee.jpg',
     name: 'Rob',
     nameJa: 'ロブ',
     role: 'roleGuestCyclist',
@@ -131,7 +131,7 @@ const CAST: CastMember[] = [
   {
     days: 1,
     handle: 'PewDiePie',
-    image: '/images/avatar-pewdiepie.jpg',
+    image: '/images/2026/avatar-pewdiepie.jpg',
     name: 'Felix',
     nameJa: 'フェリックス',
     role: 'roleGuestCyclist',
@@ -153,7 +153,7 @@ const CAST: CastMember[] = [
   {
     days: 2,
     handle: 'ironmouse',
-    image: '/images/avatar-ironmouse.png',
+    image: '/images/2026/avatar-ironmouse.png',
     name: 'Ironmouse',
     nameJa: 'アイアンマウス',
     role: 'roleVirtualCohost',
@@ -175,7 +175,7 @@ const CAST: CastMember[] = [
   {
     days: 1,
     handle: 'PremierTwo',
-    image: '/images/avatar-premiertwo.jpg',
+    image: '/images/2026/avatar-premiertwo.jpg',
     name: 'Peter',
     nameJa: 'ピーター',
     role: 'roleVanGang',
@@ -191,7 +191,7 @@ const CAST: CastMember[] = [
   {
     days: 15,
     handle: 'Paul Ballard',
-    image: '/images/avatar-paul.jpg',
+    image: '/images/2026/avatar-paul.jpg',
     name: 'Paul',
     nameJa: 'ポール',
     role: 'roleVanGang',
@@ -207,7 +207,7 @@ const CAST: CastMember[] = [
   {
     days: 15,
     handle: 'Ian',
-    image: '/images/avatar-ian.jpg',
+    image: '/images/2026/avatar-ian.jpg',
     name: 'Ian',
     nameJa: 'イアン',
     role: 'roleVanGang',
@@ -223,7 +223,7 @@ const CAST: CastMember[] = [
   {
     days: 15,
     handle: 'nabiruplays',
-    image: '/images/avatar-nabi.jpg',
+    image: '/images/2026/avatar-nabi.jpg',
     name: 'Nabi',
     nameJa: 'ナビ',
     role: 'roleVanGang',

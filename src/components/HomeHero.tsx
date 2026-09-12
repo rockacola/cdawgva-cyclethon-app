@@ -57,7 +57,7 @@ export function HomeHero({ stats }: HomeHeroProps) {
           alt="Cyclethon — on the road again"
           fill
           priority
-          src="/images/cyclethon-4-1.jpg"
+          src="/images/2026/cyclethon-4-1.jpg"
           style={{
             filter: 'sepia(0.2)',
             objectFit: 'cover',
