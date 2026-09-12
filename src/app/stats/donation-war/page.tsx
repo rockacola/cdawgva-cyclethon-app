@@ -78,7 +78,7 @@ function DonationWarContent() {
       {noMatchDonations.length > 0 && (
         <Box mb={10}>
           <Heading as="h2" mb={1} size="md">
-            No Match
+            No match
           </Heading>
           <Text color="fg.muted" fontSize="sm" mb={3}>
             {noMatchDonations.length} donations
@@ -127,7 +127,7 @@ function DonationWarContent() {
       ) : (
         <Box mb={10}>
           <Heading as="h2" mb={1} size="md">
-            All Matched Donations
+            All matched donations
           </Heading>
           <Text color="fg.muted" fontSize="sm" mb={3}>
             {filteredDonations.length} donations found
