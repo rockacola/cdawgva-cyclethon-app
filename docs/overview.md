@@ -13,7 +13,6 @@ Fan-made donation tracker for CDawgVA Cyclethon — a charity cycling event that
 | `/`                     | `src/app/page.tsx`                      | Homepage — hero, cause, body sections        |
 | `/en`                   | `src/app/en/page.tsx`                   | English locale entry point                   |
 | `/ja`                   | `src/app/ja/page.tsx`                   | Japanese locale entry point                  |
-| `/jp`                   | `src/app/jp/page.tsx`                   | Japanese locale alias                        |
 | `/about`                | `src/app/about/page.tsx`                | About the tracker                            |
 | `/about-cyclethon`      | `src/app/about-cyclethon/page.tsx`      | About the Cyclethon event                    |
 | `/donations`            | `src/app/donations/page.tsx`            | Donation feed with layout wrapper            |

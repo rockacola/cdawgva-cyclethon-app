@@ -110,7 +110,6 @@ src/
     en/                         # English locale entry point
     finish-line/
     ja/                         # Japanese locale entry point
-    jp/                         # Japanese locale alias
     journey/
       [day]/                    # Per-day log page
     stats/
