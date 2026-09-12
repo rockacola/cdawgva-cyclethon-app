@@ -32,6 +32,12 @@ function getDataSource(type: DonationWarType) {
   return dataSource;
 }
 
+export function isDonationWarType(value: string | null): value is DonationWarType {
+  return value !== null && value in DATA_SOURCE_MAP;
+}
+
+export const DONATION_WAR_TYPES = Object.keys(DATA_SOURCE_MAP) as DonationWarType[];
+
 export function detectItemIdFromComment(
   type: DonationWarType,
   comment: string | null | undefined

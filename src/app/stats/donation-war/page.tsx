@@ -14,9 +14,13 @@ import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useDonationsPolling } from '@/hooks/useDonationsPolling';
 import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 import { formatAmountParts } from '@/lib/donationUtils';
-import { detectItemIdFromComment, itemIdToName } from '@/lib/donationWarUtils';
+import {
+  DONATION_WAR_TYPES,
+  detectItemIdFromComment,
+  isDonationWarType,
+  itemIdToName,
+} from '@/lib/donationWarUtils';
 import { formatDonationTime } from '@/lib/timeUtils';
-import type { DonationWarType } from '@/lib/types';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
 export default function DonationWarPage() {
@@ -34,10 +38,22 @@ function DonationWarContent() {
   const searchParams = useSearchParams();
   const currencyPrefix = useCurrencyPrefix();
 
-  const type = searchParams.get('type') as DonationWarType | null;
-  if (!type) {
-    throw new Error('Expect a donation type from URL params.');
+  const rawType = searchParams.get('type');
+  if (!isDonationWarType(rawType)) {
+    return (
+      <PageContainer>
+        <Heading as="h1" mb={2} size={{ base: 'xl', md: '2xl' }}>
+          Missing donation type
+        </Heading>
+        <Text color="fg.muted" fontSize="sm">
+          This page needs a <Span fontFamily="mono">type</Span> parameter in the URL, for example{' '}
+          <Span fontFamily="mono">?type=anime</Span>. Valid types are:{' '}
+          {DONATION_WAR_TYPES.join(', ')}.
+        </Text>
+      </PageContainer>
+    );
   }
+  const type = rawType;
   const startTimestamp = Number(searchParams.get('start')) || 0;
   const endTimestamp = Number(searchParams.get('end')) || Infinity;
 
