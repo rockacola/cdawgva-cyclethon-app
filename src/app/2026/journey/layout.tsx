@@ -6,7 +6,7 @@ import { getDonationsFull } from '@/lib/getDonationsFull';
 import { getJourneyDays } from '@/lib/journey';
 import { journeyData } from '@/lib/journey-data';
 
-export default async function JourneyLayout({ children }: { children: React.ReactNode }) {
+export default async function JourneyLayout2026({ children }: { children: React.ReactNode }) {
   const [days, { donations }] = await Promise.all([
     Promise.resolve(getJourneyDays()),
     getDonationsFull(),

@@ -1,25 +1,7 @@
-import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import { DonationLiveFeed } from '@/components/DonationLiveFeed';
-import { PageContainer } from '@/components/PageContainer';
-import { getCampaignFact } from '@/lib/getCampaignFact';
-import { getDonations } from '@/lib/getDonations';
+import { CURRENT_EDITION } from '@/lib/editions';
 
-export const revalidate = 3600;
-
-export const metadata: Metadata = {
-  title: 'Live Donations | Cyclethon Tracker',
-};
-
-export default async function DonationsLivePage() {
-  const [{ donations }, initialCampaignFact] = await Promise.all([
-    getDonations(),
-    getCampaignFact(),
-  ]);
-
-  return (
-    <PageContainer>
-      <DonationLiveFeed initialCampaignFact={initialCampaignFact} initialDonations={donations} />
-    </PageContainer>
-  );
+export default function DonationsLivePage() {
+  redirect(`/${CURRENT_EDITION.year}/donations/live`);
 }

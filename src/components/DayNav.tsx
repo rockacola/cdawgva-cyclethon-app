@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 
 import { useTranslations } from '@/hooks/useTranslations';
 import type { JourneyDay } from '@/lib/journey';
+import { useEditionContext } from '@/providers/EditionProvider';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function DayNav({ availableDaySlugs, days }: Props) {
+  const year = useEditionContext();
   const pathname = usePathname();
   const t = useTranslations('dayNav');
   const { resolvedLocale } = useLocaleContext();
@@ -30,7 +32,7 @@ export function DayNav({ availableDaySlugs, days }: Props) {
       {/* Mobile: horizontal scroll */}
       <Stack direction={{ base: 'row', md: 'column' }} gap={1} pb={{ base: 2, md: 0 }}>
         {days.map(({ date, day, slug }) => {
-          const href = `/journey/${slug}`;
+          const href = `/${year}/journey/${slug}`;
           const isActive = pathname === href;
           const hasData = availableDaySlugs.has(slug);
 

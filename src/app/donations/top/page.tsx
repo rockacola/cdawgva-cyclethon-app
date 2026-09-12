@@ -1,16 +1,7 @@
-import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import { PageContainer } from '@/components/PageContainer';
-import { TopDonors } from '@/components/TopDonors';
-
-export const metadata: Metadata = {
-  title: 'Top Donors | Cyclethon Tracker',
-};
+import { CURRENT_EDITION } from '@/lib/editions';
 
 export default function TopDonorsPage() {
-  return (
-    <PageContainer>
-      <TopDonors />
-    </PageContainer>
-  );
+  redirect(`/${CURRENT_EDITION.year}/donations/top`);
 }

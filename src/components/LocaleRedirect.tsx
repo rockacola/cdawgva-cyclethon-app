@@ -8,18 +8,19 @@ import { useLocaleContext } from '@/providers/LocaleProvider';
 
 interface Props {
   locale: LocaleMode;
+  redirectTo?: string;
 }
 
-export function LocaleRedirect({ locale }: Props) {
+export function LocaleRedirect({ locale, redirectTo = '/' }: Props) {
   const { setLocaleMode } = useLocaleContext();
   const router = useRouter();
 
   useEffect(
     function switchAndRedirect() {
       setLocaleMode(locale);
-      router.replace('/');
+      router.replace(redirectTo);
     },
-    [locale, router, setLocaleMode]
+    [locale, redirectTo, router, setLocaleMode]
   );
 
   return null;

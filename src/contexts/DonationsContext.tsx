@@ -18,28 +18,36 @@ const DonationsContext = createContext<DonationsContextValue | null>(null);
 interface Props {
   children: React.ReactNode;
   initialDonations: Donation[];
+  sourceUrl?: string;
 }
 
-export function DonationsProvider({ children, initialDonations }: Props) {
+export function DonationsProvider({
+  children,
+  initialDonations,
+  sourceUrl = DONATIONS_FULL_URL,
+}: Props) {
   const [donations, setDonations] = useState<Donation[]>(() =>
     filterAndWarnCurrency(initialDonations)
   );
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastCheckedAt, setLastCheckedAt] = useState(() => Math.floor(Date.now() / 1000));
 
-  const refresh = useCallback(async function refresh() {
-    setIsRefreshing(true);
-    try {
-      const res = await fetch(DONATIONS_FULL_URL, { cache: 'no-store' });
-      const data: DonationsData = await res.json();
-      setDonations(filterAndWarnCurrency(data.donations));
-      setLastCheckedAt(Math.floor(Date.now() / 1000));
-    } catch {
-      // silently ignore poll failures
-    } finally {
-      setIsRefreshing(false);
-    }
-  }, []);
+  const refresh = useCallback(
+    async function refresh() {
+      setIsRefreshing(true);
+      try {
+        const res = await fetch(sourceUrl, { cache: 'no-store' });
+        const data: DonationsData = await res.json();
+        setDonations(filterAndWarnCurrency(data.donations));
+        setLastCheckedAt(Math.floor(Date.now() / 1000));
+      } catch {
+        // silently ignore poll failures
+      } finally {
+        setIsRefreshing(false);
+      }
+    },
+    [sourceUrl]
+  );
 
   return (
     <DonationsContext.Provider value={{ donations, isRefreshing, lastCheckedAt, refresh }}>

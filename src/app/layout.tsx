@@ -5,8 +5,6 @@ import type { Metadata } from 'next';
 import { JetBrains_Mono, Playfair_Display } from 'next/font/google';
 
 import { BackToTop } from '@/components/BackToTop';
-import { Footer } from '@/components/Footer';
-import { Header } from '@/components/Header';
 import { AppearanceProvider } from '@/providers/AppearanceProvider';
 import { ChakraProvider } from '@/providers/ChakraProvider';
 import { LocaleProvider } from '@/providers/LocaleProvider';
@@ -47,9 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AppearanceProvider>
             <LocaleProvider>
               <TimezoneProvider>
-                <Header />
                 {children}
-                <Footer />
                 <BackToTop />
                 <Analytics />
               </TimezoneProvider>

@@ -1,16 +1,7 @@
-import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import { AboutCyclethonContent } from '@/components/AboutCyclethonContent';
-import { PageContainer } from '@/components/PageContainer';
-
-export const metadata: Metadata = {
-  title: 'About Cyclethon | Cyclethon Tracker',
-};
+import { CURRENT_EDITION } from '@/lib/editions';
 
 export default function AboutCyclethonPage() {
-  return (
-    <PageContainer>
-      <AboutCyclethonContent />
-    </PageContainer>
-  );
+  redirect(`/${CURRENT_EDITION.year}/about-cyclethon`);
 }

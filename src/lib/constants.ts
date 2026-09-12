@@ -10,6 +10,21 @@ export const DONATIONS_URL = `${R2_BASE_URL}/${DONATIONS_FILE}`;
 export const DONATIONS_FULL_URL = `${R2_BASE_URL}/${DONATIONS_FULL_FILE}`;
 export const DONATIONS_STATS_URL = `${R2_BASE_URL}/${DONATIONS_STATS_FILE}`;
 
+// Year-prefixed R2 paths for an archived edition's frozen data snapshot.
+// Populated by a one-time copy at freeze time, not written by the live pipeline.
+// See .ai/tasks/active/year-scoped-editions.md.
+export function getArchivedDonationsUrl(year: number): string {
+  return `${R2_BASE_URL}/${year}/${DONATIONS_FILE}`;
+}
+
+export function getArchivedDonationsFullUrl(year: number): string {
+  return `${R2_BASE_URL}/${year}/${DONATIONS_FULL_FILE}`;
+}
+
+export function getArchivedDonationsStatsUrl(year: number): string {
+  return `${R2_BASE_URL}/${year}/${DONATIONS_STATS_FILE}`;
+}
+
 // Server-side revalidation window in seconds
 export const FETCH_CACHE_REVALIDATE = 3600;
 

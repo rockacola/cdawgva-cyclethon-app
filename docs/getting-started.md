@@ -98,25 +98,41 @@ Used only for `npm run snapshot`. Not wired into the test suite — just a Node 
 ```
 src/
   app/                          # Next.js App Router
-    about/
-    about-cyclethon/
+    2026/                       # This edition's real implementation of every route
+      layout.tsx                # This year's own Header/Footer (nav links point at /2026/...)
+      about/
+      about-cyclethon/
+      donations/
+        live/
+        search/
+        top/
+      en/                       # Locale entry point
+      ja/                       # Locale entry point
+      finish-line/
+      journey/
+        [day]/
+      stats/
+        donation-war/
+      page.tsx                  # Homepage
+    about/                      # Redirects to /${year}/about
+    about-cyclethon/            # Redirects to /${year}/about-cyclethon
     api/
       donations/stream/         # SSE route for live donations
       webhooks/tiltify/         # Tiltify webhook receiver
-    donations/
-      live/
-      search/
-      top/
-    en/                         # English locale entry point
-    finish-line/
-    ja/                         # Japanese locale entry point
-    journey/
-      [day]/                    # Per-day log page
+    donations/                  # Redirects to /${year}/donations/search
+      live/                     # Redirects to /${year}/donations/live
+      search/                   # Redirects to /${year}/donations/search
+      top/                      # Redirects to /${year}/donations/top
+    en/                         # Redirects to /${year}/en
+    finish-line/                # Redirects to /${year}/finish-line
+    ja/                         # Redirects to /${year}/ja
+    journey/                    # Redirects to /${year}/journey
+      [day]/                    # Redirects to /${year}/journey/[day]
     stats/
-      donation-war/
+      donation-war/             # Redirects to /${year}/stats/donation-war (query preserved)
     globals.css
-    layout.tsx                  # Root layout: fonts, metadata, providers
-    page.tsx                    # Homepage
+    layout.tsx                  # Root layout: fonts, metadata, providers (no Header/Footer — each year's own layout supplies those)
+    page.tsx                    # Redirects to /${year}
   components/
     journey/                    # Journey-specific components
     ui/
@@ -128,6 +144,7 @@ src/
   lib/                          # Pure utilities, data, and type definitions
     types.ts
     constants.ts
+    editions.ts                 # Registry of Cyclethon years, live flag, template tier
     theme.ts
     journey-data.ts             # Static per-day journey data
     donations-emitter.ts        # In-memory SSE event emitter
@@ -138,6 +155,7 @@ src/
   providers/
     AppearanceProvider.tsx
     ChakraProvider.tsx
+    EditionProvider.tsx        # Which year a component renders under (scoped per year, not root)
     LocaleProvider.tsx
     TimezoneProvider.tsx
 cypress/                        # E2E tests

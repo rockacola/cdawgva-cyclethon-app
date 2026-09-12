@@ -1,39 +1,7 @@
-import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import { JourneyPageContent } from '@/components/journey/JourneyPageContent';
-import { PageContainer } from '@/components/PageContainer';
-import type { GuestCyclist } from '@/lib/journey';
-import { getCompletedDays, getTotalDistanceKm } from '@/lib/journey';
-import { journeyData } from '@/lib/journey-data';
+import { CURRENT_EDITION } from '@/lib/editions';
 
-export const metadata: Metadata = {
-  title: 'Journey | Cyclethon Tracker',
-};
-
-export default async function JourneyPage() {
-  const completedDays = getCompletedDays();
-  const totalDistanceKm = getTotalDistanceKm();
-  const totalCaloriesBurnt = completedDays.reduce((sum, d) => sum + (d.caloriesBurnt ?? 0), 0);
-  const totalTimeCycling = completedDays.reduce((sum, d) => sum + (d.timeCycling ?? 0), 0);
-
-  const guestsByHandler = new Map<string, GuestCyclist>();
-  for (const day of journeyData) {
-    for (const guest of day.guests ?? []) {
-      if (!guestsByHandler.has(guest.handler)) {
-        guestsByHandler.set(guest.handler, guest);
-      }
-    }
-  }
-  const guests = [...guestsByHandler.values()];
-
-  return (
-    <PageContainer>
-      <JourneyPageContent
-        guests={guests}
-        totalCaloriesBurnt={totalCaloriesBurnt}
-        totalDistanceKm={totalDistanceKm}
-        totalTimeCycling={totalTimeCycling}
-      />
-    </PageContainer>
-  );
+export default function JourneyPage() {
+  redirect(`/${CURRENT_EDITION.year}/journey`);
 }

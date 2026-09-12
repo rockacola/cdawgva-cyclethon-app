@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { DonationFeed } from '@/components/DonationFeed';
 import { useTranslations } from '@/hooks/useTranslations';
 import type { Donation } from '@/lib/types';
+import { useEditionContext } from '@/providers/EditionProvider';
 
 type FilterKey = 'all' | 'commented' | 'over100' | 'over500' | 'anonymous';
 
@@ -28,6 +29,7 @@ interface Props {
 }
 
 export function LatestDonations({ donations }: Props) {
+  const year = useEditionContext();
   const t = useTranslations('donationFeed');
   const [activeFilter, setActiveFilter] = useState<FilterKey>('all');
 
@@ -85,7 +87,7 @@ export function LatestDonations({ donations }: Props) {
           pb={0.5}
           textDecoration="none"
         >
-          <NextLink href="/donations/search">{t('viewAll')} →</NextLink>
+          <NextLink href={`/${year}/donations/search`}>{t('viewAll')} →</NextLink>
         </Link>
       </HStack>
     </Box>

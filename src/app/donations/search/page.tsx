@@ -1,16 +1,7 @@
-import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import { DonationSearcher } from '@/components/DonationSearcher';
-import { PageContainer } from '@/components/PageContainer';
-
-export const metadata: Metadata = {
-  title: 'Search Donations | Cyclethon Tracker',
-};
+import { CURRENT_EDITION } from '@/lib/editions';
 
 export default function DonationSearchPage() {
-  return (
-    <PageContainer>
-      <DonationSearcher />
-    </PageContainer>
-  );
+  redirect(`/${CURRENT_EDITION.year}/donations/search`);
 }

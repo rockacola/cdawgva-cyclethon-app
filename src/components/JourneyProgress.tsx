@@ -6,6 +6,7 @@ import NextLink from 'next/link';
 import { todayInOffset } from '@/lib/dateUtils';
 import { getJourneyDays } from '@/lib/journey';
 import { journeyData } from '@/lib/journey-data';
+import { useEditionContext } from '@/providers/EditionProvider';
 
 // Date strings in the same timezone as the stats payload
 const EVENT_START_DATE = '2026-04-05'; // Day 1
@@ -21,6 +22,7 @@ interface JourneyProgressProps {
 const availableDays = new Set(journeyData.filter((d) => d.destination).map((d) => d.dayKey));
 
 export function JourneyProgress({ utcOffset }: JourneyProgressProps) {
+  const year = useEditionContext();
   const days = getJourneyDays();
   const todayStr = todayInOffset(utcOffset);
 
@@ -115,7 +117,7 @@ export function JourneyProgress({ utcOffset }: JourneyProgressProps) {
           );
 
           const dotEl = isClickable ? (
-            <NextLink aria-label={label} href={`/journey/${slug}`} key={slug}>
+            <NextLink aria-label={label} href={`/${year}/journey/${slug}`} key={slug}>
               {dot}
             </NextLink>
           ) : (

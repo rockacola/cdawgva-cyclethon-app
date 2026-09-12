@@ -10,6 +10,7 @@ import { PageHeader } from '@/components/PageHeader';
 import { useTranslations } from '@/hooks/useTranslations';
 import type { GuestCyclist } from '@/lib/journey';
 import { KCAL_TO_KJ, KM_TO_MI, formatMinutesToCyclingTime } from '@/lib/unitConversions';
+import { useEditionContext } from '@/providers/EditionProvider';
 
 import { SectionLabel } from '../SectionLabel';
 
@@ -77,6 +78,7 @@ export function JourneyPageContent({
   totalDistanceKm,
   totalTimeCycling,
 }: Props) {
+  const year = useEditionContext();
   const t = useTranslations('journey');
   const tHeader = useTranslations('header');
 
@@ -144,7 +146,7 @@ export function JourneyPageContent({
           textTransform="uppercase"
           transition="background 0.15s"
         >
-          <NextLink href="/finish-line">
+          <NextLink href={`/${year}/finish-line`}>
             <Flag size={12} />
             {tHeader('finishLine')}
           </NextLink>

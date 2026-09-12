@@ -1,26 +1,7 @@
-import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import { HomeBody } from '@/components/HomeBody';
-import { HomeHero } from '@/components/HomeHero';
-import { PageContainer } from '@/components/PageContainer';
-import { getDonations } from '@/lib/getDonations';
-import { getStats } from '@/lib/getStats';
+import { CURRENT_EDITION } from '@/lib/editions';
 
-export const revalidate = 3600;
-
-export const metadata: Metadata = {
-  title: 'Cyclethon Tracker',
-};
-
-export default async function HomePage() {
-  const [{ donations }, stats] = await Promise.all([getDonations(), getStats()]);
-
-  return (
-    <>
-      <PageContainer>
-        <HomeHero stats={stats} />
-        <HomeBody donations={donations.slice(0, 50)} />
-      </PageContainer>{' '}
-    </>
-  );
+export default function HomePage() {
+  redirect(`/${CURRENT_EDITION.year}`);
 }

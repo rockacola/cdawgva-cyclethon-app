@@ -369,5 +369,10 @@
     "pizzaMonkeToppings": "pepperoni, sausage, jalapeño",
     "pizzaVanGangName": "Van Gang Combo",
     "pizzaVanGangToppings": "ham, pineapple, sesame sauce, hot honey"
+  },
+  "archive": {
+    "bannerBody": "This is a frozen record of the {year} campaign. It no longer updates.",
+    "bannerTitle": "Archived: Cyclethon {editionNumber}",
+    "bannerViewCurrent": "View the current campaign"
   }
 }

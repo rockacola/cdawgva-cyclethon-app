@@ -3,7 +3,7 @@ import { getDonationsFull } from '@/lib/getDonationsFull';
 
 export const revalidate = 3600;
 
-export default async function StatsLayout({ children }: { children: React.ReactNode }) {
+export default async function StatsLayout2026({ children }: { children: React.ReactNode }) {
   const { donations } = await getDonationsFull();
 
   return <DonationsProvider initialDonations={donations}>{children}</DonationsProvider>;

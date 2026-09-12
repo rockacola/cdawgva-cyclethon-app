@@ -19,29 +19,12 @@ import { useState } from 'react';
 import { DonateLinkButton } from '@/components/DonateLinkButton';
 import { SettingsModal } from '@/components/SettingsModal';
 import { useTranslations } from '@/hooks/useTranslations';
+import { getEdition } from '@/lib/editions';
+import { useEditionContext } from '@/providers/EditionProvider';
 import { useLocaleContext } from '@/providers/LocaleProvider';
 
-const standaloneNavLinks = [
-  { href: '/journey', labelKey: 'journey' },
-  { href: '/about-cyclethon', labelKey: 'aboutCyclethon' },
-] as const;
-
-const donationNavLinks = [
-  { href: '/donations/live', labelKey: 'live' },
-  { href: '/donations/search', labelKey: 'search' },
-  { href: '/donations/top', labelKey: 'top' },
-] as const;
-
-const allNavLinks = [
-  { href: '/', labelKey: 'home' },
-  { href: '/donations/live', labelKey: 'liveDonations' },
-  { href: '/donations/search', labelKey: 'searchDonations' },
-  { href: '/donations/top', labelKey: 'topDonors' },
-  { href: '/journey', labelKey: 'journey' },
-  { href: '/about-cyclethon', labelKey: 'aboutCyclethon' },
-] as const;
-
 export function Header() {
+  const year = useEditionContext();
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -54,7 +37,36 @@ export function Header() {
     setDrawerOpen(false);
   }
 
-  const isDonationsActive = pathname.startsWith('/donations');
+  const homeHref = `/${year}`;
+  const journeyHref = `/${year}/journey`;
+  const aboutCyclethonHref = `/${year}/about-cyclethon`;
+  const donationsLiveHref = `/${year}/donations/live`;
+  const donationsSearchHref = `/${year}/donations/search`;
+  const donationsTopHref = `/${year}/donations/top`;
+
+  const standaloneNavLinks = [
+    { href: journeyHref, labelKey: 'journey' },
+    { href: aboutCyclethonHref, labelKey: 'aboutCyclethon' },
+  ];
+
+  const donationNavLinks = [
+    { href: donationsLiveHref, labelKey: 'live' },
+    { href: donationsSearchHref, labelKey: 'search' },
+    { href: donationsTopHref, labelKey: 'top' },
+  ];
+
+  const allNavLinks = [
+    { href: homeHref, labelKey: 'home' },
+    { href: donationsLiveHref, labelKey: 'liveDonations' },
+    { href: donationsSearchHref, labelKey: 'searchDonations' },
+    { href: donationsTopHref, labelKey: 'topDonors' },
+    { href: journeyHref, labelKey: 'journey' },
+    { href: aboutCyclethonHref, labelKey: 'aboutCyclethon' },
+  ];
+
+  const isDonationsActive = pathname.includes('/donations/');
+  const edition = getEdition(year);
+  const isArchivedEdition = edition !== undefined && !edition.isLive;
 
   return (
     <Box as="header" borderBottomWidth="1px" px={{ base: 4, md: 8 }} py={3}>
@@ -72,7 +84,7 @@ export function Header() {
 
         {/* Wordmark */}
         <HStack asChild gap={2.5} textDecoration="none">
-          <NextLink href="/">
+          <NextLink href={homeHref}>
             <Box display={{ base: 'none', sm: 'block' }}>
               <Span
                 color="fg"
@@ -99,12 +111,12 @@ export function Header() {
 
         {/* Desktop nav */}
         <HStack display={{ base: 'none', md: 'flex' }} flex={1} gap={0} justify="center">
-          <NavLink active={pathname === '/'} href="/">
+          <NavLink active={pathname === homeHref} href={homeHref}>
             {t('home')}
           </NavLink>
 
           {/* Donations group */}
-          <NavLink active={isDonationsActive} href="/donations/live">
+          <NavLink active={isDonationsActive} href={donationsLiveHref}>
             {t('donations')}
           </NavLink>
           {isDonationsActive
@@ -155,7 +167,9 @@ export function Header() {
           </IconButton>
 
           {/* Donate CTA */}
-          <DonateLinkButton display={{ base: 'none', md: 'inline-block' }} />
+          {isArchivedEdition ? null : (
+            <DonateLinkButton display={{ base: 'none', md: 'inline-block' }} />
+          )}
         </HStack>
 
         <SettingsModal onClose={() => setSettingsOpen(false)} open={settingsOpen} />
@@ -185,7 +199,8 @@ export function Header() {
                 <Drawer.Body pt={12}>
                   <Stack gap={1}>
                     {allNavLinks.map(({ href, labelKey }) => {
-                      const isActive = href === '/' ? pathname === href : pathname.startsWith(href);
+                      const isActive =
+                        href === homeHref ? pathname === href : pathname.startsWith(href);
                       return (
                         <Link
                           _hover={{ bg: 'bg.subtle', textDecoration: 'none' }}
@@ -202,7 +217,7 @@ export function Header() {
                         </Link>
                       );
                     })}
-                    <DonateLinkButton display="block" mt={2} />
+                    {isArchivedEdition ? null : <DonateLinkButton display="block" mt={2} />}
                   </Stack>
                 </Drawer.Body>
               </Drawer.Content>

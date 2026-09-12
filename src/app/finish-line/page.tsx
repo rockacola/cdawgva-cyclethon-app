@@ -1,16 +1,7 @@
-import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import { FinishLineContent } from '@/components/FinishLineContent';
-import { PageContainer } from '@/components/PageContainer';
-
-export const metadata: Metadata = {
-  title: 'Finish Line | Cyclethon Tracker',
-};
+import { CURRENT_EDITION } from '@/lib/editions';
 
 export default function FinishLinePage() {
-  return (
-    <PageContainer>
-      <FinishLineContent />
-    </PageContainer>
-  );
+  redirect(`/${CURRENT_EDITION.year}/finish-line`);
 }

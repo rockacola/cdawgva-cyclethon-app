@@ -5,23 +5,32 @@ import NextLink from 'next/link';
 
 import { useTranslations } from '@/hooks/useTranslations';
 import { MAIN_DONATION_URL } from '@/lib/constants';
+import { getEdition } from '@/lib/editions';
+import { useEditionContext } from '@/providers/EditionProvider';
 
 import { PageContainer } from './PageContainer';
 
 export function Footer() {
+  const year = useEditionContext();
   const t = useTranslations('footer');
+  const edition = getEdition(year);
+  const isArchivedEdition = edition !== undefined && !edition.isLive;
+
+  const aboutHref = `/${year}/about`;
 
   const causeLinks = [
     { external: true, href: 'https://primaryimmune.org', label: t('causeLinkIDF') },
-    { external: true, href: MAIN_DONATION_URL, label: t('causeLinkDonate') },
+    ...(isArchivedEdition
+      ? []
+      : [{ external: true, href: MAIN_DONATION_URL, label: t('causeLinkDonate') }]),
   ];
 
   const siteLinks = [
-    { href: '/donations/live', label: t('siteLinkLiveDonations') },
-    { href: '/donations/search', label: t('siteLinkSearch') },
-    { href: '/journey', label: t('siteLinkJourney') },
-    { href: '/finish-line', label: t('siteLinkFinishLine') },
-    { href: '/about', label: t('siteLinkAbout') },
+    { href: `/${year}/donations/live`, label: t('siteLinkLiveDonations') },
+    { href: `/${year}/donations/search`, label: t('siteLinkSearch') },
+    { href: `/${year}/journey`, label: t('siteLinkJourney') },
+    { href: `/${year}/finish-line`, label: t('siteLinkFinishLine') },
+    { href: aboutHref, label: t('siteLinkAbout') },
   ];
 
   return (
@@ -111,7 +120,7 @@ export function Footer() {
           >
             <Text color="bg" fontFamily="mono" fontSize="sm" letterSpacing="wide" opacity={0.4}>
               <Link _hover={{ opacity: 1 }} asChild color="bg" textDecoration="none">
-                <NextLink href="/about">{t('about')}</NextLink>
+                <NextLink href={aboutHref}>{t('about')}</NextLink>
               </Link>
               {' · '}
               {t('disclaimer')}

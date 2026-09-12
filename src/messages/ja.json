@@ -369,5 +369,10 @@
     "pizzaMonkeToppings": "ペパロニ、ソーセージ、ハラペーニョ",
     "pizzaVanGangName": "バンギャングコンボ",
     "pizzaVanGangToppings": "ハム、パイナップル、ごまソース、ホットハニー"
+  },
+  "archive": {
+    "bannerBody": "{year}年のキャンペーンの記録です。更新は行われません。",
+    "bannerTitle": "アーカイブ：Cyclethon {editionNumber}",
+    "bannerViewCurrent": "現在のキャンペーンを見る"
   }
 }
