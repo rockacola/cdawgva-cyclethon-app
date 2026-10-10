@@ -2,9 +2,11 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
-import { DONATIONS_FULL_URL, DONATION_REFETCH_INTERVAL } from '@/lib/constants';
+import { DONATION_REFETCH_INTERVAL, getArchivedDonationsFullUrl } from '@/lib/constants';
 import type { TimezoneMode } from '@/lib/constants';
+import { getEdition } from '@/lib/editions';
 import type { DonationsData } from '@/lib/types';
+import { useEditionContext } from '@/providers/EditionProvider';
 import { useTimezoneContext } from '@/providers/TimezoneProvider';
 
 export interface ActivityBucket {
@@ -102,27 +104,32 @@ function buildBuckets(
 
 export function useActivityBuckets(): ActivityBucket[] {
   const { timezoneMode } = useTimezoneContext();
+  const year = useEditionContext();
+  const url = getArchivedDonationsFullUrl(getEdition(year)!.eventKey);
   const [donations, setDonations] = useState<{ amount_cent: number; completed_at: number }[]>([]);
   // currentBucket advances every 15 min so the window slides forward even with no new donations
   const [currentBucket, setCurrentBucket] = useState(snapToCurrentBucket);
 
-  useEffect(function pollFullDonations() {
-    // Fetch the full donations dataset (not just latest-100) so we have enough
-    // history to fill all 300 buckets. Re-fetches every DONATION_REFETCH_INTERVAL (30s).
-    async function fetchData() {
-      try {
-        const res = await fetch(DONATIONS_FULL_URL, { cache: 'no-store' });
-        const data: DonationsData = await res.json();
-        setDonations(data.donations);
-      } catch (err) {
-        console.error('[useActivityBuckets] fetch failed:', err);
+  useEffect(
+    function pollFullDonations() {
+      // Fetch the full donations dataset (not just latest-100) so we have enough
+      // history to fill all 300 buckets. Re-fetches every DONATION_REFETCH_INTERVAL (30s).
+      async function fetchData() {
+        try {
+          const res = await fetch(url, { cache: 'no-store' });
+          const data: DonationsData = await res.json();
+          setDonations(data.donations);
+        } catch (err) {
+          console.error('[useActivityBuckets] fetch failed:', err);
+        }
       }
-    }
 
-    fetchData();
-    const id = setInterval(fetchData, DONATION_REFETCH_INTERVAL);
-    return () => clearInterval(id);
-  }, []);
+      fetchData();
+      const id = setInterval(fetchData, DONATION_REFETCH_INTERVAL);
+      return () => clearInterval(id);
+    },
+    [url]
+  );
 
   useEffect(function advanceWindow() {
     // Align the first tick to the next 15-min wall-clock boundary, then repeat every 15 min.

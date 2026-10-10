@@ -25,6 +25,11 @@ export function getArchivedDonationsStatsUrl(eventKey: string): string {
   return `${R2_BASE_URL}/${eventKey}/${DONATIONS_STATS_FILE}`;
 }
 
+// Per-day snapshot, e.g. `cyclethon-5/donations-2026-04-05.json`.
+export function getArchivedDonationsDayUrl(eventKey: string, dateStr: string): string {
+  return `${R2_BASE_URL}/${eventKey}/donations-${dateStr}.json`;
+}
+
 // Server-side revalidation window in seconds
 export const FETCH_CACHE_REVALIDATE = 3600;
 

@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
 
-import { DONATIONS_STATS_URL } from '@/lib/constants';
+import { getArchivedDonationsStatsUrl } from '@/lib/constants';
+import { getEdition } from '@/lib/editions';
 import type { CampaignFact, DonationsStats } from '@/lib/types';
+import { useEditionContext } from '@/providers/EditionProvider';
 
 export function useCampaignFactPoll(
   initial: CampaignFact | null,
   intervalMs: number
 ): CampaignFact | null {
+  const year = useEditionContext();
+  const url = getArchivedDonationsStatsUrl(getEdition(year)!.eventKey);
   const [fact, setFact] = useState<CampaignFact | null>(initial);
 
   useEffect(
     function pollCampaignFact() {
       const fetchFact = async () => {
         try {
-          const res = await fetch(DONATIONS_STATS_URL, { cache: 'no-store' });
+          const res = await fetch(url, { cache: 'no-store' });
           const data: DonationsStats = await res.json();
           const c = data.campaign;
           if (!c) {
@@ -33,7 +37,7 @@ export function useCampaignFactPoll(
       const id = setInterval(fetchFact, intervalMs);
       return () => clearInterval(id);
     },
-    [intervalMs]
+    [intervalMs, url]
   );
 
   return fact;
