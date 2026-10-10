@@ -1,7 +1,7 @@
 import { DONATIONS_FULL_URL, FETCH_CACHE_REVALIDATE } from '@/lib/constants';
 import type { DonationsData } from '@/lib/types';
 
-export async function getDonationsFull(): Promise<DonationsData> {
-  const res = await fetch(DONATIONS_FULL_URL, { next: { revalidate: FETCH_CACHE_REVALIDATE } });
+export async function getDonationsFull(url: string = DONATIONS_FULL_URL): Promise<DonationsData> {
+  const res = await fetch(url, { next: { revalidate: FETCH_CACHE_REVALIDATE } });
   return res.json();
 }

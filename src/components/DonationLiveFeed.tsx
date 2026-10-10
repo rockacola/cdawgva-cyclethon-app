@@ -20,37 +20,45 @@ const MAX_DONATIONS = 100;
 interface Props {
   initialCampaignFact: CampaignFact | null;
   initialDonations: Donation[];
+  sourceUrl?: string;
 }
 
-export function DonationLiveFeed({ initialCampaignFact, initialDonations }: Props) {
+export function DonationLiveFeed({
+  initialCampaignFact,
+  initialDonations,
+  sourceUrl = DONATIONS_URL,
+}: Props) {
   const [donationMap, setDonationMap] = useState<Map<string, Donation>>(
     () => new Map(initialDonations.map((d) => [d.id, d]))
   );
   const [isConnected, setIsConnected] = useState(false);
   const [campaignFact, setCampaignFact] = useState<CampaignFact | null>(initialCampaignFact);
 
-  useEffect(function startPolling() {
-    const poll = async () => {
-      try {
-        const res = await fetch(DONATIONS_URL, { cache: 'no-store' });
-        const data: DonationsData = await res.json();
-        setDonationMap((prev) => {
-          const additions = data.donations.filter((d) => !prev.has(d.id));
-          if (additions.length === 0) {
-            return prev;
-          }
-          const next = new Map(prev);
-          additions.forEach((d) => next.set(d.id, d));
-          return next;
-        });
-      } catch {
-        // silently ignore poll failures
-      }
-    };
+  useEffect(
+    function startPolling() {
+      const poll = async () => {
+        try {
+          const res = await fetch(sourceUrl, { cache: 'no-store' });
+          const data: DonationsData = await res.json();
+          setDonationMap((prev) => {
+            const additions = data.donations.filter((d) => !prev.has(d.id));
+            if (additions.length === 0) {
+              return prev;
+            }
+            const next = new Map(prev);
+            additions.forEach((d) => next.set(d.id, d));
+            return next;
+          });
+        } catch {
+          // silently ignore poll failures
+        }
+      };
 
-    const id = setInterval(poll, DONATION_REFETCH_INTERVAL);
-    return () => clearInterval(id);
-  }, []);
+      const id = setInterval(poll, DONATION_REFETCH_INTERVAL);
+      return () => clearInterval(id);
+    },
+    [sourceUrl]
+  );
 
   useEffect(function startSSE() {
     let es: EventSource | null = null;

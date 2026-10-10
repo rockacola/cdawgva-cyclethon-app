@@ -10,19 +10,19 @@ export const DONATIONS_URL = `${R2_BASE_URL}/${DONATIONS_FILE}`;
 export const DONATIONS_FULL_URL = `${R2_BASE_URL}/${DONATIONS_FULL_FILE}`;
 export const DONATIONS_STATS_URL = `${R2_BASE_URL}/${DONATIONS_STATS_FILE}`;
 
-// Year-prefixed R2 paths for an archived edition's frozen data snapshot.
-// Populated by a one-time copy at freeze time, not written by the live pipeline.
-// See .ai/tasks/active/year-scoped-editions.md.
-export function getArchivedDonationsUrl(year: number): string {
-  return `${R2_BASE_URL}/${year}/${DONATIONS_FILE}`;
+// eventKey-prefixed R2 paths for an archived edition's frozen data snapshot,
+// written by the cdawgva-cyclethon pipeline's archive-event.ts into the
+// shared `cdawgva` bucket. See .ai/tasks/active/year-scoped-editions.md.
+export function getArchivedDonationsUrl(eventKey: string): string {
+  return `${R2_BASE_URL}/${eventKey}/${DONATIONS_FILE}`;
 }
 
-export function getArchivedDonationsFullUrl(year: number): string {
-  return `${R2_BASE_URL}/${year}/${DONATIONS_FULL_FILE}`;
+export function getArchivedDonationsFullUrl(eventKey: string): string {
+  return `${R2_BASE_URL}/${eventKey}/${DONATIONS_FULL_FILE}`;
 }
 
-export function getArchivedDonationsStatsUrl(year: number): string {
-  return `${R2_BASE_URL}/${year}/${DONATIONS_STATS_FILE}`;
+export function getArchivedDonationsStatsUrl(eventKey: string): string {
+  return `${R2_BASE_URL}/${eventKey}/${DONATIONS_STATS_FILE}`;
 }
 
 // Server-side revalidation window in seconds
