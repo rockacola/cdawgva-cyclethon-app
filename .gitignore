@@ -42,4 +42,4 @@ cypress-image-diff-screenshots/diff
 snapshots/
 
 # Claude Code
-.claude/
+.claude/settings.local.json
