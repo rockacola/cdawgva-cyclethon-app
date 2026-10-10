@@ -38,13 +38,27 @@ If they also want a push, tell them to ask for that separately.
    `snapshots/` (a manually-managed cold-storage archive, not something this skill should ever touch) out,
    but a quick look costs nothing and catches the case where the ignore rules themselves are wrong.
 
-6. **Read the staged diff for content too sensitive for a public repo, not just classic secrets.** This repo
-   is public and renders real Tiltify donation data (donor names, comments, amounts) fetched from R2 at
-   runtime. The risk isn't only API keys/tokens (those are covered by step 5) — it's an AI agent pasting a
-   real donor's name or comment, a specific dollar figure, or other live-fetched donation data into a
-   scratch script, test fixture, task doc, or journal entry instead of a placeholder, and that landing in a
-   commit. Actually read the diff's content, not just the filenames. If anything reads as real personal
-   donor data or otherwise too sensitive to publish, **stop and describe exactly what you found to the
+   Also run a mechanical grep over the staged diff as a deterministic backstop, since a careful read (step 6)
+   can still miss something on a rushed pass:
+   `git diff --cached | grep -nIE "(api[_-]?key|secret|token|password|bearer|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----)"`.
+   A hit isn't automatically bad (this pattern also matches the word "secret" in a comment or doc), but read
+   every match's context before treating it as fine.
+
+6. **Read the staged diff for anything too sensitive for a public repo — not just classic secrets, and not
+   only donor data.** This is a broader category than programming secrets: any text that reveals more about
+   a real person than they'd want public counts, even if nothing about it looks like a credential. The most
+   likely source in this repo is Tiltify donation data (donor names, comments, specific dollar figures)
+   fetched live from R2 at runtime — an AI agent pasting a real donor's name, comment, or amount into a
+   scratch script, test fixture, task doc, or journal entry instead of a placeholder is the known failure
+   mode here. But the same care applies to anything else that surfaces a real person's details during
+   research or debugging: a collaborator's or streamer's real name or contact info, a specific personal
+   circumstance mentioned in passing, a pasted API/webhook payload or screenshot that happens to include
+   someone's email, IP, or address, and so on. Task docs and journal entries (written every session per
+   `AGENTS.md`) are a prime landing spot for this precisely because they're meant to capture real context in
+   prose, not just code — they're exactly where a detail like this slips in unnoticed.
+
+   Actually read the diff's content, not just the filenames. If anything reads as real personal data about
+   any real person, or otherwise too sensitive to publish, **stop and describe exactly what you found to the
    user** — don't decide it's probably fine and commit anyway, and don't silently redact it yourself either.
    Let the user decide whether to redact, exclude the file, or confirm it's actually fine to publish.
 
