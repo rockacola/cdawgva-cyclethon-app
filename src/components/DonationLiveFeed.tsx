@@ -11,7 +11,7 @@ import { PageHeader } from '@/components/PageHeader';
 import { useAnimatedValue } from '@/hooks/useAnimatedValue';
 import { useCurrencyPrefix } from '@/hooks/useCurrencyPrefix';
 import { useTranslations } from '@/hooks/useTranslations';
-import { DONATIONS_URL, DONATION_REFETCH_INTERVAL } from '@/lib/constants';
+import { DONATION_REFETCH_INTERVAL } from '@/lib/constants';
 import { formatAmountParts } from '@/lib/donationUtils';
 import type { CampaignFact, Donation, DonationsData } from '@/lib/types';
 
@@ -20,14 +20,10 @@ const MAX_DONATIONS = 100;
 interface Props {
   initialCampaignFact: CampaignFact | null;
   initialDonations: Donation[];
-  sourceUrl?: string;
+  sourceUrl: string;
 }
 
-export function DonationLiveFeed({
-  initialCampaignFact,
-  initialDonations,
-  sourceUrl = DONATIONS_URL,
-}: Props) {
+export function DonationLiveFeed({ initialCampaignFact, initialDonations, sourceUrl }: Props) {
   const [donationMap, setDonationMap] = useState<Map<string, Donation>>(
     () => new Map(initialDonations.map((d) => [d.id, d]))
   );

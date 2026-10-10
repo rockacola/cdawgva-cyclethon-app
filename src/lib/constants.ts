@@ -6,10 +6,6 @@ export const DONATIONS_FILE = 'donations-latest-100.json';
 export const DONATIONS_FULL_FILE = 'donations-full.json';
 export const DONATIONS_STATS_FILE = 'donations-stats.json';
 
-export const DONATIONS_URL = `${R2_BASE_URL}/${DONATIONS_FILE}`;
-export const DONATIONS_FULL_URL = `${R2_BASE_URL}/${DONATIONS_FULL_FILE}`;
-export const DONATIONS_STATS_URL = `${R2_BASE_URL}/${DONATIONS_STATS_FILE}`;
-
 // eventKey-prefixed R2 paths for an archived edition's frozen data snapshot,
 // written by the cdawgva-cyclethon pipeline's archive-event.ts into the
 // shared `cdawgva` bucket. See .ai/tasks/active/year-scoped-editions.md.

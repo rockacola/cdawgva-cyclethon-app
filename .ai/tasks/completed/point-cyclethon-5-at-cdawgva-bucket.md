@@ -1,5 +1,5 @@
 ---
-status: active
+status: completed
 created: '2026-10-10'
 updated: '2026-10-10'
 ---
@@ -73,6 +73,16 @@ and `.ai/journal/2026/2026-10-10.md`. Summary of what changed, from that repo's 
   not the pipeline).
 - Added explicit `eventKey` field to `Edition` (not derived from `editionNumber`), matching the
   existing style of explicit per-edition facts (`tiltifyUrl`).
+- After the first deploy, found four client-side hooks (`useActivityBuckets`, `useDailyTotals`,
+  `useCampaignFactPoll`, `useDayDonations`) that fetched the unprefixed R2 constants directly in
+  their own `useEffect`, bypassing Phase 1's server-side wrapper functions entirely. Fixed by
+  reading the current edition via the existing `useEditionContext()` rather than prop-drilling a
+  URL through each component tree. Added `getArchivedDonationsDayUrl(eventKey, dateStr)` for the
+  per-day snapshot shape, which had no helper yet.
+- Once the live site was confirmed working, removed the now-fully-dead unprefixed
+  `DONATIONS_URL`/`DONATIONS_FULL_URL`/`DONATIONS_STATS_URL` constants and their use as default
+  parameter values, making `url`/`sourceUrl` required everywhere instead of silently falling back
+  to a URL that 404s against the real bucket.
 
 ## Phases
 
@@ -99,14 +109,15 @@ and `.ai/journal/2026/2026-10-10.md`. Summary of what changed, from that repo's 
 - [x] `/2026/donations/live`'s fate: kept as a static replay per operator decision. See Decisions
       made.
 - [x] Verify against the real `cdawgva` bucket: `/2026/donations/top` renders 20,998 donations,
-      `npm run check` and `npm run build` both pass. Cypress visual-regression specs not run this
-      session, see Next step.
+      `npm run check` and `npm run build` both pass. Verified live on Vercel after deploy (browser
+      network inspection): the three previously-404ing requests (`donations-stats.json`,
+      `donations-full.json`, a day snapshot) now resolve correctly as `cyclethon-5/...json`, `200`.
+      Cypress visual-regression specs run clean except one expected diff (see below).
 
 ## Open questions / risks
 
-- Public access on `cdawgva` isn't confirmed. This is the core blocker: this app fetches R2 data as
-  plain public HTTP, not via signed requests, and R2 credentials were never configured here and
-  shouldn't need to be.
+- ~~Public access on `cdawgva` isn't confirmed.~~ Resolved: confirmed and verified, see Decisions
+  made.
 - Whether a future live edition (Cyclethon 6+) will also live under `cdawgva`'s per-event-prefix
   convention, or whether this app keeps reading live data from a separate bucket, isn't decided by
   this task. year-scoped-editions.md Phase 4 ("Ready for 2027") will need to account for whichever
@@ -119,6 +130,10 @@ and `.ai/journal/2026/2026-10-10.md`. Summary of what changed, from that repo's 
 
 ## Next step
 
-Phase 1 is implemented and verified against the live `cdawgva` bucket. Run the Cypress
-visual-regression suite (not run this session) to confirm specs still pass or get updated for the
-new data, then move this task to `.ai/tasks/completed/`.
+Done. Phase 1 is implemented, deployed, and verified live against the real `cdawgva` bucket.
+
+One deliberately deferred follow-up, not blocking completion: the Cypress `header matches baseline`
+spec now fails against its old baseline image, because the header's "Donate via Tiltify ↗" button
+correctly disappeared once `isLive: false` took effect (confirmed by comparing the baseline and
+comparison screenshots side by side — not a bug). Re-baseline that snapshot (`npm run cy:open` or
+equivalent, approve the new header image) whenever convenient.

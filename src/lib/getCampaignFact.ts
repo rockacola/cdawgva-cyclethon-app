@@ -1,9 +1,7 @@
-import { DONATIONS_STATS_URL, FETCH_CACHE_REVALIDATE } from '@/lib/constants';
+import { FETCH_CACHE_REVALIDATE } from '@/lib/constants';
 import type { CampaignFact, DonationsStats } from '@/lib/types';
 
-export async function getCampaignFact(
-  url: string = DONATIONS_STATS_URL
-): Promise<CampaignFact | null> {
+export async function getCampaignFact(url: string): Promise<CampaignFact | null> {
   try {
     const res = await fetch(url, { next: { revalidate: FETCH_CACHE_REVALIDATE } });
     const data: DonationsStats = await res.json();

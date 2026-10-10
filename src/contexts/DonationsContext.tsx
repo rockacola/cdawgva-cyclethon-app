@@ -2,7 +2,6 @@
 
 import { createContext, useCallback, useContext, useState } from 'react';
 
-import { DONATIONS_FULL_URL } from '@/lib/constants';
 import { filterAndWarnCurrency } from '@/lib/donationUtils';
 import type { Donation, DonationsData } from '@/lib/types';
 
@@ -18,14 +17,10 @@ const DonationsContext = createContext<DonationsContextValue | null>(null);
 interface Props {
   children: React.ReactNode;
   initialDonations: Donation[];
-  sourceUrl?: string;
+  sourceUrl: string;
 }
 
-export function DonationsProvider({
-  children,
-  initialDonations,
-  sourceUrl = DONATIONS_FULL_URL,
-}: Props) {
+export function DonationsProvider({ children, initialDonations, sourceUrl }: Props) {
   const [donations, setDonations] = useState<Donation[]>(() =>
     filterAndWarnCurrency(initialDonations)
   );
