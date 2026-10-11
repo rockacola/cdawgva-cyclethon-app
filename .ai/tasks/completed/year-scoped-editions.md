@@ -1,7 +1,7 @@
 ---
-status: active
+status: completed
 created: '2026-09-12'
-updated: '2026-09-12'
+updated: '2026-10-11'
 ---
 
 # Task: Year-scoped editions (wrap up 2026, prep 2027)
@@ -106,41 +106,79 @@ First pass (superseded within this phase, see Decisions made): forked only home/
 - [x] `/about-cyclethon`'s and `/about`'s nav hrefs still point at `/2026/about-cyclethon` / `/2026/about` (their current real location) rather than an imagined future unprefixed location, per the operator's heads-up below — change these when the pages actually move, not before.
 - Operator gave two pieces of forward context, not acted on this turn: (1) a year selector is wanted "later on" to switch between editions — `EditionProvider`/`useEditionContext()` is a step toward that, the selector control itself is not built; (2) `/about` and `/about-cyclethon` are expected to become year-agnostic pages eventually, unlike journey/donations/finish-line which are genuinely per-edition — noted in the ADR as a known gap, not resolved.
 
-### Phase 3 — Freeze 2026
+### Phase 3 — Freeze 2026 — resolved 2026-10-10 via a different mechanism than planned
 
-- [ ] Decide and record the freeze trigger (e.g. N days after the Tiltify campaign closes, to allow for late refunds/chargebacks to settle).
-- [ ] One-time copy: snapshot the final `donations-full.json`, `donations-stats.json`, and latest-100 file from the bucket root into a `2026/` prefix in the same R2 bucket. Manual/admin action, not a pipeline code change.
-- [ ] Update `/2026/...`'s data-fetching in place to read the frozen R2 paths (`getArchivedDonationsUrl`/`Full`/`Stats` from `constants.ts`) instead of the live ones — likely means passing `sourceUrl={getArchivedDonationsFullUrl(2026)}` to each `DonationsProvider` and swapping `getDonations`/`getDonationsFull`/`getStats`/`getCampaignFact` calls in `/2026/page.tsx`, `/2026/donations/live/page.tsx`, and the three layouts. Consider whether `/2026/donations/live` should be removed or replaced with a static replay once there's no live data left to show.
-- [ ] Flip `isLive: false` for 2026 in the registry once the copy is confirmed. At that point the Donate CTA and (once re-added) `ArchivedEditionBanner` start reflecting "archived" correctly, and whichever year is next in the registry with `isLive: true` takes over the unprefixed redirects.
-- [ ] Convert `cyclethonHistory.ts`'s Cyclethon 5 entry from the dynamic `buildCyclethon5Totals()` to a frozen static array, matching editions 1-4.
-- [ ] Re-add the "view previous edition" link (`AboutCyclethonContent`, footer) now that it's meaningful again.
-- [ ] Re-add `ArchivedEditionBanner` to `/2026/...`'s pages.
+This phase shipped through `.ai/tasks/completed/point-cyclethon-5-at-cdawgva-bucket.md`
+instead of the one-time-copy plan below, once the operator confirmed the
+`cdawgva-cyclethon` pipeline repo now writes every edition's data to one
+shared `cdawgva` bucket, per-event-prefixed, on an ongoing basis.
 
-### Phase 4 — Ready for 2027
+- [x] ~~Decide and record the freeze trigger~~ — moot. There's no freeze-copy
+      step; 2026's data simply keeps resolving through `cyclethon-5/` in the
+      shared bucket, same as every other edition.
+- [x] ~~One-time copy into a `2026/` prefix in the same bucket~~ — didn't
+      happen this way. The real resolution is the pipeline repo's own
+      per-event `eventKey` prefix (`cyclethon-5`), not a year prefix, and not
+      a one-time copy.
+- [x] Update `/2026/...`'s data-fetching to read the archived URLs — done,
+      but via `eventKey` (`getArchivedDonationsUrl('cyclethon-5')` etc.) in
+      place of the year-based path this phase originally planned.
+- [x] Flip `isLive: false` for 2026 in the registry — done.
+- [ ] Convert `cyclethonHistory.ts`'s Cyclethon 5 entry from the dynamic
+      `buildCyclethon5Totals()` to a frozen static array, matching editions
+      1-4 — still genuinely open, carried forward into
+      `.ai/tasks/active/historical-editions-and-site-pages.md` Phase C,
+      since it's about presenting 2026 as an archived edition.
+- [ ] Re-add the "view previous edition" link (`AboutCyclethonContent`,
+      footer) — still open, carried forward to the same task's Phase C.
+- [ ] Re-add `ArchivedEditionBanner` to 2026's pages — still open, carried
+      forward to the same task's Phase C (adapted to whatever template that
+      task ends up building, not necessarily today's `/2026/...` tree).
+- `/2026/donations/live`'s fate is now decided (see that task's Decisions
+  made): dropped entirely, not kept as a static replay.
 
-- [ ] Document the "new edition" checklist in `getting-started.md`: add a registry entry with `isLive: true` (and flip 2026's off if Phase 3 hasn't already), build `src/app/2027/...` as its own fork (copied from 2026 and adjusted, per the Presentation decision above), add `journey-data/2027.ts` (or equivalent, once 2027's scope is known), add `public/images/2027/` for that year's own photos/avatars, update `MAIN_DONATION_URL`, add a `cyclethonHistory.ts` series, rotate `TILTIFY_WEBHOOK_SIGNING_ID` for the new campaign.
+### Phase 4 — Ready for 2027 — superseded 2026-10-11
+
+Everything still open in this phase is carried forward rather than finished
+here, split by which new task it actually belongs to:
+
+- [ ] "New edition" checklist (registry entry, `src/app/2027/...` fork,
+      `journey-data` for 2027, `public/images/2027/`, `MAIN_DONATION_URL`,
+      `cyclethonHistory.ts` series entry, rotate `TILTIFY_WEBHOOK_SIGNING_ID`)
+      → carried to `.ai/tasks/active/historical-editions-and-site-pages.md`
+      Phase H (the 2027 section, folded in from a now-deleted
+      `2027-edition-launch.md`).
 - [x] `public/images/` moved to `public/images/2026/` (2026-09-13, operator's call — different years may have different image assets, e.g. a different cast, different cause photos). All 15 tracked files moved via `git mv` (kept as renames in git history), all 27 references across `HomeHero.tsx`, `HomeCause.tsx`, `WhoComing.tsx`, `JourneyGuestsGrid.tsx`, `DayGuests.tsx`, and `journey-data.ts` updated to `/images/2026/...`. Hardcoded directly (not read from `EditionProvider`) since every one of those files/components is already 2026-specific content (hardcoded cast list, hardcoded photos, hardcoded per-day data) that will be forked wholesale for 2027 anyway, not a shared component that needs to resolve its year dynamically.
-- [ ] Replace remaining hardcoded "2026"/"Cyclethon 5" strings (layout metadata, hero, progress components, translations) with reads from the registry, for whatever stays shared across years.
-- [ ] Do not pre-build 2027's "more than 2026" features now — scope unknown. This phase only ensures next year's build doesn't have to fight 2026-specific assumptions baked into shared code.
+- [ ] Replace remaining hardcoded "2026"/"Cyclethon 5" strings with reads
+      from the registry → carried to
+      `.ai/tasks/active/historical-editions-and-site-pages.md` Phase C,
+      since converting 2026 to the archive format forces this cleanup
+      anyway.
+- 2027's "more than 2026" scope is still unknown — stays an open question on
+  the 2027 task rather than resolved here.
 
 ### Phase 5 — Docs, tests & journal
 
 - [x] Update `docs/overview.md` routes table for the new `/2026/...` routes and the redirect-based unprefixed routes.
 - [x] Update `docs/getting-started.md` structure tree.
-- [ ] Add the new `/2026/...` routes to `scripts/snapshot.js`'s route list and to the Cypress visual-regression specs.
+- [x] ~~Add the new `/2026/...` routes to `scripts/snapshot.js`'s route list and to the Cypress visual-regression specs~~ — dropped as moot 2026-10-11: those routes are being replaced wholesale by `.ai/tasks/active/historical-editions-and-site-pages.md` Phase C, writing specs for the current tree now would be throwaway.
 - [x] Journal entries per AGENTS.md.
 
 ## Open questions / risks
 
-- Freeze trigger timing not yet decided (see Phase 3).
-- A frozen archive can still go stale if Tiltify processes a refund/chargeback after the freeze copy is taken — no plan yet for handling that; likely just accepted as a known limitation unless it comes up.
-- 2022-2025 shared legacy template is out of scope for this task; the editions registry's `templateTier` field is meant to leave room for it without rework, but that's not proven until it's actually built.
-- 2027's "more than 2026" scope is unknown, so Phase 4 is deliberately light — revisit once that scope exists.
-- Header/Footer/DayNav nav and the in-page links found so far now read their year from `EditionProvider` (fixed 2026-09-13). The audit for this wasn't exhaustive — other content components may still hardcode an unprefixed path; fix opportunistically when found.
-- `/2026/donations/live`'s fate at freeze time (Phase 3) isn't decided yet — keep as a static replay, or remove entirely once there's nothing "live" left to show.
-- `/about` and `/about-cyclethon` are expected to become year-agnostic pages later (operator's heads-up, 2026-09-13) — not acted on yet. Whenever that happens, it also needs an answer for what chrome they get, since chrome now lives inside each year's own `EditionProvider`+layout and there's no year-agnostic layout today.
-- A year selector UI (switch editions from the nav) is wanted later — not built. `EditionProvider`/`useEditionContext()` is preparatory, not the selector itself.
+Carried forward to the two tasks that replace this one, rather than tracked
+here any further:
+
+- 2022-2025 shared legacy template, 2027's "more than 2026" scope, the
+  `/about`/`/about-cyclethon` year-agnostic-page question, and the year
+  selector UI → all now live on
+  `.ai/tasks/active/historical-editions-and-site-pages.md`, including its
+  folded-in 2027 section.
+- Header/Footer/DayNav's `EditionProvider` audit was never exhaustive — still
+  worth fixing opportunistically if more hardcoded unprefixed paths turn up,
+  wherever that work happens to land.
 
 ## Next step
 
-Start Phase 3 once the Tiltify campaign has actually concluded: decide the freeze trigger and run the one-time R2 copy for 2026.
+None, this task is done. See
+`.ai/tasks/active/historical-editions-and-site-pages.md` for what comes next.
