@@ -8,7 +8,7 @@ import { getEdition } from '@/lib/editions';
 import { getDonations } from '@/lib/getDonations';
 import { getStats } from '@/lib/getStats';
 
-export const revalidate = 3600;
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: 'Cyclethon Tracker',

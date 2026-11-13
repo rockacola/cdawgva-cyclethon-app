@@ -3,7 +3,7 @@ import { getArchivedDonationsFullUrl } from '@/lib/constants';
 import { getEdition } from '@/lib/editions';
 import { getDonationsFull } from '@/lib/getDonationsFull';
 
-export const revalidate = 3600;
+export const revalidate = false;
 
 const archivedFullUrl = getArchivedDonationsFullUrl(getEdition(2026)!.eventKey);
 

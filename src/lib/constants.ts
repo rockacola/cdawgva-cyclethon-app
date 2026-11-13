@@ -26,9 +26,6 @@ export function getArchivedDonationsDayUrl(eventKey: string, dateStr: string): s
   return `${R2_BASE_URL}/${eventKey}/donations-${dateStr}.json`;
 }
 
-// Server-side revalidation window in seconds
-export const FETCH_CACHE_REVALIDATE = 3600;
-
 // Client-side polling interval in milliseconds
 export const DONATION_REFETCH_INTERVAL = 300_000;
 
